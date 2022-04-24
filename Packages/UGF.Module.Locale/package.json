@@ -1,0 +1,22 @@
+{
+  "name": "com.ugf.module.locale",
+  "displayName": "UGF.Module.Locale",
+  "version": "0.0.0-preview",
+  "unity": "2021.2",
+  "apiCompatibility": ".NET Standard 2.1",
+  "description": "Module to manager language and other locale.",
+  "author": {
+    "name": "Unity Game Framework",
+    "url": "https://github.com/unity-game-framework"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/unity-game-framework/ugf-module-locale.git"
+  },
+  "changelogUrl": "https://github.com/unity-game-framework/ugf-module-locale/blob/main/changelog.md",
+  "licensesUrl": "https://github.com/unity-game-framework/ugf-module-locale/blob/main/license",
+  "publishConfig": {
+    "registry": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+  },
+  "dependencies": {}
+}
