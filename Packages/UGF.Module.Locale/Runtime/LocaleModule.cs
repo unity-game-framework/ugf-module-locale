@@ -29,6 +29,11 @@ namespace UGF.Module.Locale.Runtime
             {
                 Entries.Add(key, value);
             }
+
+            for (int i = 0; i < Description.Tables.Count; i++)
+            {
+                AddEntries(Description.Tables[i]);
+            }
         }
 
         protected override void OnUninitialize()
@@ -37,6 +42,19 @@ namespace UGF.Module.Locale.Runtime
 
             Entries.Clear();
             m_locales.Clear();
+        }
+
+        public void AddEntries(LocaleTableDescription description)
+        {
+            if (description == null) throw new ArgumentNullException(nameof(description));
+
+            foreach ((string key, List<string> value) in description.Entries)
+            {
+                for (int i = 0; i < value.Count; i++)
+                {
+                    AddEntries(key, value[i]);
+                }
+            }
         }
 
         public void AddEntries(string localeId, string entriesId)
@@ -52,6 +70,26 @@ namespace UGF.Module.Locale.Runtime
             }
 
             collection.Add(entriesId);
+        }
+
+        public bool RemoveEntries(LocaleTableDescription description)
+        {
+            if (description == null) throw new ArgumentNullException(nameof(description));
+
+            bool result = false;
+
+            foreach ((string key, List<string> value) in description.Entries)
+            {
+                for (int i = 0; i < value.Count; i++)
+                {
+                    if (RemoveEntries(key, value[i]))
+                    {
+                        result = true;
+                    }
+                }
+            }
+
+            return result;
         }
 
         public bool RemoveEntries(string localeId, string entriesId)

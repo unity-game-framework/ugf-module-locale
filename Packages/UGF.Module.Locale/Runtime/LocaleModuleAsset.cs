@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UGF.Application.Runtime;
 using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
 using UnityEngine;
@@ -10,9 +11,11 @@ namespace UGF.Module.Locale.Runtime
     {
         [SerializeField] private List<AssetReference<LocaleDescriptionAsset>> m_locales = new List<AssetReference<LocaleDescriptionAsset>>();
         [SerializeField] private List<AssetReference<LocaleEntriesDescriptionAsset>> m_entries = new List<AssetReference<LocaleEntriesDescriptionAsset>>();
+        [SerializeField] private List<LocaleTableDescriptionAsset> m_tables = new List<LocaleTableDescriptionAsset>();
 
         public List<AssetReference<LocaleDescriptionAsset>> Locales { get { return m_locales; } }
         public List<AssetReference<LocaleEntriesDescriptionAsset>> Entries { get { return m_entries; } }
+        public List<LocaleTableDescriptionAsset> Tables { get { return m_tables; } }
 
         protected override IApplicationModuleDescription OnBuildDescription()
         {
@@ -30,6 +33,17 @@ namespace UGF.Module.Locale.Runtime
                 AssetReference<LocaleEntriesDescriptionAsset> reference = m_entries[i];
 
                 description.Entries.Add(reference.Guid, reference.Asset.Build());
+            }
+
+            for (int i = 0; i < m_tables.Count; i++)
+            {
+                LocaleTableDescriptionAsset table = m_tables[i];
+
+                if (table == null) throw new ArgumentException("Value cannot be null or empty.", nameof(table));
+
+                LocaleTableDescription tableDescription = table.Build();
+
+                description.Tables.Add(tableDescription);
             }
 
             return description;
