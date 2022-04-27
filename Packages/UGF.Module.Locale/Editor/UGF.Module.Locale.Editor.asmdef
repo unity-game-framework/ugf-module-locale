@@ -2,7 +2,8 @@
     "name": "UGF.Module.Locale.Editor",
     "rootNamespace": "UGF.Module.Locale.Editor",
     "references": [
-        "GUID:bb7bf94360d43544299e5070ddb39ad6"
+        "GUID:bb7bf94360d43544299e5070ddb39ad6",
+        "GUID:abdd615e45137c74ca2ce9c636c78c15"
     ],
     "includePlatforms": [
         "Editor"
