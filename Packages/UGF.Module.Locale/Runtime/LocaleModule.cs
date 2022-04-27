@@ -21,6 +21,24 @@ namespace UGF.Module.Locale.Runtime
             Entries = entries ?? throw new ArgumentNullException(nameof(entries));
         }
 
+        protected override void OnInitialize()
+        {
+            base.OnInitialize();
+
+            foreach ((string key, LocaleEntriesDescription value) in Description.Entries)
+            {
+                Entries.Add(key, value);
+            }
+        }
+
+        protected override void OnUninitialize()
+        {
+            base.OnUninitialize();
+
+            Entries.Clear();
+            m_locales.Clear();
+        }
+
         public void AddEntries(string localeId, string entriesId)
         {
             if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
