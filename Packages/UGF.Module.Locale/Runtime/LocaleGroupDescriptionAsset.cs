@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using UGF.Builder.Runtime;
+using UGF.EditorTools.Runtime.IMGUI.Attributes;
 using UnityEngine;
 
 namespace UGF.Module.Locale.Runtime
@@ -15,7 +16,9 @@ namespace UGF.Module.Locale.Runtime
         [Serializable]
         public struct Entry
         {
+            [AssetGuid(typeof(LocaleDescriptionAsset))]
             [SerializeField] private string m_locale;
+            [AssetGuid(typeof(LocaleEntriesDescriptionAsset))]
             [SerializeField] private string m_entries;
 
             public string Locale { get { return m_locale; } set { m_locale = value; } }
