@@ -11,11 +11,11 @@ namespace UGF.Module.Locale.Runtime
     {
         [SerializeField] private List<AssetReference<LocaleDescriptionAsset>> m_locales = new List<AssetReference<LocaleDescriptionAsset>>();
         [SerializeField] private List<AssetReference<LocaleEntriesDescriptionAsset>> m_entries = new List<AssetReference<LocaleEntriesDescriptionAsset>>();
-        [SerializeField] private List<LocaleTableDescriptionAsset> m_tables = new List<LocaleTableDescriptionAsset>();
+        [SerializeField] private List<LocaleGroupDescriptionAsset> m_groups = new List<LocaleGroupDescriptionAsset>();
 
         public List<AssetReference<LocaleDescriptionAsset>> Locales { get { return m_locales; } }
         public List<AssetReference<LocaleEntriesDescriptionAsset>> Entries { get { return m_entries; } }
-        public List<LocaleTableDescriptionAsset> Tables { get { return m_tables; } }
+        public List<LocaleGroupDescriptionAsset> Groups { get { return m_groups; } }
 
         protected override IApplicationModuleDescription OnBuildDescription()
         {
@@ -35,15 +35,15 @@ namespace UGF.Module.Locale.Runtime
                 description.Entries.Add(reference.Guid, reference.Asset.Build());
             }
 
-            for (int i = 0; i < m_tables.Count; i++)
+            for (int i = 0; i < m_groups.Count; i++)
             {
-                LocaleTableDescriptionAsset table = m_tables[i];
+                LocaleGroupDescriptionAsset group = m_groups[i];
 
-                if (table == null) throw new ArgumentException("Value cannot be null or empty.", nameof(table));
+                if (group == null) throw new ArgumentException("Value cannot be null or empty.", nameof(group));
 
-                LocaleTableDescription tableDescription = table.Build();
+                LocaleGroupDescription groupDescription = group.Build();
 
-                description.Tables.Add(tableDescription);
+                description.Groups.Add(groupDescription);
             }
 
             return description;

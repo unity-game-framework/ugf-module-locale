@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace UGF.Module.Locale.Runtime
 {
-    [CreateAssetMenu(menuName = "Unity Game Framework/Locale/Locale Table Description", order = 2000)]
-    public class LocaleTableDescriptionAsset : BuilderAsset<LocaleTableDescription>
+    [CreateAssetMenu(menuName = "Unity Game Framework/Locale/Locale Group Description", order = 2000)]
+    public class LocaleGroupDescriptionAsset : BuilderAsset<LocaleGroupDescription>
     {
         [SerializeField] private List<Entry> m_entries = new List<Entry>();
 
@@ -22,9 +22,9 @@ namespace UGF.Module.Locale.Runtime
             public string Entries { get { return m_entries; } set { m_entries = value; } }
         }
 
-        protected override LocaleTableDescription OnBuild()
+        protected override LocaleGroupDescription OnBuild()
         {
-            var description = new LocaleTableDescription();
+            var description = new LocaleGroupDescription();
 
             for (int i = 0; i < m_entries.Count; i++)
             {

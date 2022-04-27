@@ -30,9 +30,9 @@ namespace UGF.Module.Locale.Runtime
                 Entries.Add(key, value);
             }
 
-            for (int i = 0; i < Description.Tables.Count; i++)
+            for (int i = 0; i < Description.Groups.Count; i++)
             {
-                AddEntries(Description.Tables[i]);
+                AddEntries(Description.Groups[i]);
             }
         }
 
@@ -44,7 +44,7 @@ namespace UGF.Module.Locale.Runtime
             m_locales.Clear();
         }
 
-        public void AddEntries(LocaleTableDescription description)
+        public void AddEntries(LocaleGroupDescription description)
         {
             if (description == null) throw new ArgumentNullException(nameof(description));
 
@@ -72,7 +72,7 @@ namespace UGF.Module.Locale.Runtime
             collection.Add(entriesId);
         }
 
-        public bool RemoveEntries(LocaleTableDescription description)
+        public bool RemoveEntries(LocaleGroupDescription description)
         {
             if (description == null) throw new ArgumentNullException(nameof(description));
 
