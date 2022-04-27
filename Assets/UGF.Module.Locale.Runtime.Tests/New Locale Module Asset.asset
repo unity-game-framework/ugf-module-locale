@@ -18,5 +18,5 @@ MonoBehaviour:
   m_entries:
   - m_guid: e96ff4b3037d93440b95e73d1abef702
     m_asset: {fileID: 11400000, guid: e96ff4b3037d93440b95e73d1abef702, type: 2}
-  m_tables:
+  m_groups:
   - {fileID: 11400000, guid: c0480ef368334ff4fb8d0fc8c84f4a6c, type: 2}

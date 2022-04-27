@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06c3f877f12241cea9e585c2c6f94040, type: 3}
-  m_Name: New Locale Table Description Asset
+  m_Script: {fileID: 11500000, guid: 6e5d97ba925f4573b2a128ed4206e506, type: 3}
+  m_Name: New Locale Data Text Asset
   m_EditorClassIdentifier: 
   m_entries:
   - m_locale: 42494c6d521332c44aebffac79a798a7
-    m_entries: e96ff4b3037d93440b95e73d1abef702
+    m_value: Test
+  - m_locale: 42494c6d521332c44aebffac79a798a7
+    m_value: Test 2
