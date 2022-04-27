@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UGF.Application.Runtime;
 using UGF.RuntimeTools.Runtime.Providers;
 
@@ -6,19 +7,112 @@ namespace UGF.Module.Locale.Runtime
 {
     public class LocaleModule : ApplicationModule<LocaleModuleDescription>
     {
-        public IProvider<string, LocaleEntriesDescription> Entries { get { return m_entries; } }
-        public IProvider<string, LocaleCollectionDescription> Locales { get { return m_locales; } }
+        public IProvider<string, LocaleEntriesDescription> Entries { get; }
+        public ICollection<string> Locales { get { return m_locales.Keys; } }
 
-        private readonly Provider<string, LocaleEntriesDescription> m_entries = new Provider<string, LocaleEntriesDescription>();
-        private readonly Provider<string, LocaleCollectionDescription> m_locales = new Provider<string, LocaleCollectionDescription>();
+        private readonly Dictionary<string, HashSet<string>> m_locales = new Dictionary<string, HashSet<string>>();
 
-        public LocaleModule(LocaleModuleDescription description, IApplication application) : base(description, application)
+        public LocaleModule(LocaleModuleDescription description, IApplication application) : this(description, application, new Provider<string, LocaleEntriesDescription>())
         {
+        }
+
+        public LocaleModule(LocaleModuleDescription description, IApplication application, IProvider<string, LocaleEntriesDescription> entries) : base(description, application)
+        {
+            Entries = entries ?? throw new ArgumentNullException(nameof(entries));
+        }
+
+        public void AddEntries(string localeId, string entriesId)
+        {
+            if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
+            if (string.IsNullOrEmpty(entriesId)) throw new ArgumentException("Value cannot be null or empty.", nameof(entriesId));
+
+            if (!m_locales.TryGetValue(localeId, out HashSet<string> collection))
+            {
+                collection = new HashSet<string>();
+
+                m_locales.Add(localeId, collection);
+            }
+
+            collection.Add(entriesId);
+        }
+
+        public bool RemoveEntries(string localeId, string entriesId)
+        {
+            if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
+            if (string.IsNullOrEmpty(entriesId)) throw new ArgumentException("Value cannot be null or empty.", nameof(entriesId));
+
+            if (m_locales.TryGetValue(localeId, out HashSet<string> collection) && collection.Remove(entriesId))
+            {
+                if (collection.Count == 0)
+                {
+                    m_locales.Remove(localeId);
+                }
+
+                return true;
+            }
+
+            return false;
+        }
+
+        public ICollection<string> GetEntries(string localeId)
+        {
+            return TryGetEntries(localeId, out ICollection<string> entries) ? entries : throw new ArgumentException($"Entries not found by the specified locale id: '{localeId}'.");
+        }
+
+        public bool TryGetEntries(string localeId, out ICollection<string> entries)
+        {
+            if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
+
+            if (m_locales.TryGetValue(localeId, out HashSet<string> collection))
+            {
+                entries = collection;
+                return true;
+            }
+
+            entries = default;
+            return false;
+        }
+
+        public T Get<T>(string localeId, string key)
+        {
+            return (T)Get(localeId, key);
+        }
+
+        public object Get(string localeId, string key)
+        {
+            return TryGet(localeId, key, out object value) ? value : throw new ArgumentException($"Value not found by the specified locale id and key: '{localeId}', '{key}'.");
+        }
+
+        public bool TryGet<T>(string localeId, string key, out T value)
+        {
+            if (TryGet(localeId, key, out object result))
+            {
+                value = (T)result;
+                return true;
+            }
+
+            value = default;
+            return false;
         }
 
         public bool TryGet(string localeId, string key, out object value)
         {
-            throw new Exception("");
+            if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
+            if (string.IsNullOrEmpty(key)) throw new ArgumentException("Value cannot be null or empty.", nameof(key));
+
+            if (m_locales.TryGetValue(localeId, out HashSet<string> collection))
+            {
+                foreach (string id in collection)
+                {
+                    if (Entries.TryGet(id, out LocaleEntriesDescription entries) && entries.Values.TryGetValue(key, out value))
+                    {
+                        return true;
+                    }
+                }
+            }
+
+            value = default;
+            return false;
         }
     }
 }
