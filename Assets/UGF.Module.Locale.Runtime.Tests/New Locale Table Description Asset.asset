@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: New Locale Table Description Asset
   m_EditorClassIdentifier: 
   m_entries:
-  - m_locale: 
-    m_entries: 
+  - m_locale: 42494c6d521332c44aebffac79a798a7
+    m_entries: e96ff4b3037d93440b95e73d1abef702
