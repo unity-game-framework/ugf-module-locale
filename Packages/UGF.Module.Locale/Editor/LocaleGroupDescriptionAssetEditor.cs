@@ -8,11 +8,11 @@ namespace UGF.Module.Locale.Editor
     [CustomEditor(typeof(LocaleGroupDescriptionAsset), true)]
     internal class LocaleGroupDescriptionAssetEditor : UnityEditor.Editor
     {
-        private LocaleGroupDescriptionAssetEntriesListDrawer m_listEntries;
+        private LocaleKeyAndValueCollectionDrawer m_listEntries;
 
         private void OnEnable()
         {
-            m_listEntries = new LocaleGroupDescriptionAssetEntriesListDrawer(serializedObject.FindProperty("m_entries"));
+            m_listEntries = new LocaleKeyAndValueCollectionDrawer(serializedObject.FindProperty("m_entries"), "m_locale", "m_entries");
             m_listEntries.Enable();
         }
 
