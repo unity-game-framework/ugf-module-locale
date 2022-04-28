@@ -9,6 +9,7 @@ namespace UGF.Module.Locale.Runtime
     {
         [SerializeField] private string m_displayName;
         [SerializeField] private SystemLanguage m_language = SystemLanguage.Unknown;
+        [LocaleCultureNameDropdown]
         [SerializeField] private string m_cultureName;
 
         public string DisplayName { get { return m_displayName; } set { m_displayName = value; } }
@@ -21,7 +22,7 @@ namespace UGF.Module.Locale.Runtime
             {
                 DisplayName = m_displayName,
                 SystemLanguage = m_language,
-                CultureInfo = string.IsNullOrEmpty(m_cultureName) ? CultureInfo.GetCultureInfo(m_cultureName) : null
+                CultureInfo = CultureInfo.GetCultureInfo(m_cultureName)
             };
 
             return description;
