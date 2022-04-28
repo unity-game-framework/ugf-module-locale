@@ -1,4 +1,5 @@
-﻿using UGF.Description.Runtime;
+﻿using System.Globalization;
+using UGF.Description.Runtime;
 using UnityEngine;
 
 namespace UGF.Module.Locale.Runtime
@@ -8,5 +9,6 @@ namespace UGF.Module.Locale.Runtime
         public string Code { get; set; }
         public string Name { get; set; }
         public SystemLanguage SystemLanguage { get; set; }
+        public CultureInfo CultureInfo { get; set; }
     }
 }
