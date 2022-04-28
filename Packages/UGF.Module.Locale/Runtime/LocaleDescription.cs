@@ -6,8 +6,7 @@ namespace UGF.Module.Locale.Runtime
 {
     public class LocaleDescription : DescriptionBase
     {
-        public string Code { get; set; }
-        public string Name { get; set; }
+        public string DisplayName { get; set; }
         public SystemLanguage SystemLanguage { get; set; }
         public CultureInfo CultureInfo { get; set; }
     }
