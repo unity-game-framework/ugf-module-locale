@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f44a046fa3d84eb4a9f2a38967653d43, type: 3}
   m_Name: New Locale Description Asset
   m_EditorClassIdentifier: 
-  m_code: 
-  m_name: 
+  m_displayName: 
   m_language: 42
+  m_cultureName: 
