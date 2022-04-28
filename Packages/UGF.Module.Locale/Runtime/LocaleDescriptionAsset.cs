@@ -22,7 +22,9 @@ namespace UGF.Module.Locale.Runtime
             {
                 DisplayName = m_displayName,
                 SystemLanguage = m_language,
-                CultureInfo = CultureInfo.GetCultureInfo(m_cultureName)
+                CultureInfo = !string.IsNullOrEmpty(m_cultureName)
+                    ? CultureInfo.GetCultureInfo(m_cultureName)
+                    : CultureInfo.GetCultureInfo(string.Empty)
             };
 
             return description;
