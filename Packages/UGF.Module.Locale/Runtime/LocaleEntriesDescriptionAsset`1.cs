@@ -20,6 +20,20 @@ namespace UGF.Module.Locale.Runtime
             public TValue Value { get { return m_value; } set { m_value = value; } }
         }
 
+        protected override void OnSetup(IDictionary<string, object> values)
+        {
+            m_entries.Clear();
+
+            foreach ((string key, object value) in values)
+            {
+                m_entries.Add(new Entry
+                {
+                    Key = key,
+                    Value = (TValue)value
+                });
+            }
+        }
+
         protected override void OnCollect(IDictionary<string, object> values)
         {
             for (int i = 0; i < m_entries.Count; i++)
