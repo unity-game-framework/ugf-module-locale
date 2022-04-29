@@ -38,6 +38,10 @@ namespace UGF.Module.Locale.Runtime
                 if (data.TryGetValue(entry.Locale, out IDictionary<string, object> values))
                 {
                     entry.Entries.Setup(values);
+
+#if UNITY_EDITOR
+                    UnityEditor.EditorUtility.SetDirty(entry.Entries);
+#endif
                 }
             }
         }
