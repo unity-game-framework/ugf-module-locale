@@ -9,8 +9,12 @@ namespace UGF.Module.Locale.Runtime
     {
         public IProvider<string, LocaleEntriesDescription> Entries { get; }
         public ICollection<string> Locales { get { return m_locales.Keys; } }
+        public string CurrentLocaleId { get { return HasCurrentLocale ? m_currentLocaleId : throw new ArgumentException("Value not specified."); } }
+        public LocaleDescription CurrentLocale { get { return Description.Locales[CurrentLocaleId]; } }
+        public bool HasCurrentLocale { get { return !string.IsNullOrEmpty(m_currentLocaleId); } }
 
         private readonly Dictionary<string, HashSet<string>> m_locales = new Dictionary<string, HashSet<string>>();
+        private string m_currentLocaleId;
 
         public LocaleModule(LocaleModuleDescription description, IApplication application) : this(description, application, new Provider<string, LocaleEntriesDescription>())
         {
@@ -42,6 +46,19 @@ namespace UGF.Module.Locale.Runtime
 
             Entries.Clear();
             m_locales.Clear();
+        }
+
+        public void SetCurrentLocale(string localeId)
+        {
+            if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
+            if (!Description.Locales.ContainsKey(localeId)) throw new ArgumentException($"Locale description not found by the specified id: '{localeId}'.");
+
+            m_currentLocaleId = localeId;
+        }
+
+        public void ClearCurrentLocale()
+        {
+            m_currentLocaleId = string.Empty;
         }
 
         public void AddEntries(LocaleGroupDescription description)
@@ -129,14 +146,29 @@ namespace UGF.Module.Locale.Runtime
             return false;
         }
 
+        public T Get<T>(string key)
+        {
+            return Get<T>(CurrentLocaleId, key);
+        }
+
         public T Get<T>(string localeId, string key)
         {
             return (T)Get(localeId, key);
         }
 
+        public object Get(string key)
+        {
+            return Get(CurrentLocaleId, key);
+        }
+
         public object Get(string localeId, string key)
         {
             return TryGet(localeId, key, out object value) ? value : throw new ArgumentException($"Value not found by the specified locale id and key: '{localeId}', '{key}'.");
+        }
+
+        public bool TryGet<T>(string key, out T value)
+        {
+            return TryGet(CurrentLocaleId, key, out value);
         }
 
         public bool TryGet<T>(string localeId, string key, out T value)
@@ -149,6 +181,11 @@ namespace UGF.Module.Locale.Runtime
 
             value = default;
             return false;
+        }
+
+        public bool TryGet(string key, out object value)
+        {
+            return TryGet(CurrentLocaleId, key, out value);
         }
 
         public bool TryGet(string localeId, string key, out object value)
