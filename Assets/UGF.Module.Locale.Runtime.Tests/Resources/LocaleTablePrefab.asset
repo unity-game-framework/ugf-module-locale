@@ -10,10 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 916942c517a2440ea33930630b92c735, type: 3}
-  m_Name: LocaleTable
+  m_Name: LocaleTablePrefab
   m_EditorClassIdentifier: 
   m_data:
-  - m_guid: f9cd8a1f6057ad94fbe269362df9057c
-    m_asset: {fileID: 11400000, guid: f9cd8a1f6057ad94fbe269362df9057c, type: 2}
   - m_guid: 6bf9ce242ad62fe44bc10f96753bbf6f
     m_asset: {fileID: 11400000, guid: 6bf9ce242ad62fe44bc10f96753bbf6f, type: 2}

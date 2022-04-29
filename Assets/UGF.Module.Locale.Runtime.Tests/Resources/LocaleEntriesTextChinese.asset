@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06c3f877f12241cea9e585c2c6f94040, type: 3}
-  m_Name: LocaleGroup
+  m_Script: {fileID: 11500000, guid: cca25a079ed240338eb3a55c7969846c, type: 3}
+  m_Name: LocaleEntriesTextChinese
   m_EditorClassIdentifier: 
   m_entries: []
