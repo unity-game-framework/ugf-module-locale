@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2ce52ce02e2a436d8e5819929b87bf66, type: 3}
   m_Name: New Locale Module Asset
   m_EditorClassIdentifier: 
+  m_defaultLocale: 42494c6d521332c44aebffac79a798a7
   m_locales:
   - m_guid: 42494c6d521332c44aebffac79a798a7
     m_asset: {fileID: 11400000, guid: 42494c6d521332c44aebffac79a798a7, type: 2}
