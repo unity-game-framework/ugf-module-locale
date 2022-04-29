@@ -2,7 +2,7 @@
 
 namespace UGF.Module.Locale.Runtime
 {
-    public abstract class LocaleConverter : ScriptableObject
+    public abstract class LocaleConverterAsset : ScriptableObject
     {
         public void Convert()
         {
