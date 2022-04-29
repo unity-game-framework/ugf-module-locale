@@ -39,9 +39,9 @@ namespace UGF.Module.Locale.Runtime
                 Entries.Add(key, value);
             }
 
-            for (int i = 0; i < Description.Groups.Count; i++)
+            foreach ((_, LocaleGroupDescription value) in Description.Groups)
             {
-                AddEntries(Description.Groups[i]);
+                AddEntries(value);
             }
         }
 

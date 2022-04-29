@@ -14,8 +14,8 @@ namespace UGF.Module.Locale.Editor
         private ReorderableListSelectionDrawerByPath m_listLocalesSelection;
         private AssetReferenceListDrawer m_listEntries;
         private ReorderableListSelectionDrawerByPath m_listEntriesSelection;
-        private ReorderableListDrawer m_listGroups;
-        private ReorderableListSelectionDrawerByElement m_listGroupsSelection;
+        private AssetReferenceListDrawer m_listGroups;
+        private ReorderableListSelectionDrawerByPath m_listGroupsSelection;
 
         private void OnEnable()
         {
@@ -40,9 +40,9 @@ namespace UGF.Module.Locale.Editor
                 }
             };
 
-            m_listGroups = new ReorderableListDrawer(serializedObject.FindProperty("m_groups"));
+            m_listGroups = new AssetReferenceListDrawer(serializedObject.FindProperty("m_groups"));
 
-            m_listGroupsSelection = new ReorderableListSelectionDrawerByElement(m_listGroups)
+            m_listGroupsSelection = new ReorderableListSelectionDrawerByPath(m_listGroups, "m_asset")
             {
                 Drawer =
                 {
