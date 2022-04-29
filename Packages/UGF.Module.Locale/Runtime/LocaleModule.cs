@@ -29,6 +29,11 @@ namespace UGF.Module.Locale.Runtime
         {
             base.OnInitialize();
 
+            if (!string.IsNullOrEmpty(Description.DefaultLocaleId))
+            {
+                SetCurrentLocale(Description.DefaultLocaleId);
+            }
+
             foreach ((string key, LocaleEntriesDescription value) in Description.Entries)
             {
                 Entries.Add(key, value);
@@ -43,6 +48,8 @@ namespace UGF.Module.Locale.Runtime
         protected override void OnUninitialize()
         {
             base.OnUninitialize();
+
+            ClearCurrentLocale();
 
             Entries.Clear();
             m_locales.Clear();
