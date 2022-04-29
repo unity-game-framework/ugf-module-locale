@@ -32,5 +32,7 @@ MonoBehaviour:
   - m_guid: fda0f11d0102a8c42a1772348c151fa1
     m_asset: {fileID: 11400000, guid: fda0f11d0102a8c42a1772348c151fa1, type: 2}
   m_groups:
-  - {fileID: 11400000, guid: 62b8be70aadab8a4995d178e824214bc, type: 2}
-  - {fileID: 11400000, guid: 720b9272a69e37d4dbeb86eefadbe54a, type: 2}
+  - m_guid: 62b8be70aadab8a4995d178e824214bc
+    m_asset: {fileID: 11400000, guid: 62b8be70aadab8a4995d178e824214bc, type: 2}
+  - m_guid: 720b9272a69e37d4dbeb86eefadbe54a
+    m_asset: {fileID: 11400000, guid: 720b9272a69e37d4dbeb86eefadbe54a, type: 2}
