@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 060c603af140489daa45520306495959, type: 3}
   m_Name: LocaleEntriesPrefabEnglish
   m_EditorClassIdentifier: 
-  m_entries: []
+  m_entries:
+  - m_key: 6bf9ce242ad62fe44bc10f96753bbf6f
+    m_value: {fileID: 4732381671422567552, guid: 7aa4d7566c0f5644d834d643292542fb, type: 3}
