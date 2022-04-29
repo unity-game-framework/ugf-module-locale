@@ -9,6 +9,7 @@ namespace UGF.Module.Locale.Editor
     [CustomEditor(typeof(LocaleModuleAsset), true)]
     internal class LocaleModuleAssetEditor : UnityEditor.Editor
     {
+        private SerializedProperty m_propertyDefaultLocale;
         private AssetReferenceListDrawer m_listLocales;
         private ReorderableListSelectionDrawerByPath m_listLocalesSelection;
         private AssetReferenceListDrawer m_listEntries;
@@ -18,6 +19,7 @@ namespace UGF.Module.Locale.Editor
 
         private void OnEnable()
         {
+            m_propertyDefaultLocale = serializedObject.FindProperty("m_defaultLocale");
             m_listLocales = new AssetReferenceListDrawer(serializedObject.FindProperty("m_locales"));
 
             m_listLocalesSelection = new ReorderableListSelectionDrawerByPath(m_listLocales, "m_asset")
@@ -71,6 +73,8 @@ namespace UGF.Module.Locale.Editor
             using (new SerializedObjectUpdateScope(serializedObject))
             {
                 EditorIMGUIUtility.DrawScriptProperty(serializedObject);
+
+                EditorGUILayout.PropertyField(m_propertyDefaultLocale);
 
                 m_listLocales.DrawGUILayout();
                 m_listEntries.DrawGUILayout();
