@@ -35,6 +35,8 @@ namespace UGF.Module.Locale.Runtime
 
                     entries.Add(reference.Guid, value);
                 }
+
+                values.Clear();
             }
         }
     }
