@@ -41,6 +41,7 @@ MonoBehaviour:
     m_asset: {fileID: 11400000, guid: 720b9272a69e37d4dbeb86eefadbe54a, type: 2}
   - m_guid: d77ddb0f730bd0948afa8336d3b1ac16
     m_asset: {fileID: 11400000, guid: d77ddb0f730bd0948afa8336d3b1ac16, type: 2}
-  m_preloadEntries: []
+  m_preloadEntries:
+  - a4e3f075bbb2f874f930749e1022fd00
   m_preloadGroups:
   - d77ddb0f730bd0948afa8336d3b1ac16
