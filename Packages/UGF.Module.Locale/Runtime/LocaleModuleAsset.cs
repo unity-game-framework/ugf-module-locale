@@ -11,21 +11,27 @@ namespace UGF.Module.Locale.Runtime
     {
         [AssetGuid(typeof(LocaleDescriptionAsset))]
         [SerializeField] private string m_defaultLocale;
+        [SerializeField] private bool m_unloadEntriesOnUninitialize = true;
         [SerializeField] private List<AssetReference<LocaleDescriptionAsset>> m_locales = new List<AssetReference<LocaleDescriptionAsset>>();
         [SerializeField] private List<AssetReference<LocaleEntriesDescriptionAsset>> m_entries = new List<AssetReference<LocaleEntriesDescriptionAsset>>();
         [SerializeField] private List<AssetReference<LocaleGroupDescriptionAsset>> m_groups = new List<AssetReference<LocaleGroupDescriptionAsset>>();
+        [AssetGuid(typeof(LocaleEntriesDescriptionAsset))]
+        [SerializeField] private List<string> m_preloadEntries = new List<string>();
 
         public string DefaultLocale { get { return m_defaultLocale; } set { m_defaultLocale = value; } }
+        public bool UnloadEntriesOnUninitialize { get { return m_unloadEntriesOnUninitialize; } set { m_unloadEntriesOnUninitialize = value; } }
         public List<AssetReference<LocaleDescriptionAsset>> Locales { get { return m_locales; } }
         public List<AssetReference<LocaleEntriesDescriptionAsset>> Entries { get { return m_entries; } }
         public List<AssetReference<LocaleGroupDescriptionAsset>> Groups { get { return m_groups; } }
+        public List<string> PreloadEntries { get { return m_preloadEntries; } }
 
         protected override IApplicationModuleDescription OnBuildDescription()
         {
             var description = new LocaleModuleDescription
             {
                 RegisterType = typeof(LocaleModule),
-                DefaultLocaleId = m_defaultLocale
+                DefaultLocaleId = m_defaultLocale,
+                UnloadEntriesOnUninitialize = m_unloadEntriesOnUninitialize
             };
 
             for (int i = 0; i < m_locales.Count; i++)
@@ -47,6 +53,11 @@ namespace UGF.Module.Locale.Runtime
                 AssetReference<LocaleGroupDescriptionAsset> reference = m_groups[i];
 
                 description.Groups.Add(reference.Guid, reference.Asset.Build());
+            }
+
+            for (int i = 0; i < m_preloadEntries.Count; i++)
+            {
+                description.PreloadEntries.Add(m_preloadEntries[i]);
             }
 
             return description;
