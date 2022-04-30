@@ -21,12 +21,12 @@ namespace UGF.Module.Locale.Runtime.Tests
             ResourcesPath = resourcesPath;
         }
 
-        public Task CreateAsync()
+        public async Task CreateAsync()
         {
             m_launcher = Object.Instantiate(Resources.Load<ApplicationLauncherComponent>(ResourcesPath));
             m_launcher.Initialize();
 
-            return m_launcher.LaunchAsync();
+            await m_launcher.LaunchAsync();
         }
 
         public void Destroy()

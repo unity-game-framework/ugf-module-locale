@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LocaleModule
   m_EditorClassIdentifier: 
   m_defaultLocale: afd271f866d228f41a616aeea100880e
+  m_unloadEntriesOnUninitialize: 1
   m_locales:
   - m_guid: afd271f866d228f41a616aeea100880e
     m_asset: {fileID: 11400000, guid: afd271f866d228f41a616aeea100880e, type: 2}
@@ -38,3 +39,8 @@ MonoBehaviour:
     m_asset: {fileID: 11400000, guid: 62b8be70aadab8a4995d178e824214bc, type: 2}
   - m_guid: 720b9272a69e37d4dbeb86eefadbe54a
     m_asset: {fileID: 11400000, guid: 720b9272a69e37d4dbeb86eefadbe54a, type: 2}
+  - m_guid: d77ddb0f730bd0948afa8336d3b1ac16
+    m_asset: {fileID: 11400000, guid: d77ddb0f730bd0948afa8336d3b1ac16, type: 2}
+  m_preloadEntries: []
+  m_preloadGroups:
+  - d77ddb0f730bd0948afa8336d3b1ac16

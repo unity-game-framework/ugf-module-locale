@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_modules:
   - m_enabled: 1
+    m_value: {fileID: 11400000, guid: 769cb3a99874b9247b84c445f1a83e1c, type: 2}
+  - m_enabled: 1
     m_value: {fileID: 11400000, guid: be8c62f46433e3645a472fc1fa0b0cdb, type: 2}
