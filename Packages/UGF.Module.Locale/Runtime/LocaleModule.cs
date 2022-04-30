@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UGF.Application.Runtime;
+using UGF.Module.Assets.Runtime;
 using UGF.RuntimeTools.Runtime.Providers;
 
 namespace UGF.Module.Locale.Runtime
@@ -13,7 +15,10 @@ namespace UGF.Module.Locale.Runtime
         public LocaleDescription CurrentLocale { get { return Description.Locales[CurrentLocaleId]; } }
         public bool HasCurrentLocale { get { return !string.IsNullOrEmpty(m_currentLocaleId); } }
 
+        protected IAssetModule AssetModule { get; }
+
         private readonly Dictionary<string, HashSet<string>> m_locales = new Dictionary<string, HashSet<string>>();
+        private readonly Dictionary<string, LocaleEntriesDescriptionAsset> m_assets = new Dictionary<string, LocaleEntriesDescriptionAsset>();
         private string m_currentLocaleId;
 
         public LocaleModule(LocaleModuleDescription description, IApplication application) : this(description, application, new Provider<string, LocaleEntriesDescription>())
@@ -23,6 +28,8 @@ namespace UGF.Module.Locale.Runtime
         public LocaleModule(LocaleModuleDescription description, IApplication application, IProvider<string, LocaleEntriesDescription> entries) : base(description, application)
         {
             Entries = entries ?? throw new ArgumentNullException(nameof(entries));
+
+            AssetModule = Application.GetModule<IAssetModule>();
         }
 
         protected override void OnInitialize()
@@ -68,15 +75,71 @@ namespace UGF.Module.Locale.Runtime
             m_currentLocaleId = string.Empty;
         }
 
+        public async Task LoadAsync(string localeId, string localeGroupId)
+        {
+            if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
+            if (string.IsNullOrEmpty(localeGroupId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeGroupId));
+            if (!Description.Groups.TryGetValue(localeGroupId, out LocaleGroupDescription description)) throw new ArgumentException($"Locale group not found by the specified id: '{localeGroupId}'.");
+            if (!description.Entries.TryGetValue(localeId, out HashSet<string> entries)) throw new ArgumentException($"Entries not found by the specified locale id: '{localeId}'.");
+
+            foreach (string id in entries)
+            {
+                await LoadAsync(id);
+            }
+        }
+
+        public async Task<LocaleEntriesDescription> LoadAsync(string entriesId)
+        {
+            if (string.IsNullOrEmpty(entriesId)) throw new ArgumentException("Value cannot be null or empty.", nameof(entriesId));
+
+            var asset = await AssetModule.LoadAsync<LocaleEntriesDescriptionAsset>(entriesId);
+            LocaleEntriesDescription description = asset.Build();
+
+            m_assets.Add(entriesId, asset);
+            Entries.Add(entriesId, description);
+
+            return description;
+        }
+
+        public async Task UnloadAsync(string localeId, string localeGroupId)
+        {
+            if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
+            if (string.IsNullOrEmpty(localeGroupId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeGroupId));
+            if (!Description.Groups.TryGetValue(localeGroupId, out LocaleGroupDescription description)) throw new ArgumentException($"Locale group not found by the specified id: '{localeGroupId}'.");
+            if (!description.Entries.TryGetValue(localeId, out HashSet<string> entries)) throw new ArgumentException($"Entries not found by the specified locale id: '{localeId}'.");
+
+            foreach (string id in entries)
+            {
+                await UnloadAsync(id);
+            }
+        }
+
+        public async Task<bool> UnloadAsync(string entriesId)
+        {
+            if (string.IsNullOrEmpty(entriesId)) throw new ArgumentException("Value cannot be null or empty.", nameof(entriesId));
+
+            if (m_assets.TryGetValue(entriesId, out LocaleEntriesDescriptionAsset asset))
+            {
+                m_assets.Remove(entriesId);
+                Entries.Remove(entriesId);
+
+                await AssetModule.UnloadAsync(entriesId, asset);
+
+                return true;
+            }
+
+            return false;
+        }
+
         public void AddEntries(LocaleGroupDescription description)
         {
             if (description == null) throw new ArgumentNullException(nameof(description));
 
-            foreach ((string key, List<string> value) in description.Entries)
+            foreach ((string key, HashSet<string> value) in description.Entries)
             {
-                for (int i = 0; i < value.Count; i++)
+                foreach (string id in value)
                 {
-                    AddEntries(key, value[i]);
+                    AddEntries(key, id);
                 }
             }
         }
@@ -102,11 +165,11 @@ namespace UGF.Module.Locale.Runtime
 
             bool result = false;
 
-            foreach ((string key, List<string> value) in description.Entries)
+            foreach ((string key, HashSet<string> value) in description.Entries)
             {
-                for (int i = 0; i < value.Count; i++)
+                foreach (string id in value)
                 {
-                    if (RemoveEntries(key, value[i]))
+                    if (RemoveEntries(key, id))
                     {
                         result = true;
                     }

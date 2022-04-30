@@ -82,22 +82,12 @@
       },
       "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
     },
-    "com.ugf.module.controllers": {
-      "version": "2.1.1",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.ugf.application": "8.0.0"
-      },
-      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
-    },
     "com.ugf.module.locale": {
       "version": "file:UGF.Module.Locale",
       "depth": 0,
       "source": "embedded",
       "dependencies": {
         "com.ugf.module.assets": "4.0.0",
-        "com.ugf.module.controllers": "2.1.1",
         "com.ugf.editortools": "2.4.1",
         "com.ugf.builder": "2.0.2",
         "com.ugf.runtimetools": "2.6.0"
