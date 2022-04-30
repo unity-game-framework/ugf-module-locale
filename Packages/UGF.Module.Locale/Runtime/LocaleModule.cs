@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using UGF.Application.Runtime;
+using UGF.Logs.Runtime;
 using UGF.Module.Assets.Runtime;
 using UGF.RuntimeTools.Runtime.Providers;
 
@@ -52,6 +53,13 @@ namespace UGF.Module.Locale.Runtime
             {
                 AddGroup(key, value);
             }
+
+            Log.Debug("Locale Module initialized", new
+            {
+                currentLocale = m_currentLocaleId,
+                entries = Description.Entries.Count,
+                groups = Description.Groups.Count
+            });
         }
 
         public async Task InitializeAsync()
@@ -69,6 +77,12 @@ namespace UGF.Module.Locale.Runtime
 
                 await LoadGroupAsync(id);
             }
+
+            Log.Debug("Locale Module initialize async", new
+            {
+                preloadEntries = Description.PreloadEntries.Count,
+                preloadGroups = Description.PreloadGroups.Count
+            });
         }
 
         protected override void OnUninitialize()
@@ -77,6 +91,11 @@ namespace UGF.Module.Locale.Runtime
 
             if (Description.UnloadEntriesOnUninitialize)
             {
+                Log.Debug("Locale Module unload assets", new
+                {
+                    assets = m_assets.Count
+                });
+
                 while (m_assets.Count > 0)
                 {
                     string id = m_assets.First().Key;
