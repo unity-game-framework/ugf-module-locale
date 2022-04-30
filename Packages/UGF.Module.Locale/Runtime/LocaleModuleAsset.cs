@@ -17,6 +17,8 @@ namespace UGF.Module.Locale.Runtime
         [SerializeField] private List<AssetReference<LocaleGroupDescriptionAsset>> m_groups = new List<AssetReference<LocaleGroupDescriptionAsset>>();
         [AssetGuid(typeof(LocaleEntriesDescriptionAsset))]
         [SerializeField] private List<string> m_preloadEntries = new List<string>();
+        [AssetGuid(typeof(LocaleGroupDescriptionAsset))]
+        [SerializeField] private List<string> m_preloadGroups = new List<string>();
 
         public string DefaultLocale { get { return m_defaultLocale; } set { m_defaultLocale = value; } }
         public bool UnloadEntriesOnUninitialize { get { return m_unloadEntriesOnUninitialize; } set { m_unloadEntriesOnUninitialize = value; } }
@@ -24,6 +26,7 @@ namespace UGF.Module.Locale.Runtime
         public List<AssetReference<LocaleEntriesDescriptionAsset>> Entries { get { return m_entries; } }
         public List<AssetReference<LocaleGroupDescriptionAsset>> Groups { get { return m_groups; } }
         public List<string> PreloadEntries { get { return m_preloadEntries; } }
+        public List<string> PreloadGroups { get { return m_preloadGroups; } }
 
         protected override IApplicationModuleDescription OnBuildDescription()
         {
@@ -58,6 +61,11 @@ namespace UGF.Module.Locale.Runtime
             for (int i = 0; i < m_preloadEntries.Count; i++)
             {
                 description.PreloadEntries.Add(m_preloadEntries[i]);
+            }
+
+            for (int i = 0; i < m_preloadGroups.Count; i++)
+            {
+                description.PreloadGroups.Add(m_preloadGroups[i]);
             }
 
             return description;

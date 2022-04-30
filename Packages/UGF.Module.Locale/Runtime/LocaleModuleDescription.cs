@@ -11,5 +11,6 @@ namespace UGF.Module.Locale.Runtime
         public Dictionary<string, LocaleEntriesDescription> Entries { get; } = new Dictionary<string, LocaleEntriesDescription>();
         public Dictionary<string, LocaleGroupDescription> Groups { get; } = new Dictionary<string, LocaleGroupDescription>();
         public List<string> PreloadEntries { get; } = new List<string>();
+        public List<string> PreloadGroups { get; } = new List<string>();
     }
 }

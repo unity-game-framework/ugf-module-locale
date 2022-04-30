@@ -18,6 +18,7 @@ namespace UGF.Module.Locale.Editor
         private AssetReferenceListDrawer m_listGroups;
         private ReorderableListSelectionDrawerByPath m_listGroupsSelection;
         private ReorderableListDrawer m_listPreloadEntries;
+        private ReorderableListDrawer m_listPreloadGroups;
 
         private void OnEnable()
         {
@@ -55,6 +56,7 @@ namespace UGF.Module.Locale.Editor
             };
 
             m_listPreloadEntries = new ReorderableListDrawer(serializedObject.FindProperty("m_preloadEntries"));
+            m_listPreloadGroups = new ReorderableListDrawer(serializedObject.FindProperty("m_preloadGroups"));
 
             m_listLocales.Enable();
             m_listLocalesSelection.Enable();
@@ -63,6 +65,7 @@ namespace UGF.Module.Locale.Editor
             m_listGroups.Enable();
             m_listGroupsSelection.Enable();
             m_listPreloadEntries.Enable();
+            m_listPreloadGroups.Enable();
         }
 
         private void OnDisable()
@@ -74,6 +77,7 @@ namespace UGF.Module.Locale.Editor
             m_listGroups.Disable();
             m_listGroupsSelection.Disable();
             m_listPreloadEntries.Disable();
+            m_listPreloadGroups.Disable();
         }
 
         public override void OnInspectorGUI()
@@ -89,6 +93,7 @@ namespace UGF.Module.Locale.Editor
                 m_listEntries.DrawGUILayout();
                 m_listGroups.DrawGUILayout();
                 m_listPreloadEntries.DrawGUILayout();
+                m_listPreloadGroups.DrawGUILayout();
 
                 m_listLocalesSelection.DrawGUILayout();
                 m_listEntriesSelection.DrawGUILayout();

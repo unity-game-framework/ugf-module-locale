@@ -62,6 +62,13 @@ namespace UGF.Module.Locale.Runtime
 
                 await LoadAsync(id);
             }
+
+            for (int i = 0; i < Description.PreloadGroups.Count; i++)
+            {
+                string id = Description.PreloadGroups[i];
+
+                await LoadGroupAsync(id);
+            }
         }
 
         protected override void OnUninitialize()
@@ -95,6 +102,76 @@ namespace UGF.Module.Locale.Runtime
         public void ClearCurrentLocale()
         {
             m_currentLocaleId = string.Empty;
+        }
+
+        public async Task LoadGroupAllAsync(string groupId)
+        {
+            LocaleGroupDescription description = GetGroup(groupId);
+
+            foreach (List<string> entries in description.Entries.Values)
+            {
+                for (int i = 0; i < entries.Count; i++)
+                {
+                    await LoadAsync(entries[i]);
+                }
+            }
+        }
+
+        public Task LoadGroupAsync(string groupId)
+        {
+            return LoadGroupAsync(groupId, CurrentLocaleId);
+        }
+
+        public async Task LoadGroupAsync(string groupId, string localeId)
+        {
+            if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
+
+            LocaleGroupDescription description = GetGroup(groupId);
+
+            if (!description.Entries.TryGetValue(localeId, out List<string> entries))
+            {
+                throw new ArgumentException($"Entries not found by the specified locale id: '{localeId}'.");
+            }
+
+            for (int i = 0; i < entries.Count; i++)
+            {
+                await LoadAsync(entries[i]);
+            }
+        }
+
+        public async Task UnloadGroupAllAsync(string groupId)
+        {
+            LocaleGroupDescription description = GetGroup(groupId);
+
+            foreach (List<string> entries in description.Entries.Values)
+            {
+                for (int i = 0; i < entries.Count; i++)
+                {
+                    await UnloadAsync(entries[i]);
+                }
+            }
+        }
+
+        public Task UnloadGroupAsync(string groupId)
+        {
+            return UnloadGroupAsync(groupId, CurrentLocaleId);
+        }
+
+        public async Task UnloadGroupAsync(string groupId, string localeId)
+        {
+            if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
+
+            LocaleGroupDescription description = GetGroup(groupId);
+
+            if (!description.Entries.TryGetValue(localeId, out List<string> entries))
+            {
+                throw new ArgumentException($"Entries not found by the specified locale id: '{localeId}'.");
+            }
+
+            for (int i = 0; i < entries.Count; i++)
+            {
+                await UnloadAsync(entries[i]);
+            }
         }
 
         public LocaleEntriesDescription Load(string entriesId)
