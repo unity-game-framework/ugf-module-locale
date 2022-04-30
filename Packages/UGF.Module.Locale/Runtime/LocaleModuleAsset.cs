@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UGF.Application.Runtime;
 using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
 using UGF.EditorTools.Runtime.IMGUI.Attributes;
@@ -60,12 +61,20 @@ namespace UGF.Module.Locale.Runtime
 
             for (int i = 0; i < m_preloadEntries.Count; i++)
             {
-                description.PreloadEntries.Add(m_preloadEntries[i]);
+                string id = m_preloadEntries[i];
+
+                if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty/", nameof(id));
+
+                description.PreloadEntries.Add(id);
             }
 
             for (int i = 0; i < m_preloadGroups.Count; i++)
             {
-                description.PreloadGroups.Add(m_preloadGroups[i]);
+                string id = m_preloadGroups[i];
+
+                if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty/", nameof(id));
+
+                description.PreloadGroups.Add(id);
             }
 
             return description;
