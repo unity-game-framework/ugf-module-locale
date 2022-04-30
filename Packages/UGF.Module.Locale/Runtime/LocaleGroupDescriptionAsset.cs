@@ -33,9 +33,9 @@ namespace UGF.Module.Locale.Runtime
             {
                 Entry entry = m_entries[i];
 
-                if (!description.Entries.TryGetValue(entry.Locale, out HashSet<string> collection))
+                if (!description.Entries.TryGetValue(entry.Locale, out List<string> collection))
                 {
-                    collection = new HashSet<string>();
+                    collection = new List<string>();
 
                     description.Entries.Add(entry.Locale, collection);
                 }

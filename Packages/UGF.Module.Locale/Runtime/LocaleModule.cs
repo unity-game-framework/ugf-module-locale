@@ -80,10 +80,12 @@ namespace UGF.Module.Locale.Runtime
             if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
             if (string.IsNullOrEmpty(localeGroupId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeGroupId));
             if (!Description.Groups.TryGetValue(localeGroupId, out LocaleGroupDescription description)) throw new ArgumentException($"Locale group not found by the specified id: '{localeGroupId}'.");
-            if (!description.Entries.TryGetValue(localeId, out HashSet<string> entries)) throw new ArgumentException($"Entries not found by the specified locale id: '{localeId}'.");
+            if (!description.Entries.TryGetValue(localeId, out List<string> entries)) throw new ArgumentException($"Entries not found by the specified locale id: '{localeId}'.");
 
-            foreach (string id in entries)
+            for (int i = 0; i < entries.Count; i++)
             {
+                string id = entries[i];
+
                 await LoadAsync(id);
             }
         }
@@ -106,10 +108,12 @@ namespace UGF.Module.Locale.Runtime
             if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
             if (string.IsNullOrEmpty(localeGroupId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeGroupId));
             if (!Description.Groups.TryGetValue(localeGroupId, out LocaleGroupDescription description)) throw new ArgumentException($"Locale group not found by the specified id: '{localeGroupId}'.");
-            if (!description.Entries.TryGetValue(localeId, out HashSet<string> entries)) throw new ArgumentException($"Entries not found by the specified locale id: '{localeId}'.");
+            if (!description.Entries.TryGetValue(localeId, out List<string> entries)) throw new ArgumentException($"Entries not found by the specified locale id: '{localeId}'.");
 
-            foreach (string id in entries)
+            for (int i = 0; i < entries.Count; i++)
             {
+                string id = entries[i];
+
                 await UnloadAsync(id);
             }
         }
@@ -135,10 +139,12 @@ namespace UGF.Module.Locale.Runtime
         {
             if (description == null) throw new ArgumentNullException(nameof(description));
 
-            foreach ((string key, HashSet<string> value) in description.Entries)
+            foreach ((string key, List<string> value) in description.Entries)
             {
-                foreach (string id in value)
+                for (int i = 0; i < value.Count; i++)
                 {
+                    string id = value[i];
+
                     AddEntries(key, id);
                 }
             }
@@ -165,10 +171,12 @@ namespace UGF.Module.Locale.Runtime
 
             bool result = false;
 
-            foreach ((string key, HashSet<string> value) in description.Entries)
+            foreach ((string key, List<string> value) in description.Entries)
             {
-                foreach (string id in value)
+                for (int i = 0; i < value.Count; i++)
                 {
+                    string id = value[i];
+
                     if (RemoveEntries(key, id))
                     {
                         result = true;
