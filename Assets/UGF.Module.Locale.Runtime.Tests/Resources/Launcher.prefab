@@ -48,7 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_builder: {fileID: 8648921889085135750}
   m_resourceLoader: {fileID: 8648921889085135751}
-  m_launchOnStart: 1
+  m_launchOnStart: 0
   m_stopOnQuit: 1
   m_sceneAccess: 1
 --- !u!114 &8648921889085135750
