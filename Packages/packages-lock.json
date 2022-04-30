@@ -14,17 +14,6 @@
       },
       "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
     },
-    "com.ugf.assetbundles": {
-      "version": "1.0.0-preview.2",
-      "depth": 1,
-      "source": "registry",
-      "dependencies": {
-        "com.unity.modules.assetbundle": "1.0.0",
-        "com.ugf.editortools": "1.12.0",
-        "com.ugf.runtimetools": "2.3.0"
-      },
-      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
-    },
     "com.ugf.builder": {
       "version": "2.0.2",
       "depth": 1,
@@ -84,18 +73,17 @@
       },
       "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
     },
-    "com.ugf.module.assetbundles": {
-      "version": "1.0.0-preview.7",
+    "com.ugf.module.assets": {
+      "version": "4.0.0",
       "depth": 1,
       "source": "registry",
       "dependencies": {
-        "com.ugf.module.assets": "4.0.0-preview.3",
-        "com.ugf.assetbundles": "1.0.0-preview.1"
+        "com.ugf.application": "8.0.0"
       },
       "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
     },
-    "com.ugf.module.assets": {
-      "version": "4.0.0",
+    "com.ugf.module.controllers": {
+      "version": "2.1.1",
       "depth": 1,
       "source": "registry",
       "dependencies": {
@@ -109,9 +97,8 @@
       "source": "embedded",
       "dependencies": {
         "com.ugf.module.assets": "4.0.0",
-        "com.ugf.module.assetbundles": "1.0.0-preview.7",
+        "com.ugf.module.controllers": "2.1.1",
         "com.ugf.editortools": "2.4.1",
-        "com.ugf.assetbundles": "1.0.0-preview.2",
         "com.ugf.builder": "2.0.2",
         "com.ugf.runtimetools": "2.6.0"
       }
@@ -149,12 +136,6 @@
         "com.unity.modules.jsonserialize": "1.0.0"
       },
       "url": "https://packages.unity.com"
-    },
-    "com.unity.modules.assetbundle": {
-      "version": "1.0.0",
-      "depth": 2,
-      "source": "builtin",
-      "dependencies": {}
     },
     "com.unity.modules.imgui": {
       "version": "1.0.0",

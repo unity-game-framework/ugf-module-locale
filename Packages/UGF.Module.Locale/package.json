@@ -20,9 +20,8 @@
   },
   "dependencies": {
     "com.ugf.module.assets": "4.0.0",
-    "com.ugf.module.assetbundles": "1.0.0-preview.7",
+    "com.ugf.module.controllers": "2.1.1",
     "com.ugf.editortools": "2.4.1",
-    "com.ugf.assetbundles": "1.0.0-preview.2",
     "com.ugf.builder": "2.0.2",
     "com.ugf.runtimetools": "2.6.0"
   }
