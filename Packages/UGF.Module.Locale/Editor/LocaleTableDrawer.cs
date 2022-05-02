@@ -19,7 +19,7 @@ namespace UGF.Module.Locale.Editor
         private int? m_selectedIndex;
         private SerializedProperty m_selectedPropertyId;
         private SerializedProperty m_selectedPropertyName;
-        private LocaleTableAssetEntryValueListDrawer m_selectedListValues;
+        private LocaleTableEntryValueListDrawer m_selectedListValues;
         private Styles m_styles;
 
         private class Styles
@@ -51,11 +51,16 @@ namespace UGF.Module.Locale.Editor
         {
             m_styles ??= new Styles();
 
-            OnEntryControlsDraw();
+            SerializedProperty.isExpanded = EditorGUILayout.Foldout(SerializedProperty.isExpanded, SerializedProperty.displayName, true);
 
-            EditorGUILayout.Space();
+            if (SerializedProperty.isExpanded)
+            {
+                OnEntryControlsDraw();
 
-            OnEntrySelectedDraw();
+                EditorGUILayout.Space();
+
+                OnEntrySelectedDraw();
+            }
         }
 
         private void OnEntrySelect(int index)
@@ -74,7 +79,7 @@ namespace UGF.Module.Locale.Editor
 
                 propertyValues.isExpanded = true;
 
-                m_selectedListValues = new LocaleTableAssetEntryValueListDrawer(propertyValues);
+                m_selectedListValues = new LocaleTableEntryValueListDrawer(propertyValues);
                 m_selectedListValues.Enable();
             }
         }
@@ -131,71 +136,66 @@ namespace UGF.Module.Locale.Editor
 
         private void OnEntryControlsDraw()
         {
-            SerializedProperty.isExpanded = EditorGUILayout.Foldout(SerializedProperty.isExpanded, SerializedProperty.displayName, true);
-
-            if (SerializedProperty.isExpanded)
+            using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
             {
-                using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
+                using (new EditorGUI.DisabledScope(m_selectedIndex == null || m_selectedIndex == 0))
                 {
-                    using (new EditorGUI.DisabledScope(m_selectedIndex == null || m_selectedIndex == 0))
+                    if (OnDrawToolbarButton(m_styles.BackButtonContent))
                     {
-                        if (OnDrawToolbarButton(m_styles.BackButtonContent))
-                        {
-                            m_selectedIndex--;
+                        m_selectedIndex--;
 
-                            OnEntrySelect(SelectedIndex);
-                        }
+                        OnEntrySelect(SelectedIndex);
                     }
+                }
 
-                    using (new EditorGUI.DisabledScope(m_selectedIndex == null || m_selectedIndex >= m_propertyEntries.arraySize - 1))
+                using (new EditorGUI.DisabledScope(m_selectedIndex == null || m_selectedIndex >= m_propertyEntries.arraySize - 1))
+                {
+                    if (OnDrawToolbarButton(m_styles.ForwardButtonContent))
                     {
-                        if (OnDrawToolbarButton(m_styles.ForwardButtonContent))
-                        {
-                            m_selectedIndex++;
+                        m_selectedIndex++;
 
-                            OnEntrySelect(SelectedIndex);
-                        }
+                        OnEntrySelect(SelectedIndex);
                     }
+                }
 
-                    GUIContent contentDropdown = m_styles.EntryNoneContent;
+                GUIContent contentDropdown = m_styles.EntryNoneContent;
 
-                    if (m_selectedPropertyName != null)
+                if (m_selectedPropertyName != null)
+                {
+                    string entryName = m_selectedPropertyName.stringValue;
+
+                    contentDropdown = !string.IsNullOrEmpty(entryName) ? new GUIContent(entryName) : m_styles.EntryEmptyContent;
+                }
+
+                Rect rectDropdown = GUILayoutUtility.GetRect(contentDropdown, EditorStyles.toolbarDropDown);
+
+                if (DropdownEditorGUIUtility.Dropdown(rectDropdown, GUIContent.none, contentDropdown, m_selection, OnGetEntryKeyItems, out DropdownItem<int> selected, FocusType.Keyboard, EditorStyles.toolbarDropDown))
+                {
+                    OnEntrySelect(selected.Value);
+                }
+
+                using (new EditorGUI.DisabledScope(m_selectedIndex == null))
+                {
+                    if (OnDrawToolbarButton(m_styles.RemoveButtonContent))
                     {
-                        string entryName = m_selectedPropertyName.stringValue;
-
-                        contentDropdown = !string.IsNullOrEmpty(entryName) ? new GUIContent(entryName) : m_styles.EntryEmptyContent;
+                        OnEntryRemove(SelectedIndex);
                     }
+                }
 
-                    Rect rectDropdown = GUILayoutUtility.GetRect(contentDropdown, EditorStyles.toolbarDropDown);
+                if (OnDrawToolbarButton(m_styles.AddButtonContent))
+                {
+                    int index = m_selectedIndex != null
+                        ? m_selectedIndex.Value + 1
+                        : m_propertyEntries.arraySize;
 
-                    if (DropdownEditorGUIUtility.Dropdown(rectDropdown, GUIContent.none, contentDropdown, m_selection, OnGetEntryKeyItems, out DropdownItem<int> selected, FocusType.Keyboard, EditorStyles.toolbarDropDown))
-                    {
-                        OnEntrySelect(selected.Value);
-                    }
+                    OnEntryAdd(index);
+                }
 
-                    using (new EditorGUI.DisabledScope(m_selectedIndex == null))
-                    {
-                        if (OnDrawToolbarButton(m_styles.RemoveButtonContent))
-                        {
-                            OnEntryRemove(SelectedIndex);
-                        }
-                    }
+                Rect rectMenu = GUILayoutUtility.GetRect(m_styles.MenuButtonContent, EditorStyles.toolbarButton, GUILayout.Width(25F));
 
-                    if (OnDrawToolbarButton(m_styles.AddButtonContent))
-                    {
-                        int index = m_selectedIndex != null
-                            ? m_selectedIndex.Value + 1
-                            : m_propertyEntries.arraySize;
-
-                        OnEntryAdd(index);
-                    }
-
-                    Rect rectMenu = GUILayoutUtility.GetRect(m_styles.MenuButtonContent, EditorStyles.toolbarButton, GUILayout.Width(25F));
-
-                    if (GUI.Button(rectMenu, m_styles.MenuButtonContent, EditorStyles.toolbarButton))
-                    {
-                        OnMenuOpen(rectMenu);
-                    }
+                if (GUI.Button(rectMenu, m_styles.MenuButtonContent, EditorStyles.toolbarButton))
+                {
+                    OnMenuOpen(rectMenu);
                 }
             }
         }
@@ -206,6 +206,7 @@ namespace UGF.Module.Locale.Editor
 
             menu.AddItem(new GUIContent("Search by Id"), SearchById, () => SearchById = !SearchById);
             menu.AddItem(new GUIContent("Show Indexes"), ShowIndexes, () => ShowIndexes = !ShowIndexes);
+            menu.AddSeparator(string.Empty);
 
             if (m_propertyEntries.arraySize > 0)
             {
@@ -238,15 +239,15 @@ namespace UGF.Module.Locale.Editor
 
                 if (SearchById)
                 {
-                    SerializedProperty propertyName = propertyEntry.FindPropertyRelative("m_name");
-
-                    displayName = propertyName.stringValue;
-                }
-                else
-                {
                     SerializedProperty propertyId = propertyEntry.FindPropertyRelative("m_id");
 
                     displayName = propertyId.stringValue;
+                }
+                else
+                {
+                    SerializedProperty propertyName = propertyEntry.FindPropertyRelative("m_name");
+
+                    displayName = propertyName.stringValue;
                 }
 
                 if (ShowIndexes)
