@@ -29,7 +29,7 @@ namespace UGF.Module.Locale.Editor
             {
                 rectValue.height = EditorGUIUtility.singleLineHeight * 3F;
 
-                propertyValue.stringValue = EditorGUI.TextArea(rectValue, propertyValue.stringValue, GUIStyle.none);
+                propertyValue.stringValue = EditorGUI.TextArea(rectValue, propertyValue.stringValue);
             }
             else
             {
