@@ -27,6 +27,7 @@ namespace UGF.Module.Locale.Editor
             public GUIContent ForwardButtonContent { get; } = new GUIContent(EditorGUIUtility.FindTexture("forward"), "Move to the next entry.");
             public GUIContent AddButtonContent { get; } = new GUIContent(EditorGUIUtility.FindTexture("Toolbar Plus"), "Add new entry.");
             public GUIContent RemoveButtonContent { get; } = new GUIContent(EditorGUIUtility.FindTexture("Toolbar Minus"), "Delete current entry.");
+            public GUIContent MenuButtonContent { get; } = new GUIContent(EditorGUIUtility.FindTexture("_Menu"));
         }
 
         private void OnEnable()
@@ -83,7 +84,12 @@ namespace UGF.Module.Locale.Editor
                 m_selectedEntryIndex = index;
                 m_selectedEntryPropertyId = propertyEntry.FindPropertyRelative("m_id");
                 m_selectedEntryPropertyName = propertyEntry.FindPropertyRelative("m_name");
-                m_selectedEntryListValues = new LocaleTableAssetEntryValueListDrawer(propertyEntry.FindPropertyRelative("m_values"));
+
+                SerializedProperty propertyValues = propertyEntry.FindPropertyRelative("m_values");
+
+                propertyValues.isExpanded = true;
+
+                m_selectedEntryListValues = new LocaleTableAssetEntryValueListDrawer(propertyValues);
                 m_selectedEntryListValues.Enable();
             }
         }
@@ -110,6 +116,12 @@ namespace UGF.Module.Locale.Editor
         {
             m_propertyEntries.InsertArrayElementAtIndex(index);
 
+            SerializedProperty propertyEntry = m_propertyEntries.GetArrayElementAtIndex(index);
+            SerializedProperty propertyId = propertyEntry.FindPropertyRelative("m_id");
+            SerializedProperty propertyName = propertyEntry.FindPropertyRelative("m_name");
+
+            propertyId.stringValue = Guid.NewGuid().ToString("N");
+
             OnEntrySelect(index);
         }
 
@@ -135,6 +147,7 @@ namespace UGF.Module.Locale.Editor
         private void OnEntryControlsDraw()
         {
             EditorGUILayout.LabelField("Entries");
+            EditorGUILayout.Space();
 
             using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
             {
@@ -143,6 +156,16 @@ namespace UGF.Module.Locale.Editor
                     if (OnDrawToolbarButton(m_styles.BackButtonContent))
                     {
                         m_selectedEntryIndex--;
+
+                        OnEntrySelect(m_selectedEntryIndex.Value);
+                    }
+                }
+
+                using (new EditorGUI.DisabledScope(m_selectedEntryIndex == null || m_selectedEntryIndex >= m_propertyEntries.arraySize - 1))
+                {
+                    if (OnDrawToolbarButton(m_styles.ForwardButtonContent))
+                    {
+                        m_selectedEntryIndex++;
 
                         OnEntrySelect(m_selectedEntryIndex.Value);
                     }
@@ -174,19 +197,44 @@ namespace UGF.Module.Locale.Editor
 
                 if (OnDrawToolbarButton(m_styles.AddButtonContent))
                 {
-                    OnEntryAdd(m_selectedEntryIndex ?? 0);
+                    int index = m_selectedEntryIndex != null
+                        ? m_selectedEntryIndex.Value + 1
+                        : m_propertyEntries.arraySize;
+
+                    OnEntryAdd(index);
                 }
 
-                using (new EditorGUI.DisabledScope(m_selectedEntryIndex == null || m_selectedEntryIndex >= m_propertyEntries.arraySize - 1))
-                {
-                    if (OnDrawToolbarButton(m_styles.ForwardButtonContent))
-                    {
-                        m_selectedEntryIndex++;
+                Rect rectMenu = GUILayoutUtility.GetRect(m_styles.MenuButtonContent, EditorStyles.toolbarButton, GUILayout.Width(25F));
 
-                        OnEntrySelect(m_selectedEntryIndex.Value);
-                    }
+                if (GUI.Button(rectMenu, m_styles.MenuButtonContent, EditorStyles.toolbarButton))
+                {
+                    OnMenuOpen(rectMenu);
                 }
             }
+        }
+
+        private void OnMenuOpen(Rect position)
+        {
+            var menu = new GenericMenu();
+
+            if (m_propertyEntries.arraySize > 0)
+            {
+                menu.AddItem(new GUIContent("Clear"), false, OnMenuClear);
+            }
+            else
+            {
+                menu.AddDisabledItem(new GUIContent("Clear"));
+            }
+
+            menu.DropDown(position);
+        }
+
+        private void OnMenuClear()
+        {
+            OnEntryDeselect();
+
+            m_propertyEntries.ClearArray();
+            m_propertyEntries.serializedObject.ApplyModifiedProperties();
         }
 
         private IEnumerable<DropdownItem<int>> OnGetEntryKeyItems()
@@ -197,18 +245,16 @@ namespace UGF.Module.Locale.Editor
             {
                 SerializedProperty propertyEntry = m_propertyEntries.GetArrayElementAtIndex(i);
                 SerializedProperty propertyName = propertyEntry.FindPropertyRelative("m_name");
-                string key = propertyName.stringValue;
-                string displayName = !string.IsNullOrEmpty(key) ? key : "<Empty>";
 
-                items.Add(new DropdownItem<int>(displayName, i));
+                items.Add(new DropdownItem<int>($"[{i}] {propertyName.stringValue}", i));
             }
 
             return items;
         }
 
-        private bool OnDrawToolbarButton(GUIContent content)
+        private bool OnDrawToolbarButton(GUIContent content, float width = 50F)
         {
-            return GUILayout.Button(content, EditorStyles.toolbarButton, GUILayout.Width(50F));
+            return GUILayout.Button(content, EditorStyles.toolbarButton, GUILayout.Width(width));
         }
     }
 }

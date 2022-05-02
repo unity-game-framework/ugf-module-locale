@@ -21,8 +21,8 @@ namespace UGF.Module.Locale.Editor
             var rectKey = new Rect(position.x, position.y, labelWidth, position.height);
             var rectValue = new Rect(rectKey.xMax + space, position.y, position.width - rectKey.width - space, position.height);
 
-            EditorGUI.PropertyField(position, serializedProperty, GUIContent.none);
-            EditorGUI.PropertyField(position, serializedProperty, GUIContent.none);
+            EditorGUI.PropertyField(rectKey, propertyKey, GUIContent.none);
+            EditorGUI.PropertyField(rectValue, propertyValue, GUIContent.none);
         }
 
         protected override float OnElementHeightContent(SerializedProperty serializedProperty, int index)
