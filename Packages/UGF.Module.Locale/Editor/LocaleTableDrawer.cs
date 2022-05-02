@@ -108,13 +108,10 @@ namespace UGF.Module.Locale.Editor
             SerializedProperty propertyEntry = m_propertyEntries.GetArrayElementAtIndex(index);
             SerializedProperty propertyId = propertyEntry.FindPropertyRelative("m_id");
             SerializedProperty propertyName = propertyEntry.FindPropertyRelative("m_name");
+            string entryName = propertyName.stringValue;
 
             propertyId.stringValue = Guid.NewGuid().ToString("N");
-
-            if (string.IsNullOrEmpty(propertyName.stringValue))
-            {
-                propertyName.stringValue = "Entry";
-            }
+            propertyName.stringValue = OnGetUniqueName(!string.IsNullOrEmpty(entryName) ? entryName : "Entry");
 
             OnEntrySelect(index);
         }
@@ -260,6 +257,21 @@ namespace UGF.Module.Locale.Editor
         private bool OnDrawToolbarButton(GUIContent content, float width = 50F)
         {
             return GUILayout.Button(content, EditorStyles.toolbarButton, GUILayout.Width(width));
+        }
+
+        private string OnGetUniqueName(string entryName)
+        {
+            string[] names = new string[m_propertyEntries.arraySize];
+
+            for (int i = 0; i < m_propertyEntries.arraySize; i++)
+            {
+                SerializedProperty propertyEntry = m_propertyEntries.GetArrayElementAtIndex(i);
+                SerializedProperty propertyName = propertyEntry.FindPropertyRelative("m_name");
+
+                names[i] = propertyName.stringValue;
+            }
+
+            return ObjectNames.GetUniqueName(names, entryName);
         }
     }
 }
