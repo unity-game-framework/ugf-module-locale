@@ -5,8 +5,8 @@ using UnityEditor;
 
 namespace UGF.Module.Locale.Editor
 {
-    [CustomEditor(typeof(LocaleConverterTableToEntriesAsset), true)]
-    internal class LocaleConverterTableToEntriesAssetEditor : LocaleConverterAssetEditor
+    [CustomEditor(typeof(LocaleConverterTableAsset), true)]
+    internal class LocaleConverterTableAssetEditor : LocaleConverterAssetEditor
     {
         private SerializedProperty m_propertyTable;
         private LocaleKeyAndValueCollectionDrawer m_listEntries;

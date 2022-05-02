@@ -5,8 +5,8 @@ using UnityEngine;
 
 namespace UGF.Module.Locale.Runtime
 {
-    [CreateAssetMenu(menuName = "Unity Game Framework/Locale/Locale Converter Table to Entries", order = 2000)]
-    public class LocaleConverterTableToEntriesAsset : LocaleConverterAsset
+    [CreateAssetMenu(menuName = "Unity Game Framework/Locale/Locale Converter Table", order = 2000)]
+    public class LocaleConverterTableAsset : LocaleConverterAsset
     {
         [SerializeField] private LocaleTableAsset m_table;
         [SerializeField] private List<Entry> m_entries = new List<Entry>();
