@@ -24,12 +24,24 @@ namespace UGF.Module.Locale.Editor
             var rectValue = new Rect(rectKey.xMax + space, position.y, position.width - rectKey.width - space, position.height);
 
             AttributeEditorGUIUtility.DrawAssetGuidField(rectKey, propertyKey, GUIContent.none, typeof(LocaleDescriptionAsset));
-            EditorGUI.PropertyField(rectValue, propertyValue, GUIContent.none);
+
+            if (propertyValue.propertyType == SerializedPropertyType.String)
+            {
+                rectValue.height = EditorGUIUtility.singleLineHeight * 3F;
+
+                propertyValue.stringValue = EditorGUI.TextArea(rectValue, propertyValue.stringValue, GUIStyle.none);
+            }
+            else
+            {
+                EditorGUI.PropertyField(rectValue, propertyValue, GUIContent.none);
+            }
         }
 
         protected override float OnElementHeightContent(SerializedProperty serializedProperty, int index)
         {
-            return EditorGUIUtility.singleLineHeight;
+            SerializedProperty propertyValue = serializedProperty.FindPropertyRelative("m_value");
+
+            return propertyValue.propertyType == SerializedPropertyType.String ? EditorGUIUtility.singleLineHeight * 3F : EditorGUIUtility.singleLineHeight;
         }
 
         protected override bool OnElementHasVisibleChildren(SerializedProperty serializedProperty)
