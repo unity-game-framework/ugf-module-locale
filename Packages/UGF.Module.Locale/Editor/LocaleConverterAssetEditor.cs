@@ -22,6 +22,11 @@ namespace UGF.Module.Locale.Editor
             {
                 GUILayout.FlexibleSpace();
 
+                if (GUILayout.Button("Convert All"))
+                {
+                    LocaleEditorSettings.ConvertAll();
+                }
+
                 if (GUILayout.Button("Convert"))
                 {
                     var asset = (LocaleConverterAsset)target;

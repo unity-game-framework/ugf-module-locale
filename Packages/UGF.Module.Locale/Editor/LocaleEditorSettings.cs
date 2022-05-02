@@ -22,6 +22,8 @@ namespace UGF.Module.Locale.Editor
 
                 converter.Convert();
             }
+
+            AssetDatabase.SaveAssets();
         }
 
         [SettingsProvider]
