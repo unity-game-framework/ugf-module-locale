@@ -13,6 +13,7 @@ namespace UGF.Module.Locale.Editor
         public int SelectedIndex { get { return m_selectedIndex ?? throw new ArgumentException("Value not specified."); } }
         public bool SearchById { get; set; }
         public bool ShowIndexes { get; set; }
+        public bool UnlockIds { get; set; }
 
         private readonly DropdownSelection<DropdownItem<int>> m_selection = new DropdownSelection<DropdownItem<int>>();
         private readonly SerializedProperty m_propertyEntries;
@@ -25,9 +26,7 @@ namespace UGF.Module.Locale.Editor
         private class Styles
         {
             public GUIContent EntryNoneContent { get; } = new GUIContent("None");
-            public GUIContent EntryEmptyContent { get; } = new GUIContent("<Empty>");
-            public GUIContent BackButtonContent { get; } = new GUIContent(EditorGUIUtility.FindTexture("back"), "Move to the previous entry.");
-            public GUIContent ForwardButtonContent { get; } = new GUIContent(EditorGUIUtility.FindTexture("forward"), "Move to the next entry.");
+            public GUIContent EntryEmptyContent { get; } = new GUIContent("Untitled");
             public GUIContent AddButtonContent { get; } = new GUIContent(EditorGUIUtility.FindTexture("Toolbar Plus"), "Add new entry.");
             public GUIContent RemoveButtonContent { get; } = new GUIContent(EditorGUIUtility.FindTexture("Toolbar Minus"), "Delete current entry.");
             public GUIContent MenuButtonContent { get; } = new GUIContent(EditorGUIUtility.FindTexture("_Menu"));
@@ -112,6 +111,11 @@ namespace UGF.Module.Locale.Editor
 
             propertyId.stringValue = Guid.NewGuid().ToString("N");
 
+            if (string.IsNullOrEmpty(propertyName.stringValue))
+            {
+                propertyName.stringValue = "Entry";
+            }
+
             OnEntrySelect(index);
         }
 
@@ -119,7 +123,15 @@ namespace UGF.Module.Locale.Editor
         {
             if (m_selectedIndex != null)
             {
-                using (new EditorGUI.DisabledScope(true))
+                if (ShowIndexes)
+                {
+                    using (new EditorGUI.DisabledScope(true))
+                    {
+                        EditorGUILayout.IntField("Index", SelectedIndex);
+                    }
+                }
+
+                using (new EditorGUI.DisabledScope(!UnlockIds))
                 {
                     EditorGUILayout.PropertyField(m_selectedPropertyId);
                 }
@@ -136,28 +148,10 @@ namespace UGF.Module.Locale.Editor
 
         private void OnEntryControlsDraw()
         {
+            EditorGUILayout.Space(EditorGUIUtility.standardVerticalSpacing);
+
             using (new EditorGUILayout.HorizontalScope(EditorStyles.toolbar))
             {
-                using (new EditorGUI.DisabledScope(m_selectedIndex == null || m_selectedIndex == 0))
-                {
-                    if (OnDrawToolbarButton(m_styles.BackButtonContent))
-                    {
-                        m_selectedIndex--;
-
-                        OnEntrySelect(SelectedIndex);
-                    }
-                }
-
-                using (new EditorGUI.DisabledScope(m_selectedIndex == null || m_selectedIndex >= m_propertyEntries.arraySize - 1))
-                {
-                    if (OnDrawToolbarButton(m_styles.ForwardButtonContent))
-                    {
-                        m_selectedIndex++;
-
-                        OnEntrySelect(SelectedIndex);
-                    }
-                }
-
                 GUIContent contentDropdown = m_styles.EntryNoneContent;
 
                 if (m_selectedPropertyName != null)
@@ -206,6 +200,7 @@ namespace UGF.Module.Locale.Editor
 
             menu.AddItem(new GUIContent("Search by Id"), SearchById, () => SearchById = !SearchById);
             menu.AddItem(new GUIContent("Show Indexes"), ShowIndexes, () => ShowIndexes = !ShowIndexes);
+            menu.AddItem(new GUIContent("Unlock Ids"), UnlockIds, () => UnlockIds = !UnlockIds);
             menu.AddSeparator(string.Empty);
 
             if (m_propertyEntries.arraySize > 0)
@@ -246,8 +241,9 @@ namespace UGF.Module.Locale.Editor
                 else
                 {
                     SerializedProperty propertyName = propertyEntry.FindPropertyRelative("m_name");
+                    string value = propertyName.stringValue;
 
-                    displayName = propertyName.stringValue;
+                    displayName = !string.IsNullOrEmpty(value) ? value : m_styles.EntryEmptyContent.text;
                 }
 
                 if (ShowIndexes)
