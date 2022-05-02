@@ -81,6 +81,7 @@ namespace UGF.Module.Locale.Editor
                 SerializedProperty propertyEntry = m_propertyEntries.GetArrayElementAtIndex(index);
 
                 m_selectedEntryIndex = index;
+                m_selectedEntryPropertyId = propertyEntry.FindPropertyRelative("m_id");
                 m_selectedEntryPropertyName = propertyEntry.FindPropertyRelative("m_name");
                 m_selectedEntryListValues = new LocaleTableAssetEntryValueListDrawer(propertyEntry.FindPropertyRelative("m_values"));
                 m_selectedEntryListValues.Enable();
@@ -96,6 +97,20 @@ namespace UGF.Module.Locale.Editor
                 m_selectedEntryListValues.Disable();
                 m_selectedEntryListValues = null;
             }
+        }
+
+        private void OnEntryRemove(int index)
+        {
+            OnEntryDeselect();
+
+            m_propertyEntries.DeleteArrayElementAtIndex(index);
+        }
+
+        private void OnEntryAdd(int index)
+        {
+            m_propertyEntries.InsertArrayElementAtIndex(index);
+
+            OnEntrySelect(index);
         }
 
         private void OnEntrySelectedDraw()
@@ -127,6 +142,9 @@ namespace UGF.Module.Locale.Editor
                 {
                     if (OnDrawToolbarButton(m_styles.BackButtonContent))
                     {
+                        m_selectedEntryIndex--;
+
+                        OnEntrySelect(m_selectedEntryIndex.Value);
                     }
                 }
 
@@ -150,17 +168,22 @@ namespace UGF.Module.Locale.Editor
                 {
                     if (OnDrawToolbarButton(m_styles.RemoveButtonContent))
                     {
+                        OnEntryRemove(m_selectedEntryIndex.Value);
                     }
                 }
 
                 if (OnDrawToolbarButton(m_styles.AddButtonContent))
                 {
+                    OnEntryAdd(m_selectedEntryIndex ?? 0);
                 }
 
                 using (new EditorGUI.DisabledScope(m_selectedEntryIndex == null || m_selectedEntryIndex >= m_propertyEntries.arraySize - 1))
                 {
                     if (OnDrawToolbarButton(m_styles.ForwardButtonContent))
                     {
+                        m_selectedEntryIndex++;
+
+                        OnEntrySelect(m_selectedEntryIndex.Value);
                     }
                 }
             }
@@ -173,8 +196,8 @@ namespace UGF.Module.Locale.Editor
             for (int i = 0; i < m_propertyEntries.arraySize; i++)
             {
                 SerializedProperty propertyEntry = m_propertyEntries.GetArrayElementAtIndex(i);
-                SerializedProperty propertyKey = propertyEntry.FindPropertyRelative("m_key");
-                string key = propertyKey.stringValue;
+                SerializedProperty propertyName = propertyEntry.FindPropertyRelative("m_name");
+                string key = propertyName.stringValue;
                 string displayName = !string.IsNullOrEmpty(key) ? key : "<Empty>";
 
                 items.Add(new DropdownItem<int>(displayName, i));
