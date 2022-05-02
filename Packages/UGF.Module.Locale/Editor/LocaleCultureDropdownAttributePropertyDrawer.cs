@@ -10,12 +10,12 @@ using UnityEngine;
 
 namespace UGF.Module.Locale.Editor
 {
-    [CustomPropertyDrawer(typeof(LocaleCultureNameDropdownAttribute))]
-    internal class LocaleCultureNameDropdownAttributePropertyDrawer : PropertyDrawerTyped<LocaleCultureNameDropdownAttribute>
+    [CustomPropertyDrawer(typeof(LocaleCultureDropdownAttribute))]
+    internal class LocaleCultureDropdownAttributePropertyDrawer : PropertyDrawerTyped<LocaleCultureDropdownAttribute>
     {
         private readonly Func<IEnumerable<DropdownItem<string>>> m_itemsHandler;
 
-        public LocaleCultureNameDropdownAttributePropertyDrawer() : base(SerializedPropertyType.String)
+        public LocaleCultureDropdownAttributePropertyDrawer() : base(SerializedPropertyType.String)
         {
             m_itemsHandler = GetItems;
         }

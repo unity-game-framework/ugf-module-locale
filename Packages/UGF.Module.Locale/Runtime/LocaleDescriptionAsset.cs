@@ -9,7 +9,7 @@ namespace UGF.Module.Locale.Runtime
     {
         [SerializeField] private string m_displayName;
         [SerializeField] private SystemLanguage m_language = SystemLanguage.Unknown;
-        [LocaleCultureNameDropdown]
+        [LocaleCultureDropdown]
         [SerializeField] private string m_cultureName;
 
         public string DisplayName { get { return m_displayName; } set { m_displayName = value; } }
