@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using UGF.EditorTools.Editor.IMGUI;
 using UGF.EditorTools.Editor.IMGUI.Dropdown;
 using UGF.EditorTools.Editor.IMGUI.PropertyDrawers;
 using UGF.Module.Locale.Runtime;
@@ -12,7 +11,15 @@ namespace UGF.Module.Locale.Editor
     [CustomPropertyDrawer(typeof(LocaleEntryDropdownAttribute), true)]
     internal class LocaleEntryDropdownAttributePropertyDrawer : PropertyDrawerTyped<LocaleEntryDropdownAttribute>
     {
+        private readonly DropdownSelection<DropdownItem<string>> m_selection = new DropdownSelection<DropdownItem<string>>();
         private readonly Func<IEnumerable<DropdownItem<string>>> m_itemsHandler;
+        private Styles m_styles;
+
+        private class Styles
+        {
+            public GUIContent NoneContent { get; } = new GUIContent("None");
+            public GUIContent MissingContent { get; } = new GUIContent("Missing");
+        }
 
         public LocaleEntryDropdownAttributePropertyDrawer() : base(SerializedPropertyType.String)
         {
@@ -21,13 +28,31 @@ namespace UGF.Module.Locale.Editor
 
         protected override void OnDrawProperty(Rect position, SerializedProperty serializedProperty, GUIContent label)
         {
-            EditorElementsUtility.TextFieldWithDropdown(position, label, serializedProperty, m_itemsHandler);
+            m_styles ??= new Styles();
+
+            string value = serializedProperty.stringValue;
+            GUIContent content = m_styles.NoneContent;
+
+            if (!string.IsNullOrEmpty(value))
+            {
+                content = LocaleEditorUtility.TryGetEntryNameFromAll(value, out string name) ? new GUIContent(name) : m_styles.MissingContent;
+            }
+
+            if (DropdownEditorGUIUtility.Dropdown(position, label, content, m_selection, m_itemsHandler, out DropdownItem<string> selected))
+            {
+                serializedProperty.stringValue = selected.Value;
+            }
         }
 
         private IEnumerable<DropdownItem<string>> GetItems()
         {
             var items = new List<DropdownItem<string>>();
-            IList<LocaleTableAsset> tables = LocaleEditorUtility.FindTableAssetAll();
+            IReadOnlyList<LocaleTableAsset> tables = LocaleEditorUtility.FindTableAssetAll();
+
+            items.Add(new DropdownItem<string>("None", string.Empty)
+            {
+                Priority = int.MaxValue
+            });
 
             for (int i = 0; i < tables.Count; i++)
             {
