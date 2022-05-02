@@ -12,20 +12,6 @@ namespace UGF.Module.Locale.Editor
             nameof(LocaleEditorSettings)
         );
 
-        public static void ConvertAll()
-        {
-            LocaleEditorSettingsData data = Settings.GetData();
-
-            for (int i = 0; i < data.Converters.Count; i++)
-            {
-                LocaleConverterAsset converter = data.Converters[i];
-
-                converter.Convert();
-            }
-
-            AssetDatabase.SaveAssets();
-        }
-
         [SettingsProvider]
         private static SettingsProvider GetProvider()
         {
