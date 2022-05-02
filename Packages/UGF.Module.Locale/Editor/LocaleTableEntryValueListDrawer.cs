@@ -1,4 +1,6 @@
 ﻿using UGF.EditorTools.Editor.IMGUI;
+using UGF.EditorTools.Editor.IMGUI.Attributes;
+using UGF.Module.Locale.Runtime;
 using UnityEditor;
 using UnityEngine;
 
@@ -21,7 +23,7 @@ namespace UGF.Module.Locale.Editor
             var rectKey = new Rect(position.x, position.y, labelWidth, position.height);
             var rectValue = new Rect(rectKey.xMax + space, position.y, position.width - rectKey.width - space, position.height);
 
-            EditorGUI.PropertyField(rectKey, propertyKey, GUIContent.none);
+            AttributeEditorGUIUtility.DrawAssetGuidField(rectKey, propertyKey, GUIContent.none, typeof(LocaleDescriptionAsset));
             EditorGUI.PropertyField(rectValue, propertyValue, GUIContent.none);
         }
 
