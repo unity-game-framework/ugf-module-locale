@@ -14,20 +14,15 @@ namespace UGF.Module.Locale.Runtime
         [SerializeField] private string m_defaultLocale;
         [SerializeField] private bool m_unloadEntriesOnUninitialize = true;
         [SerializeField] private List<AssetReference<LocaleDescriptionAsset>> m_locales = new List<AssetReference<LocaleDescriptionAsset>>();
-        [SerializeField] private List<AssetReference<LocaleEntriesDescriptionAsset>> m_entries = new List<AssetReference<LocaleEntriesDescriptionAsset>>();
-        [SerializeField] private List<AssetReference<LocaleGroupDescriptionAsset>> m_groups = new List<AssetReference<LocaleGroupDescriptionAsset>>();
-        [AssetGuid(typeof(LocaleEntriesDescriptionAsset))]
-        [SerializeField] private List<string> m_preloadEntries = new List<string>();
-        [AssetGuid(typeof(LocaleGroupDescriptionAsset))]
-        [SerializeField] private List<string> m_preloadGroups = new List<string>();
+        [SerializeField] private List<AssetReference<LocaleTableDescriptionAsset>> m_tables = new List<AssetReference<LocaleTableDescriptionAsset>>();
+        [AssetGuid(typeof(LocaleTableDescriptionAsset))]
+        [SerializeField] private List<string> m_preloadTablesAsync = new List<string>();
 
         public string DefaultLocale { get { return m_defaultLocale; } set { m_defaultLocale = value; } }
         public bool UnloadEntriesOnUninitialize { get { return m_unloadEntriesOnUninitialize; } set { m_unloadEntriesOnUninitialize = value; } }
         public List<AssetReference<LocaleDescriptionAsset>> Locales { get { return m_locales; } }
-        public List<AssetReference<LocaleEntriesDescriptionAsset>> Entries { get { return m_entries; } }
-        public List<AssetReference<LocaleGroupDescriptionAsset>> Groups { get { return m_groups; } }
-        public List<string> PreloadEntries { get { return m_preloadEntries; } }
-        public List<string> PreloadGroups { get { return m_preloadGroups; } }
+        public List<AssetReference<LocaleTableDescriptionAsset>> Tables { get { return m_tables; } }
+        public List<string> PreloadTablesAsync { get { return m_preloadTablesAsync; } }
 
         protected override IApplicationModuleDescription OnBuildDescription()
         {
@@ -42,39 +37,23 @@ namespace UGF.Module.Locale.Runtime
             {
                 AssetReference<LocaleDescriptionAsset> reference = m_locales[i];
 
-                description.Locales.Add(reference.Guid, reference.Asset.Build());
+                description.Locales.Add(reference.Guid, reference.Asset);
             }
 
-            for (int i = 0; i < m_entries.Count; i++)
+            for (int i = 0; i < m_tables.Count; i++)
             {
-                AssetReference<LocaleEntriesDescriptionAsset> reference = m_entries[i];
+                AssetReference<LocaleTableDescriptionAsset> reference = m_tables[i];
 
-                description.Entries.Add(reference.Guid, reference.Asset.Build());
+                description.Tables.Add(reference.Guid, reference.Asset);
             }
 
-            for (int i = 0; i < m_groups.Count; i++)
+            for (int i = 0; i < m_preloadTablesAsync.Count; i++)
             {
-                AssetReference<LocaleGroupDescriptionAsset> reference = m_groups[i];
+                string id = m_preloadTablesAsync[i];
 
-                description.Groups.Add(reference.Guid, reference.Asset.Build());
-            }
+                if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
 
-            for (int i = 0; i < m_preloadEntries.Count; i++)
-            {
-                string id = m_preloadEntries[i];
-
-                if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty/", nameof(id));
-
-                description.PreloadEntries.Add(id);
-            }
-
-            for (int i = 0; i < m_preloadGroups.Count; i++)
-            {
-                string id = m_preloadGroups[i];
-
-                if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty/", nameof(id));
-
-                description.PreloadGroups.Add(id);
+                description.PreloadTablesAsync.Add(id);
             }
 
             return description;

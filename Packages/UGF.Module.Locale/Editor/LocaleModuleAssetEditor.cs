@@ -13,12 +13,9 @@ namespace UGF.Module.Locale.Editor
         private SerializedProperty m_propertyUnloadEntriesOnUninitialize;
         private AssetReferenceListDrawer m_listLocales;
         private ReorderableListSelectionDrawerByPath m_listLocalesSelection;
-        private AssetReferenceListDrawer m_listEntries;
-        private ReorderableListSelectionDrawerByPath m_listEntriesSelection;
-        private AssetReferenceListDrawer m_listGroups;
-        private ReorderableListSelectionDrawerByPath m_listGroupsSelection;
-        private ReorderableListDrawer m_listPreloadEntries;
-        private ReorderableListDrawer m_listPreloadGroups;
+        private AssetReferenceListDrawer m_listTables;
+        private ReorderableListSelectionDrawerByPath m_listTablesSelection;
+        private ReorderableListDrawer m_listPreloadTablesAsync;
 
         private void OnEnable()
         {
@@ -35,9 +32,9 @@ namespace UGF.Module.Locale.Editor
                 }
             };
 
-            m_listEntries = new AssetReferenceListDrawer(serializedObject.FindProperty("m_entries"));
+            m_listTables = new AssetReferenceListDrawer(serializedObject.FindProperty("m_tables"));
 
-            m_listEntriesSelection = new ReorderableListSelectionDrawerByPath(m_listEntries, "m_asset")
+            m_listTablesSelection = new ReorderableListSelectionDrawerByPath(m_listTables, "m_asset")
             {
                 Drawer =
                 {
@@ -45,39 +42,22 @@ namespace UGF.Module.Locale.Editor
                 }
             };
 
-            m_listGroups = new AssetReferenceListDrawer(serializedObject.FindProperty("m_groups"));
-
-            m_listGroupsSelection = new ReorderableListSelectionDrawerByPath(m_listGroups, "m_asset")
-            {
-                Drawer =
-                {
-                    DisplayTitlebar = true
-                }
-            };
-
-            m_listPreloadEntries = new ReorderableListDrawer(serializedObject.FindProperty("m_preloadEntries"));
-            m_listPreloadGroups = new ReorderableListDrawer(serializedObject.FindProperty("m_preloadGroups"));
+            m_listPreloadTablesAsync = new ReorderableListDrawer(serializedObject.FindProperty("m_preloadTablesAsync"));
 
             m_listLocales.Enable();
             m_listLocalesSelection.Enable();
-            m_listEntries.Enable();
-            m_listEntriesSelection.Enable();
-            m_listGroups.Enable();
-            m_listGroupsSelection.Enable();
-            m_listPreloadEntries.Enable();
-            m_listPreloadGroups.Enable();
+            m_listTables.Enable();
+            m_listTablesSelection.Enable();
+            m_listPreloadTablesAsync.Enable();
         }
 
         private void OnDisable()
         {
             m_listLocales.Disable();
             m_listLocalesSelection.Disable();
-            m_listEntries.Disable();
-            m_listEntriesSelection.Disable();
-            m_listGroups.Disable();
-            m_listGroupsSelection.Disable();
-            m_listPreloadEntries.Disable();
-            m_listPreloadGroups.Disable();
+            m_listTables.Disable();
+            m_listTablesSelection.Disable();
+            m_listPreloadTablesAsync.Disable();
         }
 
         public override void OnInspectorGUI()
@@ -90,14 +70,11 @@ namespace UGF.Module.Locale.Editor
                 EditorGUILayout.PropertyField(m_propertyUnloadEntriesOnUninitialize);
 
                 m_listLocales.DrawGUILayout();
-                m_listEntries.DrawGUILayout();
-                m_listGroups.DrawGUILayout();
-                m_listPreloadEntries.DrawGUILayout();
-                m_listPreloadGroups.DrawGUILayout();
+                m_listTables.DrawGUILayout();
+                m_listPreloadTablesAsync.DrawGUILayout();
 
                 m_listLocalesSelection.DrawGUILayout();
-                m_listEntriesSelection.DrawGUILayout();
-                m_listGroupsSelection.DrawGUILayout();
+                m_listTablesSelection.DrawGUILayout();
             }
         }
     }
