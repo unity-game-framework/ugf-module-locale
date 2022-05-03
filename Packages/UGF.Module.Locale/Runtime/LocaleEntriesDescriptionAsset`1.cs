@@ -20,28 +20,22 @@ namespace UGF.Module.Locale.Runtime
             public TValue Value { get { return m_value; } set { m_value = value; } }
         }
 
-        protected override void OnSetup(IDictionary<string, object> values)
+        protected override LocaleEntriesDescription OnBuild()
         {
-            m_entries.Clear();
+            var description = new LocaleEntriesDescription();
 
-            foreach ((string key, object value) in values)
-            {
-                m_entries.Add(new Entry
-                {
-                    Key = key,
-                    Value = (TValue)value
-                });
-            }
-        }
-
-        protected override void OnCollect(IDictionary<string, object> values)
-        {
             for (int i = 0; i < m_entries.Count; i++)
             {
                 Entry entry = m_entries[i];
+                object value = entry.Value;
 
-                values.Add(entry.Key, entry.Value);
+                if (string.IsNullOrEmpty(entry.Key)) throw new ArgumentException("Value cannot be null or empty.", nameof(entry.Key));
+                if (value == null) throw new ArgumentNullException(nameof(value));
+
+                description.Values.Add(entry.Key, value);
             }
+
+            return description;
         }
     }
 }
