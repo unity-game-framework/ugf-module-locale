@@ -14,7 +14,7 @@ namespace UGF.Module.Locale.Editor
 
         protected override void OnDrawElementContent(Rect position, SerializedProperty serializedProperty, int index, bool isActive, bool isFocused)
         {
-            SerializedProperty propertyKey = serializedProperty.FindPropertyRelative("m_key");
+            SerializedProperty propertyLocale = serializedProperty.FindPropertyRelative("m_locale");
             SerializedProperty propertyValue = serializedProperty.FindPropertyRelative("m_value");
 
             float space = EditorGUIUtility.standardVerticalSpacing;
@@ -23,7 +23,7 @@ namespace UGF.Module.Locale.Editor
             var rectKey = new Rect(position.x, position.y, labelWidth, position.height);
             var rectValue = new Rect(rectKey.xMax + space, position.y, position.width - rectKey.width - space, position.height);
 
-            AttributeEditorGUIUtility.DrawAssetGuidField(rectKey, propertyKey, GUIContent.none, typeof(LocaleDescriptionAsset));
+            AttributeEditorGUIUtility.DrawAssetGuidField(rectKey, propertyLocale, GUIContent.none, typeof(LocaleDescriptionAsset));
 
             if (propertyValue.propertyType == SerializedPropertyType.String)
             {
