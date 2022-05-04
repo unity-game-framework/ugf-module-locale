@@ -10,10 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cca25a079ed240338eb3a55c7969846c, type: 3}
-  m_Name: LocaleEntriesTextEnglish
+  m_Name: LocaleTableResourcesEntriesChinese
   m_EditorClassIdentifier: 
-  m_entries:
-  - m_key: f9cd8a1f6057ad94fbe269362df9057c
-    m_value: Good morning!
-  - m_key: 777e3e4561cf2ab45a37ca31462e5240
-    m_value: Goodbye
+  m_entries: []

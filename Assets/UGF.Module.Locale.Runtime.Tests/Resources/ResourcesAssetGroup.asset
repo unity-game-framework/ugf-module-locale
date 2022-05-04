@@ -14,9 +14,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_loader: 1fb5c542a610a4c43b79e988cde219d3
   m_assets:
+  - m_id: 69a83b0123586524cbe537c21c619c39
+    m_address: LocaleTablePrefabEntriesEnglish
+  - m_id: 6e1626b2b17ba124fac41ce503da19fa
+    m_address: LocaleTablePrefabEntriesFrench
+  - m_id: fda0f11d0102a8c42a1772348c151fa1
+    m_address: LocaleTablePrefabEntriesChinese
+  - m_id: 43413516c8766e74eafe707e929d741f
+    m_address: LocaleTableTextEntriesEnglish
+  - m_id: 8218507004000f9429eb07ceb079c3fe
+    m_address: LocaleTableTextEntriesFrench
+  - m_id: d8a35e5f735d72240bc5a40c26f6e084
+    m_address: LocaleTableTextEntriesChinese
   - m_id: de80f23a0e7f3f44da486a340e6ff606
-    m_address: LocaleEntriesResourcesEnglish
+    m_address: LocaleTableResourcesEntriesEnglish
   - m_id: b0e513f6732fc9b43a07303e79048014
-    m_address: LocaleEntriesResourcesFrench
+    m_address: LocaleTableResourcesEntriesFrench
   - m_id: a4e3f075bbb2f874f930749e1022fd00
-    m_address: LocaleEntriesResourcesChinese
+    m_address: LocaleTableResourcesEntriesChinese

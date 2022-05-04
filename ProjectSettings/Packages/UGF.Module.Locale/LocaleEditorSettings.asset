@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0495deaab590495182706623eae8aed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_tables: []
+  m_tables:
+  - m_table: {fileID: 11400000, guid: 6a8b7b6052ea0a54d9edbdb39f469cf1, type: 2}
+    m_description: {fileID: 11400000, guid: 91cbc8881bde7364491096a5970f6599, type: 2}
+  - m_table: {fileID: 11400000, guid: b66e1257af495b24ba8d605a3aaaa9d4, type: 2}
+    m_description: {fileID: 11400000, guid: 01a4c53fe3e3b824f87b9079ebe6204e, type: 2}
+  - m_table: {fileID: 11400000, guid: a3a065ba1e8cdfc4c9ac663a0fd71c59, type: 2}
+    m_description: {fileID: 11400000, guid: 1a51c9decbea6f542989e54a2014bd36, type: 2}

@@ -9,9 +9,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 916942c517a2440ea33930630b92c735, type: 3}
+  m_Script: {fileID: 11500000, guid: 0136c36cb0a947d3b9f1331ed51528c0, type: 3}
   m_Name: LocaleTableResources
   m_EditorClassIdentifier: 
-  m_data:
-  - m_guid: 67e83bdff236c9f41aaa85a30df0c04a
-    m_asset: {fileID: 11400000, guid: 67e83bdff236c9f41aaa85a30df0c04a, type: 2}
+  m_table:
+    m_entries:
+    - m_id: f407829a43364b76bca9d7da83d57822
+      m_name: Resources
+      m_values:
+      - m_locale: afd271f866d228f41a616aeea100880e
+        m_value: Resources
+      - m_locale: 47a3846001472074fa3f2d641cb11ae6
+        m_value: Ressources
+      - m_locale: 97b2faba4064dc4419593e7ce69606c8
+        m_value: "\u8D44\u6E90"

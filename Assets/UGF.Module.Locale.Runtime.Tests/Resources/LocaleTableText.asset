@@ -9,11 +9,26 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 916942c517a2440ea33930630b92c735, type: 3}
+  m_Script: {fileID: 11500000, guid: 0136c36cb0a947d3b9f1331ed51528c0, type: 3}
   m_Name: LocaleTableText
   m_EditorClassIdentifier: 
-  m_data:
-  - m_guid: f9cd8a1f6057ad94fbe269362df9057c
-    m_asset: {fileID: 11400000, guid: f9cd8a1f6057ad94fbe269362df9057c, type: 2}
-  - m_guid: 777e3e4561cf2ab45a37ca31462e5240
-    m_asset: {fileID: 11400000, guid: 777e3e4561cf2ab45a37ca31462e5240, type: 2}
+  m_table:
+    m_entries:
+    - m_id: 610ebbd624ee4e439c6542b9f5831243
+      m_name: GoodMorning
+      m_values:
+      - m_locale: afd271f866d228f41a616aeea100880e
+        m_value: Good morning!
+      - m_locale: 47a3846001472074fa3f2d641cb11ae6
+        m_value: Bonjour!
+      - m_locale: 97b2faba4064dc4419593e7ce69606c8
+        m_value: "\u65E9\u4E0A\u597D\uFF01"
+    - m_id: 6601f5ddda034d57b31059fb142bfde5
+      m_name: Goodbye
+      m_values:
+      - m_locale: afd271f866d228f41a616aeea100880e
+        m_value: Goodbye
+      - m_locale: 47a3846001472074fa3f2d641cb11ae6
+        m_value: Au revoir
+      - m_locale: 97b2faba4064dc4419593e7ce69606c8
+        m_value: "\u518D\u89C1"

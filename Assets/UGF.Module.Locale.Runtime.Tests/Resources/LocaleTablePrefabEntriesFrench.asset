@@ -9,9 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cca25a079ed240338eb3a55c7969846c, type: 3}
-  m_Name: LocaleEntriesResourcesFrench
+  m_Script: {fileID: 11500000, guid: 060c603af140489daa45520306495959, type: 3}
+  m_Name: LocaleTablePrefabEntriesFrench
   m_EditorClassIdentifier: 
-  m_entries:
-  - m_key: 67e83bdff236c9f41aaa85a30df0c04a
-    m_value: Ressources
+  m_entries: []

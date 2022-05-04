@@ -10,8 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cca25a079ed240338eb3a55c7969846c, type: 3}
-  m_Name: LocaleEntriesResourcesEnglish
+  m_Name: LocaleTableTextEntriesFrench
   m_EditorClassIdentifier: 
-  m_entries:
-  - m_key: 67e83bdff236c9f41aaa85a30df0c04a
-    m_value: Resources
+  m_entries: []
