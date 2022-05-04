@@ -143,6 +143,11 @@ namespace UGF.Module.Locale.Runtime
             return UnloadEntries(GetEntriesId(localeId, tableId));
         }
 
+        public Task<bool> UnloadTableAsync(string tableId)
+        {
+            return UnloadTableAsync(CurrentLocaleId, tableId);
+        }
+
         public Task<bool> UnloadTableAsync(string localeId, string tableId)
         {
             return UnloadEntriesAsync(GetEntriesId(localeId, tableId));
