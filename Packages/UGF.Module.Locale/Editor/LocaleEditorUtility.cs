@@ -7,6 +7,36 @@ namespace UGF.Module.Locale.Editor
 {
     public static class LocaleEditorUtility
     {
+        public static void UpdateEntries(LocaleTableDescriptionAsset tableDescriptionAsset, LocaleTableAsset tableAsset)
+        {
+            if (tableDescriptionAsset == null) throw new ArgumentNullException(nameof(tableDescriptionAsset));
+            if (tableAsset == null) throw new ArgumentNullException(nameof(tableAsset));
+
+            IDictionary<string, LocaleEntriesDescriptionAsset> tableAssets = new Dictionary<string, LocaleEntriesDescriptionAsset>();
+            ILocaleTable table = tableAsset.GetTable();
+            IDictionary<string, IDictionary<string, object>> tableEntries = LocaleUtility.GetEntries(table);
+
+            foreach (LocaleTableDescriptionAsset.Entry entry in tableDescriptionAsset.Entries)
+            {
+                string entriesPath = AssetDatabase.GUIDToAssetPath(entry.Entries);
+                var entriesAsset = AssetDatabase.LoadAssetAtPath<LocaleEntriesDescriptionAsset>(entriesPath);
+
+                tableAssets.Add(entry.Locale, entriesAsset);
+            }
+
+            foreach ((string localeId, IDictionary<string, object> entries) in tableEntries)
+            {
+                if (tableAssets.TryGetValue(localeId, out LocaleEntriesDescriptionAsset asset))
+                {
+                    asset.SetValues(entries);
+
+                    EditorUtility.SetDirty(asset);
+                }
+            }
+
+            AssetDatabase.SaveAssets();
+        }
+
         public static IReadOnlyList<LocaleTableAsset> FindTableAssetAll()
         {
             var result = new List<LocaleTableAsset>();
