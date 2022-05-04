@@ -12,5 +12,10 @@ namespace UGF.Module.Locale.Runtime
         {
             return m_table;
         }
+
+        protected override void OnSetTable(ILocaleTable table)
+        {
+            m_table = (LocaleTable<TValue>)table;
+        }
     }
 }
