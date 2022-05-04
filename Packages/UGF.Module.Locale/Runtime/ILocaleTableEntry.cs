@@ -6,8 +6,6 @@ namespace UGF.Module.Locale.Runtime
     {
         string Id { get; }
         string Name { get; }
-        IEnumerable<string> Locales { get; }
-
-        bool TryGetValue(string localeId, out object value);
+        IEnumerable<ILocaleTableEntryValue> Values { get; }
     }
 }

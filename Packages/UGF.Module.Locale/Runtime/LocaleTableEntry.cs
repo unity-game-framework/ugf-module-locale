@@ -15,34 +15,15 @@ namespace UGF.Module.Locale.Runtime
         public string Name { get { return m_name; } set { m_name = value; } }
         public List<LocaleTableEntryValue<TValue>> Values { get { return m_values; } }
 
-        public IEnumerable<string> Locales
+        IEnumerable<ILocaleTableEntryValue> ILocaleTableEntry.Values
         {
             get
             {
                 for (int i = 0; i < m_values.Count; i++)
                 {
-                    yield return m_values[i].Locale;
+                    yield return m_values[i];
                 }
             }
-        }
-
-        public bool TryGetValue(string localeId, out object value)
-        {
-            if (string.IsNullOrEmpty(localeId)) throw new ArgumentException("Value cannot be null or empty.", nameof(localeId));
-
-            for (int i = 0; i < m_values.Count; i++)
-            {
-                LocaleTableEntryValue<TValue> entryValue = m_values[i];
-
-                if (entryValue.Locale == localeId)
-                {
-                    value = entryValue.Value;
-                    return true;
-                }
-            }
-
-            value = default;
-            return false;
         }
     }
 }
