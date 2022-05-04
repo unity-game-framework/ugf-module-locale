@@ -4,7 +4,7 @@ using UnityEngine;
 namespace UGF.Module.Locale.Runtime
 {
     [Serializable]
-    public struct LocaleTableEntryValue<TValue> : ILocaleTableEntryValue
+    public class LocaleTableEntryValue<TValue> : ILocaleTableEntryValue
     {
         [SerializeField] private string m_locale;
         [SerializeField] private TValue m_value;
