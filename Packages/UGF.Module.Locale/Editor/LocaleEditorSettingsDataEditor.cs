@@ -40,7 +40,6 @@ namespace UGF.Module.Locale.Editor
                 EditorIMGUIUtility.DrawScriptProperty(serializedObject);
 
                 m_listTables.DrawGUILayout();
-                m_listTablesSelection.DrawGUILayout();
             }
 
             EditorGUILayout.Space();
@@ -67,6 +66,11 @@ namespace UGF.Module.Locale.Editor
 
                 EditorGUILayout.Space();
             }
+
+            EditorGUILayout.Space();
+            EditorGUILayout.Space();
+
+            m_listTablesSelection.DrawGUILayout();
         }
 
         private void OnUpdateSelected()
