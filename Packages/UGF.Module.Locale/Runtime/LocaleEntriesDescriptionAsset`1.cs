@@ -37,5 +37,40 @@ namespace UGF.Module.Locale.Runtime
 
             return description;
         }
+
+        protected override IDictionary<string, object> OnGetValues()
+        {
+            var values = new Dictionary<string, object>();
+
+            for (int i = 0; i < m_entries.Count; i++)
+            {
+                Entry entry = m_entries[i];
+                object value = entry.Value;
+
+                if (string.IsNullOrEmpty(entry.Key)) throw new ArgumentException("Value cannot be null or empty.", nameof(entry.Key));
+                if (value == null) throw new ArgumentNullException(nameof(value));
+
+                values.Add(entry.Key, value);
+            }
+
+            return values;
+        }
+
+        protected override void OnSetValues(IReadOnlyDictionary<string, object> values)
+        {
+            m_entries.Clear();
+
+            foreach ((string key, object value) in values)
+            {
+                if (string.IsNullOrEmpty(key)) throw new ArgumentException("Value cannot be null or empty.", nameof(key));
+                if (value == null) throw new ArgumentNullException(nameof(value));
+
+                m_entries.Add(new Entry
+                {
+                    Key = key,
+                    Value = (TValue)value
+                });
+            }
+        }
     }
 }
