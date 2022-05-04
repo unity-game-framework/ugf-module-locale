@@ -56,7 +56,7 @@ namespace UGF.Module.Locale.Runtime
             return values;
         }
 
-        protected override void OnSetValues(IReadOnlyDictionary<string, object> values)
+        protected override void OnSetValues(IDictionary<string, object> values)
         {
             m_entries.Clear();
 

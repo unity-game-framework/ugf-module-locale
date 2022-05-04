@@ -11,7 +11,7 @@ namespace UGF.Module.Locale.Runtime
             return OnGetValues();
         }
 
-        public void SetValues(IReadOnlyDictionary<string, object> values)
+        public void SetValues(IDictionary<string, object> values)
         {
             if (values == null) throw new ArgumentNullException(nameof(values));
 
@@ -19,6 +19,6 @@ namespace UGF.Module.Locale.Runtime
         }
 
         protected abstract IDictionary<string, object> OnGetValues();
-        protected abstract void OnSetValues(IReadOnlyDictionary<string, object> values);
+        protected abstract void OnSetValues(IDictionary<string, object> values);
     }
 }
