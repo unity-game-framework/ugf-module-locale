@@ -12,7 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0495deaab590495182706623eae8aed7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_converters:
-  - {fileID: 11400000, guid: ef2f30590a237da469bea18435cf9d6f, type: 2}
-  - {fileID: 11400000, guid: 6397d0e844ae5a948983764a62925d05, type: 2}
-  - {fileID: 11400000, guid: d7f64dec3f5dff341b9792adbb7ae2d0, type: 2}
+  m_tables: []

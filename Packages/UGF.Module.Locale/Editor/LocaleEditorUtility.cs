@@ -16,8 +16,9 @@ namespace UGF.Module.Locale.Editor
             ILocaleTable table = tableAsset.GetTable();
             IDictionary<string, IDictionary<string, object>> tableEntries = LocaleUtility.GetEntries(table);
 
-            foreach (LocaleTableDescriptionAsset.Entry entry in tableDescriptionAsset.Entries)
+            for (int i = 0; i < tableDescriptionAsset.Entries.Count; i++)
             {
+                LocaleTableDescriptionAsset.Entry entry = tableDescriptionAsset.Entries[i];
                 string entriesPath = AssetDatabase.GUIDToAssetPath(entry.Entries);
                 var entriesAsset = AssetDatabase.LoadAssetAtPath<LocaleEntriesDescriptionAsset>(entriesPath);
 
