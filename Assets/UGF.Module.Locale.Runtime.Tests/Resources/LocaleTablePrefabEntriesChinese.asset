@@ -12,4 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 060c603af140489daa45520306495959, type: 3}
   m_Name: LocaleTablePrefabEntriesChinese
   m_EditorClassIdentifier: 
-  m_entries: []
+  m_entries:
+  - m_key: e8ac7712ff494f0a9fc4bbc5b1b81c60
+    m_value: {fileID: 3511277001297243887, guid: a8f06d5da711694439dd00c25100d69a, type: 3}

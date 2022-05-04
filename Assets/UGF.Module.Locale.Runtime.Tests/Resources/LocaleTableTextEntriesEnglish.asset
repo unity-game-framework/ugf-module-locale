@@ -12,4 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cca25a079ed240338eb3a55c7969846c, type: 3}
   m_Name: LocaleTableTextEntriesEnglish
   m_EditorClassIdentifier: 
-  m_entries: []
+  m_entries:
+  - m_key: 610ebbd624ee4e439c6542b9f5831243
+    m_value: Good morning!
+  - m_key: 6601f5ddda034d57b31059fb142bfde5
+    m_value: Goodbye
