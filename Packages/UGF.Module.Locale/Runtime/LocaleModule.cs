@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using UGF.Application.Runtime;
 using UGF.Builder.Runtime;
+using UGF.Logs.Runtime;
 using UGF.Module.Assets.Runtime;
 using UGF.RuntimeTools.Runtime.Providers;
 
@@ -45,10 +46,22 @@ namespace UGF.Module.Locale.Runtime
             }
 
             SetCurrentLocale(Description.DefaultLocaleId);
+
+            Log.Debug("Locale Module initialized", new
+            {
+                defaultLocaleId = Description.DefaultLocaleId,
+                locales = Description.Locales.Count,
+                tables = Description.Tables.Count
+            });
         }
 
         public async Task InitializeAsync()
         {
+            Log.Debug("Locale Module initialize async", new
+            {
+                preloadTablesAsync = Description.PreloadTablesAsync.Count
+            });
+
             foreach (string tableId in Description.PreloadTablesAsync)
             {
                 await LoadTableAsync(tableId);
@@ -58,6 +71,13 @@ namespace UGF.Module.Locale.Runtime
         protected override void OnUninitialize()
         {
             base.OnUninitialize();
+
+            Log.Debug("Locale Module uninitialize", new
+            {
+                locales = Locales.Entries.Count,
+                tables = Tables.Entries.Count,
+                entries = Entries.Entries.Count
+            });
 
             if (Description.UnloadEntriesOnUninitialize)
             {
