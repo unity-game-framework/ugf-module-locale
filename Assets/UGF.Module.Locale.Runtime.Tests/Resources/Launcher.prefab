@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_useReverseModulesUninitialization: 1
-  m_provideStaticInstance: 1
+  m_provideStaticInstance: 0
 --- !u!114 &8648921889085135751
 MonoBehaviour:
   m_ObjectHideFlags: 0
