@@ -19,6 +19,7 @@ namespace UGF.Module.Locale.Editor
         {
             public GUIContent NoneContent { get; } = new GUIContent("None");
             public GUIContent MissingContent { get; } = new GUIContent("Missing");
+            public GUIContent UntitledContent { get; } = new GUIContent("Untitled");
         }
 
         public LocaleEntryDropdownAttributePropertyDrawer() : base(SerializedPropertyType.String)
@@ -35,7 +36,14 @@ namespace UGF.Module.Locale.Editor
 
             if (!string.IsNullOrEmpty(value))
             {
-                content = LocaleEditorUtility.TryGetEntryNameFromAll(value, out string name) ? new GUIContent(name) : m_styles.MissingContent;
+                if (LocaleEditorUtility.TryGetEntryNameFromAll(value, out string name))
+                {
+                    content = !string.IsNullOrEmpty(name) ? new GUIContent(name) : m_styles.UntitledContent;
+                }
+                else
+                {
+                    content = m_styles.MissingContent;
+                }
             }
 
             if (DropdownEditorGUIUtility.Dropdown(position, label, content, m_selection, m_itemsHandler, out DropdownItem<string> selected))
