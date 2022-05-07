@@ -8,12 +8,12 @@ namespace UGF.Module.Locale.Editor
     [CustomEditor(typeof(LocaleEditorSettingsData), true)]
     internal class LocaleEditorSettingsDataEditor : UnityEditor.Editor
     {
-        private LocaleKeyAndValueCollectionDrawer m_listTables;
+        private ReorderableListKeyAndValueDrawer m_listTables;
         private ReorderableListSelectionDrawer m_listTablesSelection;
 
         private void OnEnable()
         {
-            m_listTables = new LocaleKeyAndValueCollectionDrawer(serializedObject.FindProperty("m_tables"), "m_table", "m_description");
+            m_listTables = new ReorderableListKeyAndValueDrawer(serializedObject.FindProperty("m_tables"), "m_table", "m_description");
 
             m_listTablesSelection = new ReorderableListSelectionDrawerByPath(m_listTables, "m_description")
             {
