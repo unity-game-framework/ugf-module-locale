@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbf4463bff7c432792051a96aaf14a10, type: 3}
+  m_Name: LocaleTableResourcesDescription
+  m_EditorClassIdentifier: 
+  m_entries:
+  - m_locale: afd271f866d228f41a616aeea100880e
+    m_entries: de80f23a0e7f3f44da486a340e6ff606
+  - m_locale: 47a3846001472074fa3f2d641cb11ae6
+    m_entries: b0e513f6732fc9b43a07303e79048014
+  - m_locale: 97b2faba4064dc4419593e7ce69606c8
+    m_entries: a4e3f075bbb2f874f930749e1022fd00

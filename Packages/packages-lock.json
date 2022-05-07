@@ -1,20 +1,114 @@
 {
   "dependencies": {
-    "com.ugf.package.name": {
-      "version": "file:Package",
+    "com.ugf.application": {
+      "version": "8.0.0",
+      "depth": 2,
+      "source": "registry",
+      "dependencies": {
+        "com.ugf.initialize": "2.7.0",
+        "com.ugf.description": "2.0.0",
+        "com.ugf.runtimetools": "2.4.0",
+        "com.ugf.logs": "5.2.0",
+        "com.ugf.editortools": "2.1.0",
+        "com.ugf.builder": "2.0.1"
+      },
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+    },
+    "com.ugf.builder": {
+      "version": "2.0.2",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+    },
+    "com.ugf.customsettings": {
+      "version": "3.4.1",
+      "depth": 5,
+      "source": "registry",
+      "dependencies": {
+        "com.unity.modules.jsonserialize": "1.0.0",
+        "com.ugf.editortools": "1.7.0"
+      },
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+    },
+    "com.ugf.defines": {
+      "version": "2.1.5",
+      "depth": 4,
+      "source": "registry",
+      "dependencies": {
+        "com.ugf.customsettings": "3.4.1",
+        "com.ugf.editortools": "1.13.0"
+      },
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+    },
+    "com.ugf.description": {
+      "version": "2.0.0",
+      "depth": 3,
+      "source": "registry",
+      "dependencies": {
+        "com.ugf.builder": "2.0.0"
+      },
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+    },
+    "com.ugf.editortools": {
+      "version": "2.5.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+    },
+    "com.ugf.initialize": {
+      "version": "2.7.0",
+      "depth": 3,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+    },
+    "com.ugf.logs": {
+      "version": "5.2.0",
+      "depth": 3,
+      "source": "registry",
+      "dependencies": {
+        "com.ugf.defines": "2.1.5"
+      },
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+    },
+    "com.ugf.module.assets": {
+      "version": "4.0.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {
+        "com.ugf.application": "8.0.0"
+      },
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+    },
+    "com.ugf.module.locale": {
+      "version": "file:UGF.Module.Locale",
       "depth": 0,
       "source": "embedded",
-      "dependencies": {}
+      "dependencies": {
+        "com.ugf.module.assets": "4.0.0",
+        "com.ugf.editortools": "2.5.0",
+        "com.ugf.builder": "2.0.2",
+        "com.ugf.runtimetools": "2.6.0"
+      }
+    },
+    "com.ugf.runtimetools": {
+      "version": "2.6.0",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
     },
     "com.unity.ext.nunit": {
-      "version": "1.0.6",
+      "version": "2.0.2",
       "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.9",
+      "version": "3.0.14",
       "depth": 0,
       "source": "registry",
       "dependencies": {
@@ -23,11 +117,11 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.test-framework": {
-      "version": "1.1.30",
+      "version": "2.0.1-pre.18",
       "depth": 0,
       "source": "registry",
       "dependencies": {
-        "com.unity.ext.nunit": "1.0.6",
+        "com.unity.ext.nunit": "2.0.2",
         "com.unity.modules.imgui": "1.0.0",
         "com.unity.modules.jsonserialize": "1.0.0"
       },
