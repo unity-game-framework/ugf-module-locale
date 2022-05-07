@@ -4,13 +4,16 @@ UGF.Module.Locale
 
 ## Information
 
-- **Version**: `0.0.0-preview`
-- **Unity**: `2021.2`
+- **Version**: `1.0.0-preview`
+- **Unity**: `2021.3`
 - **API Compatibility Level**: `.NET Standard 2.1`
 
 ### Dependencies
 
-- N/A
+- `com.ugf.module.assets`: `4.0.0`
+- `com.ugf.editortools`: `2.5.0`
+- `com.ugf.builder`: `2.0.2`
+- `com.ugf.runtimetools`: `2.6.0`
 
 
 ### Description
