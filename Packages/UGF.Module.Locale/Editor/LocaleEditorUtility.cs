@@ -54,6 +54,11 @@ namespace UGF.Module.Locale.Editor
             return result;
         }
 
+        public static bool TryGetEntryNameFromCache(string id, out string name)
+        {
+            return LocaleEntriesCache.TryGetName(id, out name);
+        }
+
         public static bool TryGetEntryNameFromAll(string id, out string name)
         {
             IReadOnlyList<LocaleTableAsset> tables = FindTableAssetAll();
