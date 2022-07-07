@@ -36,7 +36,7 @@ namespace UGF.Module.Locale.Editor
 
             if (!string.IsNullOrEmpty(value))
             {
-                if (LocaleEditorUtility.TryGetEntryNameFromAll(value, out string name))
+                if (LocaleEditorUtility.TryGetEntryNameFromCache(value, out string name))
                 {
                     content = !string.IsNullOrEmpty(name) ? new GUIContent(name) : m_styles.UntitledContent;
                 }
@@ -56,6 +56,8 @@ namespace UGF.Module.Locale.Editor
         {
             var items = new List<DropdownItem<string>>();
             IReadOnlyList<LocaleTableAsset> tables = LocaleEditorUtility.FindTableAssetAll();
+
+            LocaleEntriesCache.Update(tables);
 
             items.Add(new DropdownItem<string>("None", string.Empty)
             {
