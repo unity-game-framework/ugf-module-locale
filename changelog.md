@@ -5,6 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.0-preview.2](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/1.0.0-preview.2) - 2022-07-10  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-module-locale/milestone/3?closed=1)  
+    
+
+### Fixed
+
+- Fix locale dropdown min height ([#5](https://github.com/unity-game-framework/ugf-module-locale/issues/5))  
+    - Fix `LocaleEntryDropdownAttribute` class property drawer using bigger dropdown height.
+
 ## [1.0.0-preview.1](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/1.0.0-preview.1) - 2022-07-07  
 
 ### Release Notes

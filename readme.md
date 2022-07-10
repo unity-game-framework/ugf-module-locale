@@ -4,7 +4,7 @@ UGF.Module.Locale
 
 ## Information
 
-- **Version**: `1.0.0-preview.1`
+- **Version**: `1.0.0-preview.2`
 - **Unity**: `2021.3`
 - **API Compatibility Level**: `.NET Standard 2.1`
 
