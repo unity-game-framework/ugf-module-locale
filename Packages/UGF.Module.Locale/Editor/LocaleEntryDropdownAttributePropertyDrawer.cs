@@ -24,6 +24,7 @@ namespace UGF.Module.Locale.Editor
 
         public LocaleEntryDropdownAttributePropertyDrawer() : base(SerializedPropertyType.String)
         {
+            m_selection.Dropdown.MinimumHeight = 300F;
             m_itemsHandler = GetItems;
         }
 
