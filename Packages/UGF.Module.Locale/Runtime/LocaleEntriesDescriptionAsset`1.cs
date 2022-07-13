@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UGF.EditorTools.Runtime.Ids;
 using UnityEngine;
 
 namespace UGF.Module.Locale.Runtime
@@ -13,10 +14,10 @@ namespace UGF.Module.Locale.Runtime
         [Serializable]
         public struct Entry
         {
-            [SerializeField] private string m_key;
+            [SerializeField] private GlobalId m_key;
             [SerializeField] private TValue m_value;
 
-            public string Key { get { return m_key; } set { m_key = value; } }
+            public GlobalId Key { get { return m_key; } set { m_key = value; } }
             public TValue Value { get { return m_value; } set { m_value = value; } }
         }
 
@@ -29,7 +30,7 @@ namespace UGF.Module.Locale.Runtime
                 Entry entry = m_entries[i];
                 object value = entry.Value;
 
-                if (string.IsNullOrEmpty(entry.Key)) throw new ArgumentException("Value cannot be null or empty.", nameof(entry.Key));
+                if (!entry.Key.IsValid()) throw new ArgumentException("Value should be valid.", nameof(entry.Key));
                 if (value == null) throw new ArgumentNullException(nameof(value));
 
                 description.Values.Add(entry.Key, value);
@@ -38,16 +39,16 @@ namespace UGF.Module.Locale.Runtime
             return description;
         }
 
-        protected override IDictionary<string, object> OnGetValues()
+        protected override IDictionary<GlobalId, object> OnGetValues()
         {
-            var values = new Dictionary<string, object>();
+            var values = new Dictionary<GlobalId, object>();
 
             for (int i = 0; i < m_entries.Count; i++)
             {
                 Entry entry = m_entries[i];
                 object value = entry.Value;
 
-                if (string.IsNullOrEmpty(entry.Key)) throw new ArgumentException("Value cannot be null or empty.", nameof(entry.Key));
+                if (!entry.Key.IsValid()) throw new ArgumentException("Value should be valid.", nameof(entry.Key));
                 if (value == null) throw new ArgumentNullException(nameof(value));
 
                 values.Add(entry.Key, value);
@@ -56,13 +57,13 @@ namespace UGF.Module.Locale.Runtime
             return values;
         }
 
-        protected override void OnSetValues(IDictionary<string, object> values)
+        protected override void OnSetValues(IDictionary<GlobalId, object> values)
         {
             m_entries.Clear();
 
-            foreach ((string key, object value) in values)
+            foreach ((GlobalId key, object value) in values)
             {
-                if (string.IsNullOrEmpty(key)) throw new ArgumentException("Value cannot be null or empty.", nameof(key));
+                if (!key.IsValid()) throw new ArgumentException("Value should be valid.", nameof(key));
                 if (value == null) throw new ArgumentNullException(nameof(value));
 
                 m_entries.Add(new Entry

@@ -1,8 +1,10 @@
-﻿namespace UGF.Module.Locale.Runtime
+﻿using UGF.EditorTools.Runtime.Ids;
+
+namespace UGF.Module.Locale.Runtime
 {
     public interface ILocaleTableEntryValue
     {
-        string LocaleId { get; }
+        GlobalId LocaleId { get; }
         object Value { get; }
     }
 }

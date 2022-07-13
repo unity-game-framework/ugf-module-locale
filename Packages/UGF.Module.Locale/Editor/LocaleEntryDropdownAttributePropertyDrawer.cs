@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using UGF.EditorTools.Editor.Ids;
 using UGF.EditorTools.Editor.IMGUI.Dropdown;
 using UGF.EditorTools.Editor.IMGUI.PropertyDrawers;
+using UGF.EditorTools.Runtime.Ids;
 using UGF.Module.Locale.Runtime;
 using UnityEditor;
 using UnityEngine;
@@ -11,8 +13,8 @@ namespace UGF.Module.Locale.Editor
     [CustomPropertyDrawer(typeof(LocaleEntryDropdownAttribute), true)]
     internal class LocaleEntryDropdownAttributePropertyDrawer : PropertyDrawerTyped<LocaleEntryDropdownAttribute>
     {
-        private readonly DropdownSelection<DropdownItem<string>> m_selection = new DropdownSelection<DropdownItem<string>>();
-        private readonly Func<IEnumerable<DropdownItem<string>>> m_itemsHandler;
+        private readonly DropdownSelection<DropdownItem<GlobalId>> m_selection = new DropdownSelection<DropdownItem<GlobalId>>();
+        private readonly Func<IEnumerable<DropdownItem<GlobalId>>> m_itemsHandler;
         private Styles m_styles;
 
         private class Styles
@@ -32,12 +34,12 @@ namespace UGF.Module.Locale.Editor
         {
             m_styles ??= new Styles();
 
-            string value = serializedProperty.stringValue;
+            GlobalId id = GlobalIdEditorUtility.GetGlobalIdFromProperty(serializedProperty);
             GUIContent content = m_styles.NoneContent;
 
-            if (!string.IsNullOrEmpty(value))
+            if (id != GlobalId.Empty)
             {
-                if (LocaleEditorUtility.TryGetEntryNameFromCache(value, out string name))
+                if (LocaleEditorUtility.TryGetEntryNameFromCache(id, out string name))
                 {
                     content = !string.IsNullOrEmpty(name) ? new GUIContent(name) : m_styles.UntitledContent;
                 }
@@ -47,20 +49,20 @@ namespace UGF.Module.Locale.Editor
                 }
             }
 
-            if (DropdownEditorGUIUtility.Dropdown(position, label, content, m_selection, m_itemsHandler, out DropdownItem<string> selected))
+            if (DropdownEditorGUIUtility.Dropdown(position, label, content, m_selection, m_itemsHandler, out DropdownItem<GlobalId> selected))
             {
-                serializedProperty.stringValue = selected.Value;
+                GlobalIdEditorUtility.SetGlobalIdToProperty(serializedProperty, selected.Value);
             }
         }
 
-        private IEnumerable<DropdownItem<string>> GetItems()
+        private IEnumerable<DropdownItem<GlobalId>> GetItems()
         {
-            var items = new List<DropdownItem<string>>();
+            var items = new List<DropdownItem<GlobalId>>();
             IReadOnlyList<LocaleTableAsset> tables = LocaleEditorUtility.FindTableAssetAll();
 
             LocaleEntriesCache.Update(tables);
 
-            items.Add(new DropdownItem<string>("None", string.Empty)
+            items.Add(new DropdownItem<GlobalId>("None", GlobalId.Empty)
             {
                 Priority = int.MaxValue
             });
@@ -72,7 +74,7 @@ namespace UGF.Module.Locale.Editor
 
                 foreach (ILocaleTableEntry entry in table.Entries)
                 {
-                    items.Add(new DropdownItem<string>(entry.Name, entry.Id)
+                    items.Add(new DropdownItem<GlobalId>(entry.Name, entry.Id)
                     {
                         Path = asset.name
                     });
