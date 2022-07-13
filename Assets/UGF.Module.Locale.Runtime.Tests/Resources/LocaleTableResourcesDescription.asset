@@ -13,9 +13,21 @@ MonoBehaviour:
   m_Name: LocaleTableResourcesDescription
   m_EditorClassIdentifier: 
   m_entries:
-  - m_locale: afd271f866d228f41a616aeea100880e
-    m_entries: de80f23a0e7f3f44da486a340e6ff606
-  - m_locale: 47a3846001472074fa3f2d641cb11ae6
-    m_entries: b0e513f6732fc9b43a07303e79048014
-  - m_locale: 97b2faba4064dc4419593e7ce69606c8
-    m_entries: a4e3f075bbb2f874f930749e1022fd00
+  - m_locale:
+      m_first: 2951096710913487352
+      m_second: 1047087608853324058
+    m_entries:
+      m_first: 4558784665162412602
+      m_second: 501710515297994970
+  - m_locale:
+      m_first: 2338495512168334432
+      m_second: 16580759713615790074
+    m_entries:
+      m_first: 14534368546099893238
+      m_second: 1477185596558411578
+  - m_locale:
+      m_first: 15871881787546467002
+      m_second: 14413373574116956441
+    m_entries:
+      m_first: 17903140794649538677
+      m_second: 71250623881031929

@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: LocaleTableResourcesEntriesFrench
   m_EditorClassIdentifier: 
   m_entries:
-  - m_key: f407829a43364b76bca9d7da83d57822
+  - m_key:
+      m_first: 4756694733353663668
+      m_second: 17587845129179080581
     m_value: Ressources
