@@ -104,9 +104,11 @@ namespace UGF.Module.Locale.Editor
             m_propertyEntries.DeleteArrayElementAtIndex(index);
         }
 
-        private void OnEntryAdd(int index)
+        private void OnEntryInsert(int index)
         {
             m_propertyEntries.InsertArrayElementAtIndex(index);
+
+            index = Mathf.Min(index + 1, m_propertyEntries.arraySize - 1);
 
             SerializedProperty propertyEntry = m_propertyEntries.GetArrayElementAtIndex(index);
             SerializedProperty propertyId = propertyEntry.FindPropertyRelative("m_id");
@@ -179,11 +181,9 @@ namespace UGF.Module.Locale.Editor
 
                 if (OnDrawToolbarButton(m_styles.AddButtonContent))
                 {
-                    int index = m_selectedIndex != null
-                        ? m_selectedIndex.Value + 1
-                        : m_propertyEntries.arraySize;
+                    int index = m_selectedIndex ?? m_propertyEntries.arraySize;
 
-                    OnEntryAdd(index);
+                    OnEntryInsert(index);
                 }
 
                 Rect rectMenu = GUILayoutUtility.GetRect(m_styles.MenuButtonContent, EditorStyles.toolbarButton, GUILayout.Width(25F));
