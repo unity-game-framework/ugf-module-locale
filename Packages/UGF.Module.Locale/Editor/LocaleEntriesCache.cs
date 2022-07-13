@@ -50,7 +50,10 @@ namespace UGF.Module.Locale.Editor
                 {
                     var data = new EntryData(entry.Name);
 
-                    m_entries.Add(entry.Id, data);
+                    if (entry.Id.IsValid())
+                    {
+                        m_entries.TryAdd(entry.Id, data);
+                    }
                 }
             }
         }

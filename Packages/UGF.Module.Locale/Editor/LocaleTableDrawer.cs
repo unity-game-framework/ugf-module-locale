@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using UGF.EditorTools.Editor.Ids;
 using UGF.EditorTools.Editor.IMGUI;
 using UGF.EditorTools.Editor.IMGUI.Dropdown;
+using UGF.EditorTools.Runtime.Ids;
 using UnityEditor;
 using UnityEngine;
 
@@ -36,6 +38,7 @@ namespace UGF.Module.Locale.Editor
         {
             SerializedProperty = serializedProperty ?? throw new ArgumentNullException(nameof(serializedProperty));
 
+            m_selection.Dropdown.MinimumHeight = 300F;
             m_propertyEntries = SerializedProperty.FindPropertyRelative("m_entries");
         }
 
@@ -110,7 +113,8 @@ namespace UGF.Module.Locale.Editor
             SerializedProperty propertyName = propertyEntry.FindPropertyRelative("m_name");
             string entryName = propertyName.stringValue;
 
-            propertyId.stringValue = Guid.NewGuid().ToString("N");
+            GlobalIdEditorUtility.SetGlobalIdToProperty(propertyId, GlobalId.Generate());
+
             propertyName.stringValue = OnGetUniqueName(!string.IsNullOrEmpty(entryName) ? entryName : "Entry");
 
             OnEntrySelect(index);
@@ -233,7 +237,7 @@ namespace UGF.Module.Locale.Editor
                 {
                     SerializedProperty propertyId = propertyEntry.FindPropertyRelative("m_id");
 
-                    displayName = propertyId.stringValue;
+                    displayName = GlobalIdEditorUtility.GetGuidFromProperty(propertyId);
                 }
                 else
                 {

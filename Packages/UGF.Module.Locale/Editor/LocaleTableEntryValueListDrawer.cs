@@ -1,39 +1,26 @@
 ﻿using UGF.EditorTools.Editor.IMGUI;
-using UGF.EditorTools.Editor.IMGUI.Attributes;
-using UGF.Module.Locale.Runtime;
 using UnityEditor;
 using UnityEngine;
 
 namespace UGF.Module.Locale.Editor
 {
-    internal class LocaleTableEntryValueListDrawer : ReorderableListDrawer
+    internal class LocaleTableEntryValueListDrawer : ReorderableListKeyAndValueDrawer
     {
-        public LocaleTableEntryValueListDrawer(SerializedProperty serializedProperty) : base(serializedProperty)
+        public LocaleTableEntryValueListDrawer(SerializedProperty serializedProperty) : base(serializedProperty, "m_locale")
         {
         }
 
-        protected override void OnDrawElementContent(Rect position, SerializedProperty serializedProperty, int index, bool isActive, bool isFocused)
+        protected override void OnDrawValue(Rect position, SerializedProperty serializedProperty)
         {
-            SerializedProperty propertyLocale = serializedProperty.FindPropertyRelative("m_locale");
-            SerializedProperty propertyValue = serializedProperty.FindPropertyRelative("m_value");
-
-            float space = EditorGUIUtility.standardVerticalSpacing;
-            float labelWidth = EditorGUIUtility.labelWidth + EditorIMGUIUtility.IndentPerLevel;
-
-            var rectKey = new Rect(position.x, position.y, labelWidth, position.height);
-            var rectValue = new Rect(rectKey.xMax + space, position.y, position.width - rectKey.width - space, position.height);
-
-            AttributeEditorGUIUtility.DrawAssetGuidField(rectKey, propertyLocale, GUIContent.none, typeof(LocaleDescriptionAsset));
-
-            if (propertyValue.propertyType == SerializedPropertyType.String)
+            if (serializedProperty.propertyType == SerializedPropertyType.String)
             {
-                rectValue.height = EditorGUIUtility.singleLineHeight * 3F;
+                position.height = EditorGUIUtility.singleLineHeight * 3F;
 
-                propertyValue.stringValue = EditorGUI.TextArea(rectValue, propertyValue.stringValue);
+                serializedProperty.stringValue = EditorGUI.TextArea(position, serializedProperty.stringValue);
             }
             else
             {
-                EditorGUI.PropertyField(rectValue, propertyValue, GUIContent.none);
+                base.OnDrawValue(position, serializedProperty);
             }
         }
 

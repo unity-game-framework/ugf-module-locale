@@ -24,7 +24,7 @@ namespace UGF.Module.Locale.Editor
             public GUIContent UntitledContent { get; } = new GUIContent("Untitled");
         }
 
-        public LocaleEntryDropdownAttributePropertyDrawer() : base(SerializedPropertyType.String)
+        public LocaleEntryDropdownAttributePropertyDrawer() : base(SerializedPropertyType.Generic)
         {
             m_selection.Dropdown.MinimumHeight = 300F;
             m_itemsHandler = GetItems;
@@ -82,6 +82,11 @@ namespace UGF.Module.Locale.Editor
             }
 
             return items;
+        }
+
+        public override float GetPropertyHeight(SerializedProperty serializedProperty, GUIContent label)
+        {
+            return EditorGUIUtility.singleLineHeight;
         }
     }
 }
