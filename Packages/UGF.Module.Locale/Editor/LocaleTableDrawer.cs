@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using UGF.EditorTools.Editor.Ids;
 using UGF.EditorTools.Editor.IMGUI;
 using UGF.EditorTools.Editor.IMGUI.Dropdown;
+using UGF.EditorTools.Runtime.Ids;
 using UnityEditor;
 using UnityEngine;
 
@@ -36,6 +38,7 @@ namespace UGF.Module.Locale.Editor
         {
             SerializedProperty = serializedProperty ?? throw new ArgumentNullException(nameof(serializedProperty));
 
+            m_selection.Dropdown.MinimumHeight = 300F;
             m_propertyEntries = SerializedProperty.FindPropertyRelative("m_entries");
         }
 
@@ -101,16 +104,19 @@ namespace UGF.Module.Locale.Editor
             m_propertyEntries.DeleteArrayElementAtIndex(index);
         }
 
-        private void OnEntryAdd(int index)
+        private void OnEntryInsert(int index)
         {
             m_propertyEntries.InsertArrayElementAtIndex(index);
+
+            index = Mathf.Min(index + 1, m_propertyEntries.arraySize - 1);
 
             SerializedProperty propertyEntry = m_propertyEntries.GetArrayElementAtIndex(index);
             SerializedProperty propertyId = propertyEntry.FindPropertyRelative("m_id");
             SerializedProperty propertyName = propertyEntry.FindPropertyRelative("m_name");
             string entryName = propertyName.stringValue;
 
-            propertyId.stringValue = Guid.NewGuid().ToString("N");
+            GlobalIdEditorUtility.SetGlobalIdToProperty(propertyId, GlobalId.Generate());
+
             propertyName.stringValue = OnGetUniqueName(!string.IsNullOrEmpty(entryName) ? entryName : "Entry");
 
             OnEntrySelect(index);
@@ -175,11 +181,9 @@ namespace UGF.Module.Locale.Editor
 
                 if (OnDrawToolbarButton(m_styles.AddButtonContent))
                 {
-                    int index = m_selectedIndex != null
-                        ? m_selectedIndex.Value + 1
-                        : m_propertyEntries.arraySize;
+                    int index = m_selectedIndex ?? m_propertyEntries.arraySize;
 
-                    OnEntryAdd(index);
+                    OnEntryInsert(index);
                 }
 
                 Rect rectMenu = GUILayoutUtility.GetRect(m_styles.MenuButtonContent, EditorStyles.toolbarButton, GUILayout.Width(25F));
@@ -233,7 +237,7 @@ namespace UGF.Module.Locale.Editor
                 {
                     SerializedProperty propertyId = propertyEntry.FindPropertyRelative("m_id");
 
-                    displayName = propertyId.stringValue;
+                    displayName = GlobalIdEditorUtility.GetGuidFromProperty(propertyId);
                 }
                 else
                 {

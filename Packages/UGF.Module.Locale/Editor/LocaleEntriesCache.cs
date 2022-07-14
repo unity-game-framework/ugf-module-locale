@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using UGF.EditorTools.Runtime.Ids;
 using UGF.Module.Locale.Runtime;
 using UnityEditor;
 
@@ -10,7 +11,7 @@ namespace UGF.Module.Locale.Editor
     {
         public static int Count { get { return m_entries.Count; } }
 
-        private static readonly Dictionary<string, EntryData> m_entries = new Dictionary<string, EntryData>();
+        private static readonly Dictionary<GlobalId, EntryData> m_entries = new Dictionary<GlobalId, EntryData>();
 
         public struct EntryData
         {
@@ -49,7 +50,10 @@ namespace UGF.Module.Locale.Editor
                 {
                     var data = new EntryData(entry.Name);
 
-                    m_entries.Add(entry.Id, data);
+                    if (entry.Id.IsValid())
+                    {
+                        m_entries.TryAdd(entry.Id, data);
+                    }
                 }
             }
         }
@@ -59,9 +63,9 @@ namespace UGF.Module.Locale.Editor
             m_entries.Clear();
         }
 
-        public static bool TryGetName(string id, out string name)
+        public static bool TryGetName(GlobalId id, out string name)
         {
-            if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
+            if (!id.IsValid()) throw new ArgumentException("Value should be valid.", nameof(id));
 
             if (m_entries.TryGetValue(id, out EntryData data))
             {

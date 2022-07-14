@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: LocaleTableTextEntriesChinese
   m_EditorClassIdentifier: 
   m_entries:
-  - m_key: 610ebbd624ee4e439c6542b9f5831243
+  - m_key:
+      m_first: 4822244537719515248
+      m_second: 13735614588188846750
     m_value: "\u65E9\u4E0A\u597D\uFF01"
-  - m_key: 6601f5ddda034d57b31059fb142bfde5
+  - m_key:
+      m_first: 4955438098652022272
+      m_second: 3169503133464964018
     m_value: "\u518D\u89C1"

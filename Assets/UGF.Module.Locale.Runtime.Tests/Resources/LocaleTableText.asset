@@ -14,21 +14,37 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_table:
     m_entries:
-    - m_id: 610ebbd624ee4e439c6542b9f5831243
+    - m_id:
+        m_first: 4822244537719515248
+        m_second: 13735614588188846750
       m_name: GoodMorning
       m_values:
-      - m_locale: afd271f866d228f41a616aeea100880e
+      - m_locale:
+          m_first: 2951096710913487352
+          m_second: 1047087608853324058
         m_value: Good morning!
-      - m_locale: 47a3846001472074fa3f2d641cb11ae6
+      - m_locale:
+          m_first: 2338495512168334432
+          m_second: 16580759713615790074
         m_value: Bonjour!
-      - m_locale: 97b2faba4064dc4419593e7ce69606c8
+      - m_locale:
+          m_first: 15871881787546467002
+          m_second: 14413373574116956441
         m_value: "\u65E9\u4E0A\u597D\uFF01"
-    - m_id: 6601f5ddda034d57b31059fb142bfde5
+    - m_id:
+        m_first: 4955438098652022272
+        m_second: 3169503133464964018
       m_name: Goodbye
       m_values:
-      - m_locale: afd271f866d228f41a616aeea100880e
+      - m_locale:
+          m_first: 2951096710913487352
+          m_second: 1047087608853324058
         m_value: Goodbye
-      - m_locale: 47a3846001472074fa3f2d641cb11ae6
+      - m_locale:
+          m_first: 2338495512168334432
+          m_second: 16580759713615790074
         m_value: Au revoir
-      - m_locale: 97b2faba4064dc4419593e7ce69606c8
+      - m_locale:
+          m_first: 15871881787546467002
+          m_second: 14413373574116956441
         m_value: "\u518D\u89C1"

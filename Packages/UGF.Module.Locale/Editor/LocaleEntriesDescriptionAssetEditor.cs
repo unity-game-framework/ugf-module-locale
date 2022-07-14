@@ -12,7 +12,7 @@ namespace UGF.Module.Locale.Editor
 
         private void OnEnable()
         {
-            m_listEntries = new ReorderableListKeyAndValueDrawer(serializedObject.FindProperty("m_entries"), "m_key", "m_value");
+            m_listEntries = new ReorderableListKeyAndValueDrawer(serializedObject.FindProperty("m_entries"));
             m_listEntries.Enable();
         }
 

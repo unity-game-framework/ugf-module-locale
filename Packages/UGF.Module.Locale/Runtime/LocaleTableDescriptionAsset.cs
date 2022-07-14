@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using UGF.Builder.Runtime;
-using UGF.EditorTools.Runtime.IMGUI.Attributes;
+using UGF.EditorTools.Runtime.Assets;
+using UGF.EditorTools.Runtime.Ids;
 using UnityEngine;
 
 namespace UGF.Module.Locale.Runtime
@@ -16,13 +17,13 @@ namespace UGF.Module.Locale.Runtime
         [Serializable]
         public struct Entry
         {
-            [AssetGuid(typeof(LocaleDescriptionAsset))]
-            [SerializeField] private string m_locale;
-            [AssetGuid(typeof(LocaleEntriesDescriptionAsset))]
-            [SerializeField] private string m_entries;
+            [AssetId(typeof(LocaleDescriptionAsset))]
+            [SerializeField] private GlobalId m_locale;
+            [AssetId(typeof(LocaleEntriesDescriptionAsset))]
+            [SerializeField] private GlobalId m_entries;
 
-            public string Locale { get { return m_locale; } set { m_locale = value; } }
-            public string Entries { get { return m_entries; } set { m_entries = value; } }
+            public GlobalId Locale { get { return m_locale; } set { m_locale = value; } }
+            public GlobalId Entries { get { return m_entries; } set { m_entries = value; } }
         }
 
         protected override LocaleTableDescription OnBuild()
@@ -33,8 +34,8 @@ namespace UGF.Module.Locale.Runtime
             {
                 Entry entry = m_entries[i];
 
-                if (string.IsNullOrEmpty(entry.Locale)) throw new ArgumentException("Value cannot be null or empty.", nameof(entry.Locale));
-                if (string.IsNullOrEmpty(entry.Entries)) throw new ArgumentException("Value cannot be null or empty.", nameof(entry.Entries));
+                if (!entry.Locale.IsValid()) throw new ArgumentException("Value should be valid.", nameof(entry.Locale));
+                if (!entry.Entries.IsValid()) throw new ArgumentException("Value should be valid.", nameof(entry.Entries));
 
                 description.Entries.Add(entry.Locale, entry.Entries);
             }

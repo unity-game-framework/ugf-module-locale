@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using UGF.Application.Runtime;
-using UGF.EditorTools.Runtime.IMGUI.AssetReferences;
-using UGF.EditorTools.Runtime.IMGUI.Attributes;
+using UGF.EditorTools.Runtime.Assets;
+using UGF.EditorTools.Runtime.Ids;
 using UnityEngine;
 
 namespace UGF.Module.Locale.Runtime
@@ -10,19 +10,19 @@ namespace UGF.Module.Locale.Runtime
     [CreateAssetMenu(menuName = "Unity Game Framework/Locale/Locale Module", order = 2000)]
     public class LocaleModuleAsset : ApplicationModuleAsset<LocaleModule, LocaleModuleDescription>
     {
-        [AssetGuid(typeof(LocaleDescriptionAsset))]
-        [SerializeField] private string m_defaultLocale;
+        [AssetId(typeof(LocaleDescriptionAsset))]
+        [SerializeField] private GlobalId m_defaultLocale;
         [SerializeField] private bool m_unloadEntriesOnUninitialize = true;
-        [SerializeField] private List<AssetReference<LocaleDescriptionAsset>> m_locales = new List<AssetReference<LocaleDescriptionAsset>>();
-        [SerializeField] private List<AssetReference<LocaleTableDescriptionAsset>> m_tables = new List<AssetReference<LocaleTableDescriptionAsset>>();
-        [AssetGuid(typeof(LocaleTableDescriptionAsset))]
-        [SerializeField] private List<string> m_preloadTablesAsync = new List<string>();
+        [SerializeField] private List<AssetIdReference<LocaleDescriptionAsset>> m_locales = new List<AssetIdReference<LocaleDescriptionAsset>>();
+        [SerializeField] private List<AssetIdReference<LocaleTableDescriptionAsset>> m_tables = new List<AssetIdReference<LocaleTableDescriptionAsset>>();
+        [AssetId(typeof(LocaleTableDescriptionAsset))]
+        [SerializeField] private List<GlobalId> m_preloadTablesAsync = new List<GlobalId>();
 
-        public string DefaultLocale { get { return m_defaultLocale; } set { m_defaultLocale = value; } }
+        public GlobalId DefaultLocale { get { return m_defaultLocale; } set { m_defaultLocale = value; } }
         public bool UnloadEntriesOnUninitialize { get { return m_unloadEntriesOnUninitialize; } set { m_unloadEntriesOnUninitialize = value; } }
-        public List<AssetReference<LocaleDescriptionAsset>> Locales { get { return m_locales; } }
-        public List<AssetReference<LocaleTableDescriptionAsset>> Tables { get { return m_tables; } }
-        public List<string> PreloadTablesAsync { get { return m_preloadTablesAsync; } }
+        public List<AssetIdReference<LocaleDescriptionAsset>> Locales { get { return m_locales; } }
+        public List<AssetIdReference<LocaleTableDescriptionAsset>> Tables { get { return m_tables; } }
+        public List<GlobalId> PreloadTablesAsync { get { return m_preloadTablesAsync; } }
 
         protected override IApplicationModuleDescription OnBuildDescription()
         {
@@ -35,23 +35,23 @@ namespace UGF.Module.Locale.Runtime
 
             for (int i = 0; i < m_locales.Count; i++)
             {
-                AssetReference<LocaleDescriptionAsset> reference = m_locales[i];
+                AssetIdReference<LocaleDescriptionAsset> reference = m_locales[i];
 
                 description.Locales.Add(reference.Guid, reference.Asset);
             }
 
             for (int i = 0; i < m_tables.Count; i++)
             {
-                AssetReference<LocaleTableDescriptionAsset> reference = m_tables[i];
+                AssetIdReference<LocaleTableDescriptionAsset> reference = m_tables[i];
 
                 description.Tables.Add(reference.Guid, reference.Asset);
             }
 
             for (int i = 0; i < m_preloadTablesAsync.Count; i++)
             {
-                string id = m_preloadTablesAsync[i];
+                GlobalId id = m_preloadTablesAsync[i];
 
-                if (string.IsNullOrEmpty(id)) throw new ArgumentException("Value cannot be null or empty.", nameof(id));
+                if (!id.IsValid()) throw new ArgumentException("Value should be valid.", nameof(id));
 
                 description.PreloadTablesAsync.Add(id);
             }
