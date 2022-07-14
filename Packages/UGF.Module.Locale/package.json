@@ -2,7 +2,7 @@
   "name": "com.ugf.module.locale",
   "displayName": "UGF.Module.Locale",
   "version": "1.0.0-preview.2",
-  "unity": "2021.3",
+  "unity": "2022.1",
   "apiCompatibility": ".NET Standard 2.1",
   "description": "Module to manager language and other locale.",
   "author": {
