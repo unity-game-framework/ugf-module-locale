@@ -1,16 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+using UGF.RuntimeTools.Runtime.Tables;
 
 namespace UGF.Module.Locale.Runtime
 {
     [Serializable]
-    public class LocaleTable<TValue> : ILocaleTable
+    public class LocaleTable<TValue> : Table<LocaleTableEntry<TValue>>
     {
-        [SerializeField] private List<LocaleTableEntry<TValue>> m_entries = new List<LocaleTableEntry<TValue>>();
-
-        public List<LocaleTableEntry<TValue>> Entries { get { return m_entries; } }
-
-        IEnumerable<ILocaleTableEntry> ILocaleTable.Entries { get { return m_entries; } }
     }
 }
