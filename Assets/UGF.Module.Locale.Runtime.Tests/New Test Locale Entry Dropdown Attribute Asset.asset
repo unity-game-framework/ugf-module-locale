@@ -12,9 +12,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55ce7f259e4644eab891a26e239b4775, type: 3}
   m_Name: New Test Locale Entry Dropdown Attribute Asset
   m_EditorClassIdentifier: 
-  m_locale1: e8ac7712ff494f0a9fc4bbc5b1b81c60
-  m_locale2: f407829a43364b76bca9d7da83d57822
-  m_locale3: f407829a43364b76bca9d7da83d57822
-  m_locale4: e8ac7712ff494f0a9fc4bbc5b1b81c60
-  m_locale5: e8ac7712ff494f0a9fc4bbc5b1b81c60
-  m_locale6: f407829a43364b76bca9d7da83d57822
+  m_locale1:
+    m_first: 4730060551115319950
+    m_second: 1545505251141216178
+  m_locale2:
+    m_first: 4822244537719515248
+    m_second: 13735614588188846750
+  m_locale3:
+    m_first: 4730060551115319950
+    m_second: 1545505251141216178
+  m_locale4:
+    m_first: 0
+    m_second: 0
+  m_locale5:
+    m_first: 4730060551115319950
+    m_second: 1545505251141216178
+  m_locale6:
+    m_first: 4822244537719515248
+    m_second: 13735614588188846750

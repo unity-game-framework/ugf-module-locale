@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using UGF.RuntimeTools.Runtime.Tables;
+using UnityEngine;
 
 namespace UGF.Module.Locale.Runtime
 {
@@ -8,12 +9,12 @@ namespace UGF.Module.Locale.Runtime
 
         public LocaleTable<TValue> Table { get { return m_table; } }
 
-        protected override ILocaleTable OnGetTable()
+        protected override ITable OnGet()
         {
             return m_table;
         }
 
-        protected override void OnSetTable(ILocaleTable table)
+        protected override void OnSet(ITable table)
         {
             m_table = (LocaleTable<TValue>)table;
         }

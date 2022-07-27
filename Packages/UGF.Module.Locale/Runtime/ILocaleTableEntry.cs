@@ -1,12 +1,10 @@
 ﻿using System.Collections.Generic;
-using UGF.EditorTools.Runtime.Ids;
+using UGF.RuntimeTools.Runtime.Tables;
 
 namespace UGF.Module.Locale.Runtime
 {
-    public interface ILocaleTableEntry
+    public interface ILocaleTableEntry : ITableEntry
     {
-        GlobalId Id { get; }
-        string Name { get; }
         IEnumerable<ILocaleTableEntryValue> Values { get; }
     }
 }

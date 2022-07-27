@@ -1,10 +1,13 @@
 ﻿using System;
-using UnityEngine;
+using UGF.RuntimeTools.Runtime.Tables;
 
 namespace UGF.Module.Locale.Runtime
 {
     [AttributeUsage(AttributeTargets.Field)]
-    public class LocaleEntryDropdownAttribute : PropertyAttribute
+    public class LocaleEntryDropdownAttribute : TableEntryDropdownAttribute
     {
+        public LocaleEntryDropdownAttribute() : base(typeof(LocaleTableAsset))
+        {
+        }
     }
 }
