@@ -51,8 +51,8 @@
       "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
     },
     "com.ugf.editortools": {
-      "version": "2.13.0",
-      "depth": 2,
+      "version": "2.14.0",
+      "depth": 1,
       "source": "registry",
       "dependencies": {},
       "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
@@ -90,6 +90,7 @@
       "source": "embedded",
       "dependencies": {
         "com.ugf.module.assets": "5.0.0-preview.2",
+        "com.ugf.editortools": "2.14.0",
         "com.ugf.runtimetools": "2.18.0"
       }
     },
