@@ -15,6 +15,7 @@ namespace UGF.Module.Locale.Editor
         private ReorderableListDrawer m_listTables;
         private ReorderableListSelectionDrawerByPath m_listTablesSelection;
         private ReorderableListDrawer m_listPreloadTablesAsync;
+        private ReorderableListSelectionDrawerByElementGlobalId m_listPreloadTablesAsyncSelection;
 
         private void OnEnable()
         {
@@ -28,10 +29,7 @@ namespace UGF.Module.Locale.Editor
 
             m_listLocalesSelection = new ReorderableListSelectionDrawerByPath(m_listLocales, "m_asset")
             {
-                Drawer =
-                {
-                    DisplayTitlebar = true
-                }
+                Drawer = { DisplayTitlebar = true }
             };
 
             m_listTables = new ReorderableListDrawer(serializedObject.FindProperty("m_tables"))
@@ -41,10 +39,7 @@ namespace UGF.Module.Locale.Editor
 
             m_listTablesSelection = new ReorderableListSelectionDrawerByPath(m_listTables, "m_asset")
             {
-                Drawer =
-                {
-                    DisplayTitlebar = true
-                }
+                Drawer = { DisplayTitlebar = true }
             };
 
             m_listPreloadTablesAsync = new ReorderableListDrawer(serializedObject.FindProperty("m_preloadTablesAsync"))
@@ -52,11 +47,17 @@ namespace UGF.Module.Locale.Editor
                 DisplayAsSingleLine = true
             };
 
+            m_listPreloadTablesAsyncSelection = new ReorderableListSelectionDrawerByElementGlobalId(m_listPreloadTablesAsync)
+            {
+                Drawer = { DisplayTitlebar = true }
+            };
+
             m_listLocales.Enable();
             m_listLocalesSelection.Enable();
             m_listTables.Enable();
             m_listTablesSelection.Enable();
             m_listPreloadTablesAsync.Enable();
+            m_listPreloadTablesAsyncSelection.Enable();
         }
 
         private void OnDisable()
@@ -66,6 +67,7 @@ namespace UGF.Module.Locale.Editor
             m_listTables.Disable();
             m_listTablesSelection.Disable();
             m_listPreloadTablesAsync.Disable();
+            m_listPreloadTablesAsyncSelection.Disable();
         }
 
         public override void OnInspectorGUI()
@@ -83,6 +85,7 @@ namespace UGF.Module.Locale.Editor
 
                 m_listLocalesSelection.DrawGUILayout();
                 m_listTablesSelection.DrawGUILayout();
+                m_listPreloadTablesAsyncSelection.DrawGUILayout();
             }
         }
     }
