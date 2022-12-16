@@ -9,28 +9,33 @@ namespace UGF.Module.Locale.Editor
     internal class LocaleEditorSettingsDataEditor : UnityEditor.Editor
     {
         private ReorderableListKeyAndValueDrawer m_listTables;
-        private ReorderableListSelectionDrawer m_listTablesSelection;
+        private ReorderableListSelectionDrawer m_listTablesSelectionTable;
+        private ReorderableListSelectionDrawer m_listTablesSelectionDescription;
 
         private void OnEnable()
         {
             m_listTables = new ReorderableListKeyAndValueDrawer(serializedObject.FindProperty("m_tables"), "m_table", "m_description");
 
-            m_listTablesSelection = new ReorderableListSelectionDrawerByPath(m_listTables, "m_description")
+            m_listTablesSelectionTable = new ReorderableListSelectionDrawerByPath(m_listTables, "m_table")
             {
-                Drawer =
-                {
-                    DisplayTitlebar = true
-                }
+                Drawer = { DisplayTitlebar = true }
+            };
+
+            m_listTablesSelectionDescription = new ReorderableListSelectionDrawerByPath(m_listTables, "m_description")
+            {
+                Drawer = { DisplayTitlebar = true }
             };
 
             m_listTables.Enable();
-            m_listTablesSelection.Enable();
+            m_listTablesSelectionTable.Enable();
+            m_listTablesSelectionDescription.Enable();
         }
 
         private void OnDisable()
         {
             m_listTables.Disable();
-            m_listTablesSelection.Disable();
+            m_listTablesSelectionTable.Disable();
+            m_listTablesSelectionDescription.Disable();
         }
 
         public override void OnInspectorGUI()
@@ -70,7 +75,8 @@ namespace UGF.Module.Locale.Editor
             EditorGUILayout.Space();
             EditorGUILayout.Space();
 
-            m_listTablesSelection.DrawGUILayout();
+            m_listTablesSelectionTable.DrawGUILayout();
+            m_listTablesSelectionDescription.DrawGUILayout();
         }
 
         private void OnUpdateSelected()

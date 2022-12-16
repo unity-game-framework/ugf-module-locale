@@ -2,7 +2,7 @@
   "name": "com.ugf.module.locale",
   "displayName": "UGF.Module.Locale",
   "version": "2.0.0-preview.1",
-  "unity": "2022.1",
+  "unity": "2022.2",
   "apiCompatibility": ".NET Standard 2.1",
   "description": "Module to manager language and other locale.",
   "author": {
@@ -19,7 +19,8 @@
     "registry": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
   },
   "dependencies": {
-    "com.ugf.module.assets": "5.0.0-preview",
-    "com.ugf.runtimetools": "2.10.0"
+    "com.ugf.module.assets": "5.0.0-preview.2",
+    "com.ugf.editortools": "2.14.0",
+    "com.ugf.runtimetools": "2.18.0"
   }
 }
