@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.0.0-preview.2](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/2.0.0-preview.2) - 2022-12-16  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-module-locale/milestone/6?closed=1)  
+    
+
+### Added
+
+- Add inspector selection preview support ([#11](https://github.com/unity-game-framework/ugf-module-locale/issues/11))  
+    - Update dependencies: `com.ugf.module.assets` to `5.0.0-preview.2`, `com.ugf.editortools` to `2.14.0` and `"com.ugf.runtimetools` to `2.18.0` versions.
+    - Update package _Unity_ version to `2022.2`.
+    - Add missing selection preview for collections.
+
 ## [2.0.0-preview.1](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/2.0.0-preview.1) - 2022-07-27  
 
 ### Release Notes
