@@ -1,4 +1,5 @@
-﻿using UGF.RuntimeTools.Editor.Tables;
+﻿using UGF.EditorTools.Editor.IMGUI;
+using UGF.RuntimeTools.Editor.Tables;
 using UnityEditor;
 
 namespace UGF.Module.Locale.Editor
@@ -6,6 +7,7 @@ namespace UGF.Module.Locale.Editor
     public class LocaleTableDrawer : TableDrawer
     {
         private LocaleTableEntryValueListDrawer m_selectedListValues;
+        private ReorderableListSelectionDrawerByPathGlobalId m_selectedListValuesSelection;
 
         public LocaleTableDrawer(SerializedProperty serializedProperty) : base(serializedProperty)
         {
@@ -20,7 +22,14 @@ namespace UGF.Module.Locale.Editor
             propertyValues.isExpanded = true;
 
             m_selectedListValues = new LocaleTableEntryValueListDrawer(propertyValues);
+
+            m_selectedListValuesSelection = new ReorderableListSelectionDrawerByPathGlobalId(m_selectedListValues, "m_locale")
+            {
+                Drawer = { DisplayTitlebar = true }
+            };
+
             m_selectedListValues.Enable();
+            m_selectedListValuesSelection.Enable();
         }
 
         protected override void OnDeselect(int index, SerializedProperty propertyEntry)
@@ -28,30 +37,15 @@ namespace UGF.Module.Locale.Editor
             base.OnDeselect(index, propertyEntry);
 
             m_selectedListValues.Disable();
+            m_selectedListValuesSelection.Disable();
             m_selectedListValues = null;
+            m_selectedListValuesSelection = null;
         }
 
-        protected override void OnDraw(int index, SerializedProperty propertyEntry)
+        protected override void DrawEntryProperties(int index, SerializedProperty propertyEntry)
         {
-            SerializedProperty propertyId = propertyEntry.FindPropertyRelative("m_id");
-            SerializedProperty propertyName = propertyEntry.FindPropertyRelative("m_name");
-
-            if (ShowIndexes)
-            {
-                using (new EditorGUI.DisabledScope(true))
-                {
-                    EditorGUILayout.IntField("Index", SelectedIndex);
-                }
-            }
-
-            using (new EditorGUI.DisabledScope(!UnlockIds))
-            {
-                EditorGUILayout.PropertyField(propertyId);
-            }
-
-            EditorGUILayout.PropertyField(propertyName);
-
             m_selectedListValues.DrawGUILayout();
+            m_selectedListValuesSelection.DrawGUILayout();
         }
     }
 }
