@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.1.0](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/2.1.0) - 2023-04-08  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-module-locale/milestone/8?closed=1)  
+    
+
+### Added
+
+- Add set system locale on initialize ([#16](https://github.com/unity-game-framework/ugf-module-locale/issues/16))  
+    - Update dependencies: `com.ugf.application` to `8.5.0` version.
+    - Add `LocaleModuleDescription.SelectLocaleBySystemLanguageOnInitialize` property used to determine whether to setup locale on initialize based on system language.
+    - Add `LocaleModule.TryGetLocaleBySystemLanguage()` method used to get locale id and description by system language.
+    - Add `LocaleModule.TryGetLocaleByCultureInfo()` method used to get locale id and description by culture info.
+    - Change `LocaleModuleDescription` class to use constructor instead of read-write properties.
+
 ## [2.0.0](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/2.0.0) - 2023-01-04  
 
 ### Release Notes
