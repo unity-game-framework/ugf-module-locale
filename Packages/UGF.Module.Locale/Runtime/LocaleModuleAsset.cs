@@ -12,6 +12,7 @@ namespace UGF.Module.Locale.Runtime
     {
         [AssetId(typeof(LocaleDescriptionAsset))]
         [SerializeField] private GlobalId m_defaultLocale;
+        [SerializeField] private bool m_selectLocaleBySystemLanguageOnInitialize;
         [SerializeField] private bool m_unloadEntriesOnUninitialize = true;
         [SerializeField] private List<AssetIdReference<LocaleDescriptionAsset>> m_locales = new List<AssetIdReference<LocaleDescriptionAsset>>();
         [SerializeField] private List<AssetIdReference<LocaleTableDescriptionAsset>> m_tables = new List<AssetIdReference<LocaleTableDescriptionAsset>>();
@@ -19,6 +20,7 @@ namespace UGF.Module.Locale.Runtime
         [SerializeField] private List<GlobalId> m_preloadTablesAsync = new List<GlobalId>();
 
         public GlobalId DefaultLocale { get { return m_defaultLocale; } set { m_defaultLocale = value; } }
+        public bool SelectLocaleBySystemLanguageOnInitialize { get { return m_selectLocaleBySystemLanguageOnInitialize; } set { m_selectLocaleBySystemLanguageOnInitialize = value; } }
         public bool UnloadEntriesOnUninitialize { get { return m_unloadEntriesOnUninitialize; } set { m_unloadEntriesOnUninitialize = value; } }
         public List<AssetIdReference<LocaleDescriptionAsset>> Locales { get { return m_locales; } }
         public List<AssetIdReference<LocaleTableDescriptionAsset>> Tables { get { return m_tables; } }
@@ -56,6 +58,7 @@ namespace UGF.Module.Locale.Runtime
             return new LocaleModuleDescription(
                 typeof(LocaleModule),
                 m_defaultLocale,
+                m_selectLocaleBySystemLanguageOnInitialize,
                 m_unloadEntriesOnUninitialize,
                 locales,
                 tables,

@@ -47,11 +47,19 @@ namespace UGF.Module.Locale.Runtime
                 Tables.Add(key, value);
             }
 
-            SetCurrentLocale(Description.DefaultLocaleId);
+            if (Description.SelectLocaleBySystemLanguageOnInitialize
+                && TryGetLocaleBySystemLanguage(UnityEngine.Application.systemLanguage, out GlobalId localeId, out _))
+            {
+                SetCurrentLocale(localeId);
+            }
+            else
+            {
+                SetCurrentLocale(Description.DefaultLocaleId);
+            }
 
             Log.Debug("Locale Module initialized", new
             {
-                defaultLocaleId = Description.DefaultLocaleId,
+                CurrentLocaleId,
                 locales = Description.Locales.Count,
                 tables = Description.Tables.Count
             });
