@@ -1,16 +1,36 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UGF.Application.Runtime;
-using UGF.Builder.Runtime;
 using UGF.EditorTools.Runtime.Ids;
 
 namespace UGF.Module.Locale.Runtime
 {
     public class LocaleModuleDescription : ApplicationModuleDescription
     {
-        public GlobalId DefaultLocaleId { get; set; }
-        public bool UnloadEntriesOnUninitialize { get; set; }
-        public Dictionary<GlobalId, IBuilder<LocaleDescription>> Locales { get; } = new Dictionary<GlobalId, IBuilder<LocaleDescription>>();
-        public Dictionary<GlobalId, IBuilder<LocaleTableDescription>> Tables { get; } = new Dictionary<GlobalId, IBuilder<LocaleTableDescription>>();
-        public List<GlobalId> PreloadTablesAsync { get; } = new List<GlobalId>();
+        public GlobalId DefaultLocaleId { get; }
+        public bool SelectLocaleBySystemLanguageOnInitialize { get; }
+        public bool UnloadEntriesOnUninitialize { get; }
+        public IReadOnlyDictionary<GlobalId, LocaleDescription> Locales { get; }
+        public IReadOnlyDictionary<GlobalId, LocaleTableDescription> Tables { get; }
+        public IReadOnlyList<GlobalId> PreloadTablesAsync { get; }
+
+        public LocaleModuleDescription(
+            Type registerType,
+            GlobalId defaultLocaleId,
+            bool selectLocaleBySystemLanguageOnInitialize,
+            bool unloadEntriesOnUninitialize,
+            IReadOnlyDictionary<GlobalId, LocaleDescription> locales,
+            IReadOnlyDictionary<GlobalId, LocaleTableDescription> tables,
+            IReadOnlyList<GlobalId> preloadTablesAsync) : base(registerType)
+        {
+            if (!defaultLocaleId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(defaultLocaleId));
+
+            DefaultLocaleId = defaultLocaleId;
+            SelectLocaleBySystemLanguageOnInitialize = selectLocaleBySystemLanguageOnInitialize;
+            UnloadEntriesOnUninitialize = unloadEntriesOnUninitialize;
+            Locales = locales ?? throw new ArgumentNullException(nameof(locales));
+            Tables = tables ?? throw new ArgumentNullException(nameof(tables));
+            PreloadTablesAsync = preloadTablesAsync ?? throw new ArgumentNullException(nameof(preloadTablesAsync));
+        }
     }
 }

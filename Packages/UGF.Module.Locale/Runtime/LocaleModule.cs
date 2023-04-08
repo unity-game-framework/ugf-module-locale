@@ -1,13 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using UGF.Application.Runtime;
-using UGF.Builder.Runtime;
 using UGF.EditorTools.Runtime.Ids;
 using UGF.Logs.Runtime;
 using UGF.Module.Assets.Runtime;
 using UGF.RuntimeTools.Runtime.Providers;
+using UnityEngine;
 
 namespace UGF.Module.Locale.Runtime
 {
@@ -36,21 +37,29 @@ namespace UGF.Module.Locale.Runtime
             Tables.Added += OnTableAdded;
             Tables.Removed += OnTableRemoved;
 
-            foreach ((GlobalId key, IBuilder<LocaleDescription> value) in Description.Locales)
+            foreach ((GlobalId key, LocaleDescription value) in Description.Locales)
             {
-                Locales.Add(key, value.Build());
+                Locales.Add(key, value);
             }
 
-            foreach ((GlobalId key, IBuilder<LocaleTableDescription> value) in Description.Tables)
+            foreach ((GlobalId key, LocaleTableDescription value) in Description.Tables)
             {
-                Tables.Add(key, value.Build());
+                Tables.Add(key, value);
             }
 
-            SetCurrentLocale(Description.DefaultLocaleId);
+            if (Description.SelectLocaleBySystemLanguageOnInitialize
+                && TryGetLocaleBySystemLanguage(UnityEngine.Application.systemLanguage, out GlobalId localeId, out _))
+            {
+                SetCurrentLocale(localeId);
+            }
+            else
+            {
+                SetCurrentLocale(Description.DefaultLocaleId);
+            }
 
             Log.Debug("Locale Module initialized", new
             {
-                defaultLocaleId = Description.DefaultLocaleId,
+                CurrentLocaleId,
                 locales = Description.Locales.Count,
                 tables = Description.Tables.Count
             });
@@ -326,6 +335,42 @@ namespace UGF.Module.Locale.Runtime
             }
 
             value = default;
+            return false;
+        }
+
+        public bool TryGetLocaleBySystemLanguage(SystemLanguage language, out GlobalId id, out LocaleDescription description)
+        {
+            foreach ((GlobalId localeId, LocaleDescription localeDescription) in Locales.Entries)
+            {
+                if (localeDescription.SystemLanguage == language)
+                {
+                    id = localeId;
+                    description = localeDescription;
+                    return true;
+                }
+            }
+
+            id = default;
+            description = default;
+            return false;
+        }
+
+        public bool TryGetLocaleByCultureInfo(CultureInfo cultureInfo, out GlobalId id, out LocaleDescription description)
+        {
+            if (cultureInfo == null) throw new ArgumentNullException(nameof(cultureInfo));
+
+            foreach ((GlobalId localeId, LocaleDescription localeDescription) in Locales.Entries)
+            {
+                if (localeDescription.CultureInfo.Equals(cultureInfo))
+                {
+                    id = localeId;
+                    description = localeDescription;
+                    return true;
+                }
+            }
+
+            id = default;
+            description = default;
             return false;
         }
 

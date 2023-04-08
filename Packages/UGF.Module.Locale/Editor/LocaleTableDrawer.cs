@@ -4,7 +4,7 @@ using UnityEditor;
 
 namespace UGF.Module.Locale.Editor
 {
-    public class LocaleTableDrawer : TableDrawer
+    internal class LocaleTableDrawer : TableDrawer
     {
         private LocaleTableEntryValueListDrawer m_selectedListValues;
         private ReorderableListSelectionDrawerByPathGlobalId m_selectedListValuesSelection;
