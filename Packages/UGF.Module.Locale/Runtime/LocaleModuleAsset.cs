@@ -26,25 +26,22 @@ namespace UGF.Module.Locale.Runtime
 
         protected override IApplicationModuleDescription OnBuildDescription()
         {
-            var description = new LocaleModuleDescription
-            {
-                RegisterType = typeof(LocaleModule),
-                DefaultLocaleId = m_defaultLocale,
-                UnloadEntriesOnUninitialize = m_unloadEntriesOnUninitialize
-            };
+            var locales = new Dictionary<GlobalId, LocaleDescription>();
+            var tables = new Dictionary<GlobalId, LocaleTableDescription>();
+            var preloadTableAsync = new List<GlobalId>();
 
             for (int i = 0; i < m_locales.Count; i++)
             {
                 AssetIdReference<LocaleDescriptionAsset> reference = m_locales[i];
 
-                description.Locales.Add(reference.Guid, reference.Asset);
+                locales.Add(reference.Guid, reference.Asset.Build());
             }
 
             for (int i = 0; i < m_tables.Count; i++)
             {
                 AssetIdReference<LocaleTableDescriptionAsset> reference = m_tables[i];
 
-                description.Tables.Add(reference.Guid, reference.Asset);
+                tables.Add(reference.Guid, reference.Asset.Build());
             }
 
             for (int i = 0; i < m_preloadTablesAsync.Count; i++)
@@ -53,10 +50,17 @@ namespace UGF.Module.Locale.Runtime
 
                 if (!id.IsValid()) throw new ArgumentException("Value should be valid.", nameof(id));
 
-                description.PreloadTablesAsync.Add(id);
+                preloadTableAsync.Add(id);
             }
 
-            return description;
+            return new LocaleModuleDescription(
+                typeof(LocaleModule),
+                m_defaultLocale,
+                m_unloadEntriesOnUninitialize,
+                locales,
+                tables,
+                preloadTableAsync
+            );
         }
 
         protected override LocaleModule OnBuild(LocaleModuleDescription description, IApplication application)
