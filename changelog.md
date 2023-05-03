@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.2.0](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/2.2.0) - 2023-05-03  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-module-locale/milestone/9?closed=1)  
+    
+
+### Added
+
+- Add locale table description collection asset ([#20](https://github.com/unity-game-framework/ugf-module-locale/issues/20))  
+    - Add `LocaleTableDescriptionCollectionAsset` abstract class as collection of `LocaleTableDescription` assets.
+    - Add `LocaleTableDescriptionCollectionListAsset` class as default implementation of `LocaleTableDescriptionCollectionAsset` used to store collection of `LocaleTableDescriptionAsset` assets.
+    - Add `LocaleModuleAsset.Collections` property as collections of `LocaleTableDescriptionCollectionAsset` assets.
+    - Change `LocaleModuleAssetEditor` class editor to support _Replacement_ feature for _Locales_ and _Tables_ collections.
+- Add locale table description update button ([#18](https://github.com/unity-game-framework/ugf-module-locale/issues/18))  
+    - Update dependencies: `com.ugf.module.assets` to `5.1.0` version.
+    - Add `LocaleTableDescriptionAsset` class inspector button to update entries from table registered at _Locale_ project settings.
+
 ## [2.1.0](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/2.1.0) - 2023-04-08  
 
 ### Release Notes
