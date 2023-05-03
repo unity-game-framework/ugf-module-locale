@@ -15,6 +15,7 @@ MonoBehaviour:
   m_defaultLocale:
     m_first: 2951096710913487352
     m_second: 1047087608853324058
+  m_selectLocaleBySystemLanguageOnInitialize: 0
   m_unloadEntriesOnUninitialize: 1
   m_locales:
   - m_guid:
@@ -42,6 +43,7 @@ MonoBehaviour:
       m_first: 13268980966264980799
       m_second: 5629753433244335096
     m_asset: {fileID: 11400000, guid: 01a4c53fe3e3b824f87b9079ebe6204e, type: 2}
+  m_collections: []
   m_preloadTablesAsync:
   - m_first: 8314801454775519368
     m_second: 11053258004443304009
