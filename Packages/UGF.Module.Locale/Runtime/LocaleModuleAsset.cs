@@ -16,6 +16,7 @@ namespace UGF.Module.Locale.Runtime
         [SerializeField] private bool m_unloadEntriesOnUninitialize = true;
         [SerializeField] private List<AssetIdReference<LocaleDescriptionAsset>> m_locales = new List<AssetIdReference<LocaleDescriptionAsset>>();
         [SerializeField] private List<AssetIdReference<LocaleTableDescriptionAsset>> m_tables = new List<AssetIdReference<LocaleTableDescriptionAsset>>();
+        [SerializeField] private List<LocaleTableDescriptionCollectionAsset> m_collections = new List<LocaleTableDescriptionCollectionAsset>();
         [AssetId(typeof(LocaleTableDescriptionAsset))]
         [SerializeField] private List<GlobalId> m_preloadTablesAsync = new List<GlobalId>();
 
@@ -24,6 +25,7 @@ namespace UGF.Module.Locale.Runtime
         public bool UnloadEntriesOnUninitialize { get { return m_unloadEntriesOnUninitialize; } set { m_unloadEntriesOnUninitialize = value; } }
         public List<AssetIdReference<LocaleDescriptionAsset>> Locales { get { return m_locales; } }
         public List<AssetIdReference<LocaleTableDescriptionAsset>> Tables { get { return m_tables; } }
+        public List<LocaleTableDescriptionCollectionAsset> Collections { get { return m_collections; } }
         public List<GlobalId> PreloadTablesAsync { get { return m_preloadTablesAsync; } }
 
         protected override IApplicationModuleDescription OnBuildDescription()
@@ -44,6 +46,13 @@ namespace UGF.Module.Locale.Runtime
                 AssetIdReference<LocaleTableDescriptionAsset> reference = m_tables[i];
 
                 tables.Add(reference.Guid, reference.Asset.Build());
+            }
+
+            for (int i = 0; i < m_collections.Count; i++)
+            {
+                LocaleTableDescriptionCollectionAsset collection = m_collections[i];
+
+                collection.GetTableDescriptions(tables);
             }
 
             for (int i = 0; i < m_preloadTablesAsync.Count; i++)
