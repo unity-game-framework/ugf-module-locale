@@ -231,10 +231,8 @@ namespace UGF.Module.Locale.Runtime
         {
             if (!entriesId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(entriesId));
 
-            if (Entries.Entries.ContainsKey(entriesId))
+            if (Entries.Remove(entriesId))
             {
-                Entries.Remove(entriesId);
-
                 object asset = AssetModule.Tracker.Get(entriesId).Asset;
 
                 AssetModule.Unload(entriesId, asset);
@@ -249,10 +247,8 @@ namespace UGF.Module.Locale.Runtime
         {
             if (!entriesId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(entriesId));
 
-            if (Entries.Entries.ContainsKey(entriesId))
+            if (Entries.Remove(entriesId))
             {
-                Entries.Remove(entriesId);
-
                 object asset = AssetModule.Tracker.Get(entriesId).Asset;
 
                 await AssetModule.UnloadAsync(entriesId, asset);
