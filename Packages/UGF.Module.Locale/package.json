@@ -20,6 +20,6 @@
   },
   "dependencies": {
     "com.ugf.application": "8.5.0",
-    "com.ugf.module.assets": "5.0.0"
+    "com.ugf.module.assets": "5.1.0"
   }
 }
