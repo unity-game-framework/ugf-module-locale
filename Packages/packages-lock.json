@@ -111,12 +111,13 @@
       "dependencies": {
         "com.ugf.application": "8.5.0",
         "com.ugf.module.assets": "5.1.0",
-        "com.ugf.csv": "1.0.2"
+        "com.ugf.csv": "1.0.2",
+        "com.ugf.runtimetools": "2.19.0"
       }
     },
     "com.ugf.runtimetools": {
-      "version": "2.18.0",
-      "depth": 2,
+      "version": "2.19.0",
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.ugf.editortools": "2.11.0"
