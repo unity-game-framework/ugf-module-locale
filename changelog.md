@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [2.3.0](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/2.3.0) - 2023-06-17  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-module-locale/milestone/10?closed=1)  
+    
+
+### Added
+
+- Add csv import and export ([#14](https://github.com/unity-game-framework/ugf-module-locale/issues/14))  
+    - Update dependencies: `com.ugf.runtimetools` to `2.19.0` and add `com.ugf.csv` of  `1.0.2` version.
+    - Update package _Unity_ version to `2022.3`.
+    - Add _Locale Table_ import and export from _Locale_ project settings.
+    - Add `ILocaleTableEntry.TryGet()` method and overload used to get value by locale id.
+    - Add `LocaleEditorUtility.CsvImport()` and `CsvExport()` methods to import or export locale table from csv files.
+
 ## [2.2.0](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/2.2.0) - 2023-05-03  
 
 ### Release Notes
