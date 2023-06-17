@@ -2,7 +2,7 @@
   "name": "com.ugf.module.locale",
   "displayName": "UGF.Module.Locale",
   "version": "2.2.0",
-  "unity": "2022.2",
+  "unity": "2022.3",
   "apiCompatibility": ".NET Standard 2.1",
   "description": "Module to manager language and other locale.",
   "author": {
@@ -20,6 +20,8 @@
   },
   "dependencies": {
     "com.ugf.application": "8.5.0",
-    "com.ugf.module.assets": "5.1.0"
+    "com.ugf.module.assets": "5.1.0",
+    "com.ugf.csv": "1.0.2",
+    "com.ugf.runtimetools": "2.19.0"
   }
 }

@@ -35,6 +35,13 @@
       "dependencies": {},
       "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
     },
+    "com.ugf.csv": {
+      "version": "1.0.2",
+      "depth": 1,
+      "source": "registry",
+      "dependencies": {},
+      "url": "https://unitygameframework.jfrog.io/artifactory/api/npm/default"
+    },
     "com.ugf.customsettings": {
       "version": "3.4.1",
       "depth": 3,
@@ -103,12 +110,14 @@
       "source": "embedded",
       "dependencies": {
         "com.ugf.application": "8.5.0",
-        "com.ugf.module.assets": "5.1.0"
+        "com.ugf.module.assets": "5.1.0",
+        "com.ugf.csv": "1.0.2",
+        "com.ugf.runtimetools": "2.19.0"
       }
     },
     "com.ugf.runtimetools": {
-      "version": "2.18.0",
-      "depth": 2,
+      "version": "2.19.0",
+      "depth": 1,
       "source": "registry",
       "dependencies": {
         "com.ugf.editortools": "2.11.0"
@@ -123,7 +132,7 @@
       "url": "https://packages.unity.com"
     },
     "com.unity.ide.rider": {
-      "version": "3.0.21",
+      "version": "3.0.24",
       "depth": 0,
       "source": "registry",
       "dependencies": {

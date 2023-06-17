@@ -31,6 +31,31 @@ namespace UGF.Module.Locale.Editor
             LocaleEditorUtility.UpdateEntries(entry.Description, entry.Table);
         }
 
+        public static void CsvImport(int index)
+        {
+            LocaleEditorSettingsData data = Settings.GetData();
+            LocaleEditorSettingsData.CsvEntry entry = data.Csv[index];
+
+            if (entry.Csv == null) throw new ArgumentException("Locale csv import asset not specified.");
+
+            string path = AssetDatabase.GetAssetPath(entry.Csv);
+
+            LocaleEditorUtility.CsvImport(entry.Table, path, data.Locales);
+        }
+
+        public static void CsvExport(int index)
+        {
+            LocaleEditorSettingsData data = Settings.GetData();
+            LocaleEditorSettingsData.CsvEntry entry = data.Csv[index];
+
+            if (entry.Csv == null) throw new ArgumentException("Locale csv export asset not specified.");
+
+            string path = AssetDatabase.GetAssetPath(entry.Csv);
+
+            LocaleEditorUtility.CsvExport(entry.Table, path, data.Locales);
+            AssetDatabase.ImportAsset(path);
+        }
+
         public static bool TryGetTable(LocaleTableDescriptionAsset description, out LocaleTableAsset table, out int index)
         {
             if (description == null) throw new ArgumentNullException(nameof(description));
