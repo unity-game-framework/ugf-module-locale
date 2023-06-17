@@ -86,7 +86,7 @@ namespace UGF.Module.Locale.Editor
                 DataRow row = dataTable.Rows[i];
                 string name = (string)row["name"];
 
-                if (!OnTryGetTableEntryByName(table, name, out LocaleTableEntry<string> entry))
+                if (!table.TryGetByName(name, out LocaleTableEntry<string> entry))
                 {
                     entry = new LocaleTableEntry<string>
                     {
@@ -154,24 +154,6 @@ namespace UGF.Module.Locale.Editor
             data.DefaultView.Sort = "name";
 
             return data.DefaultView.ToTable();
-        }
-
-        private static bool OnTryGetTableEntryByName<T>(ITable table, string name, out T entry) where T : class, ITableEntry
-        {
-            if (table == null) throw new ArgumentNullException(nameof(table));
-            if (string.IsNullOrEmpty(name)) throw new ArgumentException("Value cannot be null or empty.", nameof(name));
-
-            foreach (ITableEntry tableEntry in table.Entries)
-            {
-                if (tableEntry.Name == name)
-                {
-                    entry = (T)tableEntry;
-                    return true;
-                }
-            }
-
-            entry = default;
-            return false;
         }
     }
 }
