@@ -17,5 +17,33 @@ namespace UGF.Module.Locale.Runtime
         public List<LocaleTableEntryValue<TValue>> Values { get { return m_values; } }
 
         IEnumerable<ILocaleTableEntryValue> ILocaleTableEntry.Values { get { return m_values; } }
+
+        public bool TryGet<T>(GlobalId localeId, out T value) where T : class, ILocaleTableEntryValue
+        {
+            if (TryGet(localeId, out ILocaleTableEntryValue result))
+            {
+                value = (T)result;
+                return true;
+            }
+
+            value = default;
+            return false;
+        }
+
+        public bool TryGet(GlobalId localeId, out ILocaleTableEntryValue value)
+        {
+            for (int i = 0; i < m_values.Count; i++)
+            {
+                value = m_values[i];
+
+                if (value.LocaleId == localeId)
+                {
+                    return true;
+                }
+            }
+
+            value = default;
+            return false;
+        }
     }
 }

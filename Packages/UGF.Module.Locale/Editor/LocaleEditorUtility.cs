@@ -103,7 +103,7 @@ namespace UGF.Module.Locale.Editor
                     string localePath = AssetDatabase.GetAssetPath(locale);
                     GlobalId localeId = GlobalId.Parse(AssetDatabase.AssetPathToGUID(localePath));
 
-                    if (!OnTryGetTableEntryValueByLocaleId(entry, localeId, out LocaleTableEntryValue<string> entryValue))
+                    if (!entry.TryGet(localeId, out LocaleTableEntryValue<string> entryValue))
                     {
                         entryValue = new LocaleTableEntryValue<string>
                         {
@@ -171,26 +171,6 @@ namespace UGF.Module.Locale.Editor
             }
 
             entry = default;
-            return false;
-        }
-
-        private static bool OnTryGetTableEntryValueByLocaleId(LocaleTableEntry<string> entry, GlobalId localeId, out LocaleTableEntryValue<string> entryValue)
-        {
-            if (entry == null) throw new ArgumentNullException(nameof(entry));
-            if (!localeId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(localeId));
-
-            for (int i = 0; i < entry.Values.Count; i++)
-            {
-                LocaleTableEntryValue<string> value = entry.Values[i];
-
-                if (value.LocaleId == localeId)
-                {
-                    entryValue = value;
-                    return true;
-                }
-            }
-
-            entryValue = default;
             return false;
         }
     }
