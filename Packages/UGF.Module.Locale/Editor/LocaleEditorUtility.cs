@@ -70,15 +70,18 @@ namespace UGF.Module.Locale.Editor
 
         public static void UpdateFromDataTable(LocaleTableAsset localeTable, DataTable dataTable, IReadOnlyList<LocaleDescriptionAsset> locales, bool clear = false)
         {
+            UpdateFromDataTable((LocaleTable<string>)localeTable.Get(), dataTable, locales, clear);
+        }
+
+        public static void UpdateFromDataTable(LocaleTable<string> localeTable, DataTable dataTable, IReadOnlyList<LocaleDescriptionAsset> locales, bool clear = false)
+        {
             if (localeTable == null) throw new ArgumentNullException(nameof(localeTable));
             if (dataTable == null) throw new ArgumentNullException(nameof(dataTable));
             if (locales == null) throw new ArgumentNullException(nameof(locales));
 
-            var table = (LocaleTable<string>)localeTable.Get();
-
             if (clear)
             {
-                table.Entries.Clear();
+                localeTable.Entries.Clear();
             }
 
             for (int i = 0; i < dataTable.Rows.Count; i++)
@@ -86,7 +89,7 @@ namespace UGF.Module.Locale.Editor
                 DataRow row = dataTable.Rows[i];
                 string name = (string)row["name"];
 
-                if (!table.TryGetByName(name, out LocaleTableEntry<string> entry))
+                if (!localeTable.TryGetByName(name, out LocaleTableEntry<string> entry))
                 {
                     entry = new LocaleTableEntry<string>
                     {
@@ -94,7 +97,7 @@ namespace UGF.Module.Locale.Editor
                         Name = name
                     };
 
-                    table.Entries.Add(entry);
+                    localeTable.Entries.Add(entry);
                 }
 
                 foreach (LocaleDescriptionAsset locale in locales.OrderBy(x => x.CultureName))
