@@ -1,0 +1,71 @@
+fileFormatVersion: 2
+guid: 2675d5982c34f6044b845fbe0e5ac418
+importerOverride:
+  nativeImporterType: 2089858483
+  scriptedImporterType:
+    serializedVersion: 2
+    Hash: 58faa27b8be8669183b233abb942ac38
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: e49eb78591b2462eaa930cfc37cc88aa, type: 3}
+  useLocalesFromProjectSettings: 1
+  locales: []
+  tableClearOnImport: 0
+  table:
+    entries:
+    - id:
+        first: 5604457898919530129
+        second: 15808470347404045502
+      name: Goodbye
+      values:
+      - locale:
+          first: 2951096710913487352
+          second: 1047087608853324058
+        value: Goodbye
+      - locale:
+          first: 2338495512168334432
+          second: 16580759713615790074
+        value: Au revoir
+      - locale:
+          first: 15871881787546467002
+          second: 14413373574116956441
+        value: "\u518D\u89C1"
+    - id:
+        first: 5148755474747070313
+        second: 10366125735042609076
+      name: GoodMorning
+      values:
+      - locale:
+          first: 2951096710913487352
+          second: 1047087608853324058
+        value: Good morning!
+      - locale:
+          first: 2338495512168334432
+          second: 16580759713615790074
+        value: Bonjour!
+      - locale:
+          first: 15871881787546467002
+          second: 14413373574116956441
+        value: "\u65E9\u4E0A\u597D\uFF01"
+    - id:
+        first: 5668893791052531417
+        second: 3863955052257476755
+      name: Test
+      values:
+      - locale:
+          first: 2951096710913487352
+          second: 1047087608853324058
+        value: EN
+      - locale:
+          first: 2338495512168334432
+          second: 16580759713615790074
+        value: FR
+      - locale:
+          first: 15871881787546467002
+          second: 14413373574116956441
+        value: ZH
