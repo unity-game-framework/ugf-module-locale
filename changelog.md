@@ -5,6 +5,24 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0-preview](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/3.0.0-preview) - 2023-11-20  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-module-locale/milestone/12?closed=1)  
+    
+
+### Added
+
+- Add locale description auto update ([#25](https://github.com/unity-game-framework/ugf-module-locale/issues/25))  
+    - Add `LocaleEditorSettingsData.TablesUpdateOnPostprocess` and `TablesUpdateOnBuild` properties to determines whether to update tables on asset postprocessing or before a player build.
+- Add csv asset importer ([#24](https://github.com/unity-game-framework/ugf-module-locale/issues/24))  
+    - Update dependencies: `com.ugf.module.assets` to `6.0.0-preview` and `com.ugf.runtimetools` to `3.0.0-preview` versions.
+    - Update package _Unity_ version to `2023.2`.
+    - Update package registry to _UPM Hub_.
+    - Add `LocaleTableCsvAssetImporter` class as additional asset import for `csv` files into `LocaleTableTextAsset`.
+    - Add `LocaleEditorUtility.UpdateFromDataTable()` method overload to update locales to the table directly.
+
 ## [2.3.0](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/2.3.0) - 2023-06-17  
 
 ### Release Notes
