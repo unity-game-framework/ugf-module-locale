@@ -48,3 +48,20 @@ MonoBehaviour:
           m_first: 15871881787546467002
           m_second: 14413373574116956441
         m_value: "\u518D\u89C1"
+    - m_id:
+        m_first: 5303727812042224561
+        m_second: 5888192442199005336
+      m_name: Goodbye_1
+      m_values:
+      - m_locale:
+          m_first: 2951096710913487352
+          m_second: 1047087608853324058
+        m_value: Goodbye
+      - m_locale:
+          m_first: 2338495512168334432
+          m_second: 16580759713615790074
+        m_value: Au revoir
+      - m_locale:
+          m_first: 15871881787546467002
+          m_second: 14413373574116956441
+        m_value: "\u518D\u89C1"

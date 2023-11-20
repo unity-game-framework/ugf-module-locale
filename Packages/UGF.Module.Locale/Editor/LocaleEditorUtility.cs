@@ -23,7 +23,6 @@ namespace UGF.Module.Locale.Editor
             UpdateFromDataTable(localeTable, data, locales);
 
             EditorUtility.SetDirty(localeTable);
-            AssetDatabase.SaveAssets();
         }
 
         public static void CsvExport(LocaleTableAsset localeTable, string path, IReadOnlyList<LocaleDescriptionAsset> locales)
@@ -34,8 +33,6 @@ namespace UGF.Module.Locale.Editor
             string csv = CsvUtility.ToCsv(data);
 
             File.WriteAllText(path, csv);
-
-            AssetDatabase.SaveAssets();
         }
 
         public static void UpdateEntries(LocaleTableDescriptionAsset tableDescriptionAsset, LocaleTableAsset tableAsset)
@@ -64,8 +61,6 @@ namespace UGF.Module.Locale.Editor
                     EditorUtility.SetDirty(asset);
                 }
             }
-
-            AssetDatabase.SaveAssets();
         }
 
         public static void UpdateFromDataTable(LocaleTableAsset localeTable, DataTable dataTable, IReadOnlyList<LocaleDescriptionAsset> locales, bool clear = false)
