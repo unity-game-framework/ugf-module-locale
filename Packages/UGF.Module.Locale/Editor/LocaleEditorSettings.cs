@@ -29,6 +29,7 @@ namespace UGF.Module.Locale.Editor
             LocaleEditorSettingsData.TableEntry entry = data.Tables[index];
 
             LocaleEditorUtility.UpdateEntries(entry.Description, entry.Table);
+            AssetDatabase.SaveAssets();
         }
 
         public static void CsvImport(int index)
@@ -41,6 +42,7 @@ namespace UGF.Module.Locale.Editor
             string path = AssetDatabase.GetAssetPath(entry.Csv);
 
             LocaleEditorUtility.CsvImport(entry.Table, path, data.Locales);
+            AssetDatabase.SaveAssets();
         }
 
         public static void CsvExport(int index)

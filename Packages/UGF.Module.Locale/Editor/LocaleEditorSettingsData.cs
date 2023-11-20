@@ -9,10 +9,14 @@ namespace UGF.Module.Locale.Editor
     public class LocaleEditorSettingsData : CustomSettingsData
     {
         [SerializeField] private List<LocaleDescriptionAsset> m_locales = new List<LocaleDescriptionAsset>();
+        [SerializeField] private bool m_tablesUpdateOnPostprocess = true;
+        [SerializeField] private bool m_tablesUpdateOnBuild = true;
         [SerializeField] private List<TableEntry> m_tables = new List<TableEntry>();
         [SerializeField] private List<CsvEntry> m_csv = new List<CsvEntry>();
 
         public List<LocaleDescriptionAsset> Locales { get { return m_locales; } }
+        public bool TablesUpdateOnPostprocess { get { return m_tablesUpdateOnPostprocess; } set { m_tablesUpdateOnPostprocess = value; } }
+        public bool TablesUpdateOnBuild { get { return m_tablesUpdateOnBuild; } set { m_tablesUpdateOnBuild = value; } }
         public List<TableEntry> Tables { get { return m_tables; } }
         public List<CsvEntry> Csv { get { return m_csv; } }
 
@@ -25,7 +29,7 @@ namespace UGF.Module.Locale.Editor
             public LocaleTableAsset Table { get { return m_table; } set { m_table = value; } }
             public LocaleTableDescriptionAsset Description { get { return m_description; } set { m_description = value; } }
         }
-        
+
         [Serializable]
         public class CsvEntry
         {
