@@ -69,3 +69,20 @@ ScriptedImporter:
           first: 15871881787546467002
           second: 14413373574116956441
         value: ZH
+    - id:
+        first: 5665816674464931182
+        second: 10452471965940329870
+      name: Test_1
+      values:
+      - locale:
+          first: 2951096710913487352
+          second: 1047087608853324058
+        value: EN 2
+      - locale:
+          first: 2338495512168334432
+          second: 16580759713615790074
+        value: FR
+      - locale:
+          first: 15871881787546467002
+          second: 14413373574116956441
+        value: ZH
