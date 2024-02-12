@@ -65,10 +65,10 @@ namespace UGF.Module.Locale.Editor
 
         public static void UpdateFromDataTable(LocaleTableAsset localeTable, DataTable dataTable, IReadOnlyList<LocaleDescriptionAsset> locales, bool clear = false)
         {
-            UpdateFromDataTable((LocaleTable<string>)localeTable.Get(), dataTable, locales, clear);
+            UpdateFromDataTable((Table<LocaleTableEntry<string>>)localeTable.Get(), dataTable, locales, clear);
         }
 
-        public static void UpdateFromDataTable(LocaleTable<string> localeTable, DataTable dataTable, IReadOnlyList<LocaleDescriptionAsset> locales, bool clear = false)
+        public static void UpdateFromDataTable(Table<LocaleTableEntry<string>> localeTable, DataTable dataTable, IReadOnlyList<LocaleDescriptionAsset> locales, bool clear = false)
         {
             if (localeTable == null) throw new ArgumentNullException(nameof(localeTable));
             if (dataTable == null) throw new ArgumentNullException(nameof(dataTable));
