@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using UGF.EditorTools.Runtime.Ids;
+using UGF.RuntimeTools.Runtime.Tables;
 using UnityEngine;
 
 namespace UGF.Module.Locale.Runtime
 {
     [Serializable]
+    [TableEntryChildren("m_values")]
     public class LocaleTableEntry<TValue> : ILocaleTableEntry
     {
         [SerializeField] private GlobalId m_id;
