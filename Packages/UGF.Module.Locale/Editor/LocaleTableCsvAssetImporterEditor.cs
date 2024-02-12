@@ -1,24 +1,22 @@
 ﻿using UGF.EditorTools.Editor.IMGUI;
-using UGF.EditorTools.Editor.IMGUI.Scopes;
 using UGF.RuntimeTools.Editor.Tables;
 using UnityEditor;
-using UnityEditor.AssetImporters;
 
 namespace UGF.Module.Locale.Editor
 {
     [CustomEditor(typeof(LocaleTableCsvAssetImporter), true)]
-    internal class LocaleTableCsvAssetImporterEditor : ScriptedImporterEditor
+    internal class LocaleTableCsvAssetImporterEditor : TableAssetImporterEditor
     {
+        private SerializedProperty m_propertyClearOnImport;
         private SerializedProperty m_propertyUseLocalesFromProjectSettings;
         private ReorderableListDrawer m_listLocales;
         private ReorderableListSelectionDrawerByElement m_listLocalesSelection;
-        private SerializedProperty m_propertyTableClearOnImport;
-        private TableDrawer m_drawerTable;
 
         public override void OnEnable()
         {
             base.OnEnable();
 
+            m_propertyClearOnImport = serializedObject.FindProperty("m_clearOnImport");
             m_propertyUseLocalesFromProjectSettings = serializedObject.FindProperty("m_useLocalesFromProjectSettings");
 
             m_listLocales = new ReorderableListDrawer(serializedObject.FindProperty("m_locales"));
@@ -28,13 +26,8 @@ namespace UGF.Module.Locale.Editor
                 Drawer = { DisplayTitlebar = true }
             };
 
-            m_propertyTableClearOnImport = serializedObject.FindProperty("m_tableClearOnImport");
-
-            m_drawerTable = new LocaleTableDrawer(serializedObject.FindProperty("m_table"));
-
             m_listLocales.Enable();
             m_listLocalesSelection.Enable();
-            m_drawerTable.Enable();
         }
 
         public override void OnDisable()
@@ -43,26 +36,17 @@ namespace UGF.Module.Locale.Editor
 
             m_listLocales.Disable();
             m_listLocalesSelection.Disable();
-            m_drawerTable.Disable();
         }
 
-        public override void OnInspectorGUI()
+        protected override void OnDrawProperties()
         {
-            using (new SerializedObjectUpdateScope(serializedObject))
-            {
-                EditorIMGUIUtility.DrawScriptProperty(serializedObject);
+            base.OnDrawProperties();
 
-                EditorGUILayout.PropertyField(m_propertyUseLocalesFromProjectSettings);
+            EditorGUILayout.PropertyField(m_propertyClearOnImport);
+            EditorGUILayout.PropertyField(m_propertyUseLocalesFromProjectSettings);
 
-                m_listLocales.DrawGUILayout();
-
-                EditorGUILayout.PropertyField(m_propertyTableClearOnImport);
-            }
-
-            m_drawerTable.DrawGUILayout();
+            m_listLocales.DrawGUILayout();
             m_listLocalesSelection.DrawGUILayout();
-
-            ApplyRevertGUI();
         }
     }
 }
