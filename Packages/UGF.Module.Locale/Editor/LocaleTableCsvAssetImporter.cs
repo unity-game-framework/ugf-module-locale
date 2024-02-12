@@ -42,6 +42,7 @@ namespace UGF.Module.Locale.Editor
                 : m_locales;
 
             LocaleEditorUtility.UpdateFromDataTable(Table, data, locales, m_clearOnImport);
+            EditorUtility.SetDirty(Table);
         }
 
         protected override void OnExport()
