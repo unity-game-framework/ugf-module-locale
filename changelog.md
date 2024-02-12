@@ -5,6 +5,21 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [3.0.0-preview.1](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/3.0.0-preview.1) - 2024-02-12  
+
+### Release Notes
+
+- [Milestone](https://github.com/unity-game-framework/ugf-module-locale/milestone/13?closed=1)  
+    
+
+### Added
+
+- Add locale table tree display support ([#30](https://github.com/unity-game-framework/ugf-module-locale/issues/30))  
+    - Update dependencies: `com.ugf.module.assets` to `6.0.0-preview.1` and `com.ugf.runtimetools` to `3.0.0-preview.6` versions.
+    - Change `LocaleTableCsvAssetImporter` class to work as `TableAssetImporter<T>` importer.
+    - Change `LocaleTableEntry` class to support table tree children drawing.
+    - Remove `LocaleTable<T>` class, change use `Table<LocaleTableEntry<T>>` instead.
+
 ## [3.0.0-preview](https://github.com/unity-game-framework/ugf-module-locale/releases/tag/3.0.0-preview) - 2023-11-20  
 
 ### Release Notes
