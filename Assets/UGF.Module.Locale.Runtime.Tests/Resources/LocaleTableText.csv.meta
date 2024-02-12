@@ -1,7 +1,14 @@
 fileFormatVersion: 2
 guid: 1633b797912ed924f81d57725a5aaeb6
-TextScriptImporter:
+ScriptedImporter:
+  internalIDToNameTable: []
   externalObjects: {}
+  serializedVersion: 2
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+  script: {fileID: 11500000, guid: e49eb78591b2462eaa930cfc37cc88aa, type: 3}
+  table: {fileID: 11400000, guid: 6a8b7b6052ea0a54d9edbdb39f469cf1, type: 2}
+  clearOnImport: 0
+  useLocalesFromProjectSettings: 1
+  locales: []
