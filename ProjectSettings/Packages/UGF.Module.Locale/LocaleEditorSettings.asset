@@ -16,6 +16,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: afd271f866d228f41a616aeea100880e, type: 2}
   - {fileID: 11400000, guid: 97b2faba4064dc4419593e7ce69606c8, type: 2}
   - {fileID: 11400000, guid: 47a3846001472074fa3f2d641cb11ae6, type: 2}
+  m_tablesUpdateOnPostprocess: 1
+  m_tablesUpdateOnBuild: 1
   m_tables:
   - m_table: {fileID: 11400000, guid: 6a8b7b6052ea0a54d9edbdb39f469cf1, type: 2}
     m_description: {fileID: 11400000, guid: 91cbc8881bde7364491096a5970f6599, type: 2}
@@ -23,8 +25,6 @@ MonoBehaviour:
     m_description: {fileID: 11400000, guid: 01a4c53fe3e3b824f87b9079ebe6204e, type: 2}
   - m_table: {fileID: 11400000, guid: a3a065ba1e8cdfc4c9ac663a0fd71c59, type: 2}
     m_description: {fileID: 11400000, guid: 1a51c9decbea6f542989e54a2014bd36, type: 2}
-  - m_table: {fileID: -6750239444755058063, guid: 2675d5982c34f6044b845fbe0e5ac418, type: 3}
-    m_description: {fileID: 11400000, guid: 12bca9936e8574c4baadf243efae6432, type: 2}
   m_csv:
   - m_table: {fileID: 11400000, guid: 6a8b7b6052ea0a54d9edbdb39f469cf1, type: 2}
     m_csv: {fileID: 4900000, guid: 1633b797912ed924f81d57725a5aaeb6, type: 3}
