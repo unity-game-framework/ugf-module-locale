@@ -15,13 +15,12 @@ namespace UGF.Module.Locale.Runtime
         public IReadOnlyList<GlobalId> PreloadTablesAsync { get; }
 
         public LocaleModuleDescription(
-            Type registerType,
             GlobalId defaultLocaleId,
             bool selectLocaleBySystemLanguageOnInitialize,
             bool unloadEntriesOnUninitialize,
             IReadOnlyDictionary<GlobalId, LocaleDescription> locales,
             IReadOnlyDictionary<GlobalId, LocaleTableDescription> tables,
-            IReadOnlyList<GlobalId> preloadTablesAsync) : base(registerType)
+            IReadOnlyList<GlobalId> preloadTablesAsync)
         {
             if (!defaultLocaleId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(defaultLocaleId));
 
