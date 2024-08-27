@@ -6,7 +6,7 @@ using System.Linq;
 using UGF.Csv.Runtime;
 using UGF.EditorTools.Runtime.Ids;
 using UGF.Module.Locale.Runtime;
-using UGF.RuntimeTools.Runtime.Tables;
+using UGF.Tables.Runtime;
 using UnityEditor;
 
 namespace UGF.Module.Locale.Editor
@@ -131,7 +131,7 @@ namespace UGF.Module.Locale.Editor
                 data.Columns.Add(locale.CultureName);
             }
 
-            foreach (ITableEntry tableEntry in table.Entries)
+            foreach (ITableEntry tableEntry in table.GetEntries())
             {
                 var entry = (ILocaleTableEntry)tableEntry;
                 DataRow row = data.NewRow();

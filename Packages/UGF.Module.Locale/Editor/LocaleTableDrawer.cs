@@ -1,5 +1,5 @@
 ﻿using UGF.EditorTools.Editor.IMGUI;
-using UGF.RuntimeTools.Editor.Tables;
+using UGF.Tables.Editor;
 using UnityEditor;
 
 namespace UGF.Module.Locale.Editor

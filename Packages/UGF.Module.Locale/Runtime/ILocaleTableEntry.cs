@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using UGF.EditorTools.Runtime.Ids;
-using UGF.RuntimeTools.Runtime.Tables;
+using UGF.Tables.Runtime;
 
 namespace UGF.Module.Locale.Runtime
 {
