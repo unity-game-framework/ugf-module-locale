@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace UGF.Module.Locale.Runtime.Tests
 {
+    [LocaleTableTextTreeDrawer]
     [CreateAssetMenu(menuName = "Tests/TestLocaleTableTextDescriptionAsset")]
     public class TestLocaleTableTextDescriptionAsset : LocaleTableDescriptionAsset<TestLocaleTableTextEntry, string, TestLocaleTableTextEntryDescription>
     {
@@ -50,11 +51,8 @@ namespace UGF.Module.Locale.Runtime.Tests
     {
         [SerializeField] private Hash128 m_id;
         [SerializeField] private string m_name;
-        [TextArea(5, 5)]
         [SerializeField] private string m_english;
-        [TextArea(5, 5)]
         [SerializeField] private string m_french;
-        [TextArea(5, 5)]
         [SerializeField] private string m_chinese;
 
         public GlobalId Id { get { return m_id; } set { m_id = value; } }

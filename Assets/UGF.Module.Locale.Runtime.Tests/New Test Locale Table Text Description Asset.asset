@@ -22,7 +22,7 @@ MonoBehaviour:
 
         as
 
-        d
+        dawd
 
         asd
 
@@ -35,5 +35,40 @@ MonoBehaviour:
         sd
 
         as'
-      m_french: 
+      m_french: 'awd asdawda awdawd a asda a
+
+        asdas
+
+        asdawd
+
+'
+      m_chinese: 
+    - m_id:
+        serializedVersion: 2
+        Hash: 736468f2a38f49f4992731eb7d2b7524
+      m_name: Entry_1
+      m_english: 'awda
+
+        as
+
+        dasd
+
+        asd
+
+        a
+
+        s
+
+        da
+
+        sd
+
+        as'
+      m_french: 'awd asdawda awdawd a asda a
+
+        asdas
+
+        asdawd
+
+'
       m_chinese: 
