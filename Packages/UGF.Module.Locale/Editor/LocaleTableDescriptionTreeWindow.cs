@@ -13,11 +13,13 @@ namespace UGF.Module.Locale.Editor
         {
             Type type = serializedObject.targetObject.GetType();
 
-            if (type.IsDefined(typeof(LocaleTableTextTreeDrawerAttribute)))
+            var attribute = type.GetCustomAttribute<LocaleTableTextTreeDrawerAttribute>();
+
+            if (attribute != null)
             {
                 TableTreeOptions options = CreateOptions(serializedObject);
 
-                options.RowHeight = EditorGUIUtility.singleLineHeight * 4F;
+                options.RowHeight = EditorGUIUtility.singleLineHeight * attribute.RowHeightLines;
 
                 return new LocaleTableTextTreeDrawer(serializedObject, options);
             }
