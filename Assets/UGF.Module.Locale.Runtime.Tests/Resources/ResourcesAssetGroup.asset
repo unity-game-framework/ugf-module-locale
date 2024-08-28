@@ -13,42 +13,6 @@ MonoBehaviour:
   m_Name: ResourcesAssetGroup
   m_EditorClassIdentifier: 
   m_loader:
-    m_first: 11872797105837163842
-    m_second: 15211438588813736251
-  m_assets:
-  - m_id:
-      m_first: 7287988959629032193
-      m_second: 4151299732674176459
-    m_address: LocaleTablePrefabEntriesEnglish
-  - m_id:
-      m_first: 11611600882954020530
-      m_second: 18021675094163375354
-    m_address: LocaleTablePrefabEntriesFrench
-  - m_id:
-      m_first: 12160846006163927325
-      m_second: 11610022056303925034
-    m_address: LocaleTablePrefabEntriesChinese
-  - m_id:
-      m_first: 7959206851730552086
-      m_second: 2266609764986322666
-    m_address: LocaleTableTextEntriesEnglish
-  - m_id:
-      m_first: 1122526607351238768
-      m_second: 18357650306370104105
-    m_address: LocaleTableTextEntriesFrench
-  - m_id:
-      m_first: 8224825666389106271
-      m_second: 9574923451070989579
-    m_address: LocaleTableTextEntriesChinese
-  - m_id:
-      m_first: 4558784665162412602
-      m_second: 501710515297994970
-    m_address: LocaleTableResourcesEntriesEnglish
-  - m_id:
-      m_first: 14534368546099893238
-      m_second: 1477185596558411578
-    m_address: LocaleTableResourcesEntriesFrench
-  - m_id:
-      m_first: 17903140794649538677
-      m_second: 71250623881031929
-    m_address: LocaleTableResourcesEntriesChinese
+    serializedVersion: 2
+    Hash: 1fb5c542a610a4c43b79e988cde219d3
+  m_assets: []

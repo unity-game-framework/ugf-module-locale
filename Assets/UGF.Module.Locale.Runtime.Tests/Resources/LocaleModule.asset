@@ -13,39 +13,22 @@ MonoBehaviour:
   m_Name: LocaleModule
   m_EditorClassIdentifier: 
   m_defaultLocale:
-    m_first: 2951096710913487352
-    m_second: 1047087608853324058
+    serializedVersion: 2
+    Hash: afd271f866d228f41a616aeea100880e
   m_selectLocaleBySystemLanguageOnInitialize: 0
   m_unloadEntriesOnUninitialize: 1
   m_locales:
   - m_guid:
-      m_first: 2951096710913487352
-      m_second: 1047087608853324058
+      serializedVersion: 2
+      Hash: afd271f866d228f41a616aeea100880e
     m_asset: {fileID: 11400000, guid: afd271f866d228f41a616aeea100880e, type: 2}
   - m_guid:
-      m_first: 2338495512168334432
-      m_second: 16580759713615790074
+      serializedVersion: 2
+      Hash: 47a3846001472074fa3f2d641cb11ae6
     m_asset: {fileID: 11400000, guid: 47a3846001472074fa3f2d641cb11ae6, type: 2}
   - m_guid:
-      m_first: 15871881787546467002
-      m_second: 14413373574116956441
+      serializedVersion: 2
+      Hash: 97b2faba4064dc4419593e7ce69606c8
     m_asset: {fileID: 11400000, guid: 97b2faba4064dc4419593e7ce69606c8, type: 2}
-  m_tables:
-  - m_guid:
-      m_first: 8314801454775519368
-      m_second: 11053258004443304009
-    m_asset: {fileID: 11400000, guid: 91cbc8881bde7364491096a5970f6599, type: 2}
-  - m_guid:
-      m_first: 8022261042578049502
-      m_second: 3944330977574488361
-    m_asset: {fileID: 11400000, guid: 1a51c9decbea6f542989e54a2014bd36, type: 2}
-  - m_guid:
-      m_first: 13268980966264980799
-      m_second: 5629753433244335096
-    m_asset: {fileID: 11400000, guid: 01a4c53fe3e3b824f87b9079ebe6204e, type: 2}
-  m_collections: []
-  m_preloadTablesAsync:
-  - m_first: 8314801454775519368
-    m_second: 11053258004443304009
-  - m_first: 13268980966264980799
-    m_second: 5629753433244335096
+  m_tables: []
+  m_preloadTablesAsync: []

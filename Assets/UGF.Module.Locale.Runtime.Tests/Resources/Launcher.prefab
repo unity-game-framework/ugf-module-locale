@@ -10,8 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8648921889085135744}
   - component: {fileID: 8648921889085135749}
-  - component: {fileID: 8648921889085135750}
-  - component: {fileID: 8648921889085135751}
   m_Layer: 0
   m_Name: Launcher
   m_TagString: Untagged
@@ -26,13 +24,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8648921889085135745}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &8648921889085135749
 MonoBehaviour:
@@ -46,36 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3fe62d66d7b2471486cb6b94f22fb807, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_builder: {fileID: 8648921889085135750}
-  m_resourceLoader: {fileID: 8648921889085135751}
+  m_application: {fileID: 11400000, guid: 2ca05a25d2c68b7438838713cdf7b879, type: 2}
   m_launchOnStart: 0
   m_stopOnQuit: 1
   m_sceneAccess: 1
---- !u!114 &8648921889085135750
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8648921889085135745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 668ff42ef33b4dea9eba1f6d5c16bcc9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_useReverseModulesUninitialization: 1
-  m_provideStaticInstance: 0
---- !u!114 &8648921889085135751
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8648921889085135745}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 14eef761f8fc4df7a4277b1e26a1a2dd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_resources:
-  - {fileID: 11400000, guid: 0621bdb047b52484a944a830c8ead178, type: 2}
