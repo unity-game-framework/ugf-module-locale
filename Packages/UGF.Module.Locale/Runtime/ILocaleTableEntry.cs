@@ -1,14 +1,8 @@
-﻿using System.Collections.Generic;
-using UGF.EditorTools.Runtime.Ids;
-using UGF.RuntimeTools.Runtime.Tables;
+﻿using UGF.Module.Descriptions.Runtime;
 
 namespace UGF.Module.Locale.Runtime
 {
-    public interface ILocaleTableEntry : ITableEntry
+    public interface ILocaleTableEntry<out TDescription, TValue> : IDescriptionTableEntry<TDescription> where TDescription : ILocaleTableEntryDescription<TValue>
     {
-        IEnumerable<ILocaleTableEntryValue> Values { get; }
-
-        bool TryGet<T>(GlobalId localeId, out T value) where T : class, ILocaleTableEntryValue;
-        bool TryGet(GlobalId localeId, out ILocaleTableEntryValue value);
     }
 }

@@ -1,12 +1,12 @@
 ﻿using System;
-using UGF.RuntimeTools.Runtime.Tables;
+using UGF.Tables.Runtime;
 
 namespace UGF.Module.Locale.Runtime
 {
     [AttributeUsage(AttributeTargets.Field)]
     public class LocaleEntryDropdownAttribute : TableEntryDropdownAttribute
     {
-        public LocaleEntryDropdownAttribute() : base(typeof(LocaleTableAsset))
+        public LocaleEntryDropdownAttribute() : base(typeof(LocaleTableDescriptionAsset))
         {
         }
     }

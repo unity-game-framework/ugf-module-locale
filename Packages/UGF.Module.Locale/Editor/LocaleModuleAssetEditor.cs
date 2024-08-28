@@ -11,13 +11,10 @@ namespace UGF.Module.Locale.Editor
     {
         private SerializedProperty m_propertyDefaultLocale;
         private SerializedProperty m_propertySelectLocaleBySystemLanguageOnInitialize;
-        private SerializedProperty m_propertyUnloadEntriesOnUninitialize;
         private AssetIdReferenceListDrawer m_listLocales;
         private ReorderableListSelectionDrawerByPath m_listLocalesSelection;
         private AssetIdReferenceListDrawer m_listTables;
         private ReorderableListSelectionDrawerByPath m_listTablesSelection;
-        private ReorderableListDrawer m_listCollections;
-        private ReorderableListSelectionDrawerByElement m_listCollectionsSelection;
         private ReorderableListDrawer m_listPreloadTablesAsync;
         private ReorderableListSelectionDrawerByElementGlobalId m_listPreloadTablesAsyncSelection;
 
@@ -25,7 +22,6 @@ namespace UGF.Module.Locale.Editor
         {
             m_propertyDefaultLocale = serializedObject.FindProperty("m_defaultLocale");
             m_propertySelectLocaleBySystemLanguageOnInitialize = serializedObject.FindProperty("m_selectLocaleBySystemLanguageOnInitialize");
-            m_propertyUnloadEntriesOnUninitialize = serializedObject.FindProperty("m_unloadEntriesOnUninitialize");
 
             m_listLocales = new AssetIdReferenceListDrawer(serializedObject.FindProperty("m_locales"))
             {
@@ -47,16 +43,6 @@ namespace UGF.Module.Locale.Editor
                 Drawer = { DisplayTitlebar = true }
             };
 
-            m_listCollections = new ReorderableListDrawer(serializedObject.FindProperty("m_collections"))
-            {
-                DisplayAsSingleLine = true
-            };
-
-            m_listCollectionsSelection = new ReorderableListSelectionDrawerByElement(m_listCollections)
-            {
-                Drawer = { DisplayTitlebar = true }
-            };
-
             m_listPreloadTablesAsync = new ReorderableListDrawer(serializedObject.FindProperty("m_preloadTablesAsync"))
             {
                 DisplayAsSingleLine = true
@@ -71,8 +57,6 @@ namespace UGF.Module.Locale.Editor
             m_listLocalesSelection.Enable();
             m_listTables.Enable();
             m_listTablesSelection.Enable();
-            m_listCollections.Enable();
-            m_listCollectionsSelection.Enable();
             m_listPreloadTablesAsync.Enable();
             m_listPreloadTablesAsyncSelection.Enable();
         }
@@ -83,8 +67,6 @@ namespace UGF.Module.Locale.Editor
             m_listLocalesSelection.Disable();
             m_listTables.Disable();
             m_listTablesSelection.Disable();
-            m_listCollections.Disable();
-            m_listCollectionsSelection.Disable();
             m_listPreloadTablesAsync.Disable();
             m_listPreloadTablesAsyncSelection.Disable();
         }
@@ -97,16 +79,13 @@ namespace UGF.Module.Locale.Editor
 
                 EditorGUILayout.PropertyField(m_propertyDefaultLocale);
                 EditorGUILayout.PropertyField(m_propertySelectLocaleBySystemLanguageOnInitialize);
-                EditorGUILayout.PropertyField(m_propertyUnloadEntriesOnUninitialize);
 
                 m_listLocales.DrawGUILayout();
                 m_listTables.DrawGUILayout();
-                m_listCollections.DrawGUILayout();
                 m_listPreloadTablesAsync.DrawGUILayout();
 
                 m_listLocalesSelection.DrawGUILayout();
                 m_listTablesSelection.DrawGUILayout();
-                m_listCollectionsSelection.DrawGUILayout();
                 m_listPreloadTablesAsyncSelection.DrawGUILayout();
             }
         }

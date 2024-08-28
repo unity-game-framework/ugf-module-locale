@@ -9,10 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21e8b28303b9482aa9ed0a381fe0a110, type: 3}
-  m_Name: ResourcesAssetGroup
+  m_Script: {fileID: 11500000, guid: f44a046fa3d84eb4a9f2a38967653d43, type: 3}
+  m_Name: New Locale Description Asset
   m_EditorClassIdentifier: 
-  m_loader:
-    serializedVersion: 2
-    Hash: 1fb5c542a610a4c43b79e988cde219d3
-  m_assets: []
+  m_displayName: 
+  m_language: 43
+  m_cultureName: 

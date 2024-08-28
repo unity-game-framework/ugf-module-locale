@@ -13,20 +13,20 @@ MonoBehaviour:
   m_Name: New Test Locale Entry Dropdown Attribute Asset
   m_EditorClassIdentifier: 
   m_locale1:
-    m_first: 4730060551115319950
-    m_second: 1545505251141216178
+    m_first: 0
+    m_second: 0
   m_locale2:
-    m_first: 4822244537719515248
-    m_second: 13735614588188846750
+    m_first: 0
+    m_second: 0
   m_locale3:
-    m_first: 4730060551115319950
-    m_second: 1545505251141216178
+    m_first: 0
+    m_second: 0
   m_locale4:
     m_first: 0
     m_second: 0
   m_locale5:
-    m_first: 4730060551115319950
-    m_second: 1545505251141216178
+    m_first: 0
+    m_second: 0
   m_locale6:
-    m_first: 4822244537719515248
-    m_second: 13735614588188846750
+    m_first: 0
+    m_second: 0
