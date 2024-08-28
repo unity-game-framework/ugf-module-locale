@@ -42,7 +42,7 @@ namespace UGF.Module.Locale.Runtime.Tests
             Assert.AreEqual("LocalePrefabEnglish", result3.name);
             Assert.False(module.TryGetValue<string>(new GlobalId("6e843cb42ca8420385a74de9f59314f4"), out _));
 
-            await module.LoadTableAsync(new GlobalId("1a51c9decbea6f542989e54a2014bd36"));
+            // await module.LoadTableAsync(new GlobalId("1a51c9decbea6f542989e54a2014bd36"));
 
             string result4 = module.GetValue<string>(new GlobalId("6e843cb42ca8420385a74de9f59314f4"));
 
