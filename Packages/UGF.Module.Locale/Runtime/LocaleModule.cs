@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using UGF.Application.Runtime;
 using UGF.EditorTools.Runtime.Ids;
 using UGF.Logs.Runtime;
-using UGF.Module.Assets.Runtime;
 using UGF.Module.Descriptions.Runtime;
 using UGF.RuntimeTools.Runtime.Providers;
 using UnityEngine;
@@ -19,14 +18,14 @@ namespace UGF.Module.Locale.Runtime
         public bool HasCurrentLocale { get { return m_currentLocaleId != GlobalId.Empty; } }
 
         protected ILog Logger { get; }
-        protected IAssetModule AssetModule { get; }
+        protected IDescriptionModule DescriptionModule { get; }
 
         private GlobalId m_currentLocaleId;
 
         public LocaleModule(LocaleModuleDescription description, IApplication application) : base(description, application)
         {
             Logger = Log.CreateWithLabel<LocaleModule>();
-            AssetModule = Application.GetModule<IAssetModule>();
+            DescriptionModule = Application.GetModule<IDescriptionModule>();
         }
 
         protected override void OnInitialize()
@@ -74,7 +73,7 @@ namespace UGF.Module.Locale.Runtime
             {
                 GlobalId id = Description.PreloadTablesAsync[i];
 
-                IDescriptionTable table = await LoadTableAsync(id);
+                IDescriptionTable table = await DescriptionModule.LoadTableAsync(id);
 
                 Tables.Add(id, table);
             }
@@ -134,11 +133,9 @@ namespace UGF.Module.Locale.Runtime
             if (locale == null) throw new ArgumentNullException(nameof(locale));
             if (!entryId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(entryId));
 
-            foreach ((GlobalId id, IDescriptionTable descriptionTable) in Tables)
+            foreach ((_, IDescriptionTable descriptionTable) in Tables)
             {
-                if (descriptionTable is ILocaleTableDescription<T> table
-                    && table.TryGet(id, out ILocaleTableEntryDescription<T> entryDescription)
-                    && entryDescription.TryGetValue(locale, out value))
+                if (descriptionTable is ILocaleTableDescription<T> table && table.TryGetValue(locale, entryId, out value))
                 {
                     return true;
                 }
@@ -182,19 +179,6 @@ namespace UGF.Module.Locale.Runtime
             id = default;
             description = default;
             return false;
-        }
-
-        public async Task<IDescriptionTable> LoadTableAsync(GlobalId id)
-        {
-            if (!id.IsValid()) throw new ArgumentException("Value should be valid.", nameof(id));
-
-            var asset = await AssetModule.LoadAsync<DescriptionTableAsset>(id);
-
-            IDescriptionTable table = asset.Build();
-
-            await AssetModule.UnloadAsync(id, asset);
-
-            return table;
         }
     }
 }

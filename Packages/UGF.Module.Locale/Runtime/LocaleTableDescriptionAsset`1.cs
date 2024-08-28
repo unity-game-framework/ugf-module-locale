@@ -24,7 +24,7 @@ namespace UGF.Module.Locale.Runtime
 
         protected override IDescriptionTable OnBuild()
         {
-            var description = new DescriptionTable<TDescription>();
+            var description = new LocaleTableDescription<TDescription, TValue>();
 
             for (int i = 0; i < m_table.Entries.Count; i++)
             {
