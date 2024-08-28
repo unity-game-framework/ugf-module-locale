@@ -9,7 +9,6 @@ namespace UGF.Module.Locale.Runtime
     {
         public GlobalId DefaultLocaleId { get; }
         public bool SelectLocaleBySystemLanguageOnInitialize { get; }
-        public bool UnloadEntriesOnUninitialize { get; }
         public IReadOnlyDictionary<GlobalId, LocaleDescription> Locales { get; }
         public IReadOnlyDictionary<GlobalId, LocaleTableDescription> Tables { get; }
         public IReadOnlyList<GlobalId> PreloadTablesAsync { get; }
@@ -17,7 +16,6 @@ namespace UGF.Module.Locale.Runtime
         public LocaleModuleDescription(
             GlobalId defaultLocaleId,
             bool selectLocaleBySystemLanguageOnInitialize,
-            bool unloadEntriesOnUninitialize,
             IReadOnlyDictionary<GlobalId, LocaleDescription> locales,
             IReadOnlyDictionary<GlobalId, LocaleTableDescription> tables,
             IReadOnlyList<GlobalId> preloadTablesAsync)
@@ -26,7 +24,6 @@ namespace UGF.Module.Locale.Runtime
 
             DefaultLocaleId = defaultLocaleId;
             SelectLocaleBySystemLanguageOnInitialize = selectLocaleBySystemLanguageOnInitialize;
-            UnloadEntriesOnUninitialize = unloadEntriesOnUninitialize;
             Locales = locales ?? throw new ArgumentNullException(nameof(locales));
             Tables = tables ?? throw new ArgumentNullException(nameof(tables));
             PreloadTablesAsync = preloadTablesAsync ?? throw new ArgumentNullException(nameof(preloadTablesAsync));

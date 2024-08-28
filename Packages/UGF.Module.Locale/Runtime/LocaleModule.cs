@@ -1,12 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
 using UGF.Application.Runtime;
 using UGF.EditorTools.Runtime.Ids;
 using UGF.Logs.Runtime;
 using UGF.Module.Assets.Runtime;
+using UGF.Module.Descriptions.Runtime;
 using UGF.RuntimeTools.Runtime.Providers;
 using UnityEngine;
 
@@ -14,10 +13,8 @@ namespace UGF.Module.Locale.Runtime
 {
     public class LocaleModule : ApplicationModuleAsync<LocaleModuleDescription>
     {
-        public IProvider<GlobalId, LocaleDescription> Locales { get; } = new Provider<GlobalId, LocaleDescription>();
-        public IProvider<GlobalId, LocaleTableDescription> Tables { get; } = new Provider<GlobalId, LocaleTableDescription>();
-        public IProvider<GlobalId, LocaleEntriesDescription> Entries { get; } = new Provider<GlobalId, LocaleEntriesDescription>();
-        public IProvider<GlobalId, HashSet<GlobalId>> EntriesByLocale { get; } = new Provider<GlobalId, HashSet<GlobalId>>();
+        public Provider<GlobalId, LocaleDescription> Locales { get; } = new Provider<GlobalId, LocaleDescription>();
+        public Provider<GlobalId, IDescriptionTable> Tables { get; } = new Provider<GlobalId, IDescriptionTable>();
         public GlobalId CurrentLocaleId { get { return HasCurrentLocale ? m_currentLocaleId : throw new ArgumentException("Value not specified."); } }
         public bool HasCurrentLocale { get { return m_currentLocaleId != GlobalId.Empty; } }
 
@@ -34,17 +31,9 @@ namespace UGF.Module.Locale.Runtime
         {
             base.OnInitialize();
 
-            Tables.Added += OnTableAdded;
-            Tables.Removed += OnTableRemoved;
-
             foreach ((GlobalId key, LocaleDescription value) in Description.Locales)
             {
                 Locales.Add(key, value);
-            }
-
-            foreach ((GlobalId key, LocaleTableDescription value) in Description.Tables)
-            {
-                Tables.Add(key, value);
             }
 
             if (Description.SelectLocaleBySystemLanguageOnInitialize
@@ -87,29 +76,18 @@ namespace UGF.Module.Locale.Runtime
             Log.Debug("Locale Module uninitialize", new
             {
                 locales = Locales.Entries.Count,
-                tables = Tables.Entries.Count,
-                entries = Entries.Entries.Count
+                tables = Tables.Entries.Count
             });
-
-            if (Description.UnloadEntriesOnUninitialize)
-            {
-                while (Entries.Entries.Count > 0)
-                {
-                    GlobalId id = Entries.Entries.Keys.First();
-
-                    UnloadEntries(id);
-                }
-            }
-
-            Tables.Added -= OnTableAdded;
-            Tables.Removed -= OnTableRemoved;
 
             ClearCurrentLocale();
 
             Locales.Clear();
             Tables.Clear();
-            Entries.Clear();
-            EntriesByLocale.Clear();
+        }
+
+        public LocaleDescription GetCurrentLocale()
+        {
+            return Locales.Get(CurrentLocaleId);
         }
 
         public void SetCurrentLocale(GlobalId localeId)
@@ -125,208 +103,33 @@ namespace UGF.Module.Locale.Runtime
             m_currentLocaleId = GlobalId.Empty;
         }
 
-        public void LoadTable(GlobalId tableId)
+        public T GetValue<T>(GlobalId entryId)
         {
-            LoadTable(CurrentLocaleId, tableId);
+            return GetValue<T>(GetCurrentLocale(), entryId);
         }
 
-        public void LoadTable(GlobalId localeId, GlobalId tableId)
+        public T GetValue<T>(LocaleDescription locale, GlobalId entryId)
         {
-            LoadEntries(GetEntriesId(localeId, tableId));
+            return TryGetValue(locale, entryId, out T value) ? value : throw new ArgumentException($"Locale value not found by the specified locale and entry id: '{locale.DisplayName}', '{entryId}'.");
         }
 
-        public Task LoadTableAsync(GlobalId tableId)
+        public bool TryGetValue<T>(GlobalId entryId, out T value)
         {
-            return LoadTableAsync(CurrentLocaleId, tableId);
+            return TryGetValue(GetCurrentLocale(), entryId, out value);
         }
 
-        public Task LoadTableAsync(GlobalId localeId, GlobalId tableId)
+        public bool TryGetValue<T>(LocaleDescription locale, GlobalId entryId, out T value)
         {
-            return LoadEntriesAsync(GetEntriesId(localeId, tableId));
-        }
+            if (locale == null) throw new ArgumentNullException(nameof(locale));
+            if (!entryId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(entryId));
 
-        public bool UnloadTable(GlobalId tableId)
-        {
-            return UnloadTable(CurrentLocaleId, tableId);
-        }
-
-        public bool UnloadTable(GlobalId localeId, GlobalId tableId)
-        {
-            return UnloadEntries(GetEntriesId(localeId, tableId));
-        }
-
-        public Task<bool> UnloadTableAsync(GlobalId tableId)
-        {
-            return UnloadTableAsync(CurrentLocaleId, tableId);
-        }
-
-        public Task<bool> UnloadTableAsync(GlobalId localeId, GlobalId tableId)
-        {
-            return UnloadEntriesAsync(GetEntriesId(localeId, tableId));
-        }
-
-        public void LoadTableAll(GlobalId tableId)
-        {
-            LocaleTableDescription table = Tables.Get(tableId);
-
-            foreach (GlobalId entriesId in table.Entries.Values)
+            foreach ((GlobalId id, IDescriptionTable descriptionTable) in Tables)
             {
-                LoadEntries(entriesId);
-            }
-        }
-
-        public async Task LoadTableAllAsync(GlobalId tableId)
-        {
-            LocaleTableDescription table = Tables.Get(tableId);
-
-            foreach (GlobalId entriesId in table.Entries.Values)
-            {
-                await LoadEntriesAsync(entriesId);
-            }
-        }
-
-        public void UnloadTableAll(GlobalId tableId)
-        {
-            LocaleTableDescription table = Tables.Get(tableId);
-
-            foreach (GlobalId entriesId in table.Entries.Values)
-            {
-                UnloadEntries(entriesId);
-            }
-        }
-
-        public async Task UnloadTableAllAsync(GlobalId tableId)
-        {
-            LocaleTableDescription table = Tables.Get(tableId);
-
-            foreach (GlobalId entriesId in table.Entries.Values)
-            {
-                await UnloadEntriesAsync(entriesId);
-            }
-        }
-
-        public void LoadEntries(GlobalId entriesId)
-        {
-            if (!entriesId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(entriesId));
-            if (Entries.Entries.ContainsKey(entriesId)) throw new ArgumentException($"Entries already loaded by the specified id: '{entriesId}'.");
-
-            var asset = AssetModule.Load<LocaleEntriesDescriptionAsset>(entriesId);
-            LocaleEntriesDescription description = asset.Build();
-
-            Entries.Add(entriesId, description);
-        }
-
-        public async Task LoadEntriesAsync(GlobalId entriesId)
-        {
-            if (!entriesId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(entriesId));
-            if (Entries.Entries.ContainsKey(entriesId)) throw new ArgumentException($"Entries already loaded by the specified id: '{entriesId}'.");
-
-            var asset = await AssetModule.LoadAsync<LocaleEntriesDescriptionAsset>(entriesId);
-            LocaleEntriesDescription description = asset.Build();
-
-            Entries.Add(entriesId, description);
-        }
-
-        public bool UnloadEntries(GlobalId entriesId)
-        {
-            if (!entriesId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(entriesId));
-
-            if (Entries.Remove(entriesId))
-            {
-                object asset = AssetModule.Tracker.Get(entriesId).Asset;
-
-                AssetModule.Unload(entriesId, asset);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public async Task<bool> UnloadEntriesAsync(GlobalId entriesId)
-        {
-            if (!entriesId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(entriesId));
-
-            if (Entries.Remove(entriesId))
-            {
-                object asset = AssetModule.Tracker.Get(entriesId).Asset;
-
-                await AssetModule.UnloadAsync(entriesId, asset);
-
-                return true;
-            }
-
-            return false;
-        }
-
-        public GlobalId GetEntriesId(GlobalId localeId, GlobalId tableId)
-        {
-            return TryGetEntriesId(localeId, tableId, out GlobalId entriesId) ? entriesId : throw new ArgumentException($"Entries id not found by the specified locale and table id: '{tableId}', '{localeId}'.");
-        }
-
-        public bool TryGetEntriesId(GlobalId localeId, GlobalId tableId, out GlobalId entriesId)
-        {
-            if (!localeId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(localeId));
-
-            LocaleTableDescription table = Tables.Get(tableId);
-
-            return table.Entries.TryGetValue(localeId, out entriesId);
-        }
-
-        public T GetEntry<T>(GlobalId id)
-        {
-            return GetEntry<T>(CurrentLocaleId, id);
-        }
-
-        public T GetEntry<T>(GlobalId localeId, GlobalId id)
-        {
-            return (T)GetEntry(localeId, id);
-        }
-
-        public object GetEntry(GlobalId id)
-        {
-            return GetEntry(CurrentLocaleId, id);
-        }
-
-        public object GetEntry(GlobalId localeId, GlobalId id)
-        {
-            return TryGetEntry(localeId, id, out object value) ? value : throw new ArgumentException($"Entry not found by the specified locale and id: '{localeId}', '{id}'.");
-        }
-
-        public bool TryGetEntry<T>(GlobalId id, out T value)
-        {
-            return TryGetEntry(CurrentLocaleId, id, out value);
-        }
-
-        public bool TryGetEntry<T>(GlobalId localeId, GlobalId id, out T value)
-        {
-            if (TryGetEntry(localeId, id, out object result))
-            {
-                value = (T)result;
-                return true;
-            }
-
-            value = default;
-            return false;
-        }
-
-        public bool TryGetEntry(GlobalId id, out object value)
-        {
-            return TryGetEntry(CurrentLocaleId, id, out value);
-        }
-
-        public bool TryGetEntry(GlobalId localeId, GlobalId id, out object value)
-        {
-            if (!localeId.IsValid()) throw new ArgumentException("Value should be valid.", nameof(localeId));
-
-            if (EntriesByLocale.TryGet(localeId, out HashSet<GlobalId> ids))
-            {
-                foreach (GlobalId entryId in ids)
+                if (descriptionTable is ILocaleTableDescription<T> table
+                    && table.TryGet(id, out ILocaleTableEntryDescription<T> entryDescription)
+                    && entryDescription.TryGetValue(locale, out value))
                 {
-                    if (Entries.TryGet(entryId, out LocaleEntriesDescription entries) && entries.Values.TryGetValue(id, out value))
-                    {
-                        return true;
-                    }
+                    return true;
                 }
             }
 
@@ -370,33 +173,17 @@ namespace UGF.Module.Locale.Runtime
             return false;
         }
 
-        private void OnTableAdded(IProvider provider, GlobalId id, LocaleTableDescription entry)
+        public async Task<IDescriptionTable> LoadTableAsync(GlobalId id)
         {
-            foreach ((GlobalId key, GlobalId value) in entry.Entries)
-            {
-                if (!EntriesByLocale.TryGet(key, out HashSet<GlobalId> ids))
-                {
-                    ids = new HashSet<GlobalId>();
+            if (!id.IsValid()) throw new ArgumentException("Value should be valid.", nameof(id));
 
-                    EntriesByLocale.Add(key, ids);
-                }
+            var asset = await AssetModule.LoadAsync<DescriptionTableAsset>(id);
 
-                ids.Add(value);
-            }
-        }
+            IDescriptionTable table = asset.Build();
 
-        private void OnTableRemoved(IProvider provider, GlobalId id, LocaleTableDescription entry)
-        {
-            foreach ((GlobalId key, GlobalId value) in entry.Entries)
-            {
-                if (EntriesByLocale.TryGet(key, out HashSet<GlobalId> ids) && ids.Remove(value))
-                {
-                    if (ids.Count == 0)
-                    {
-                        EntriesByLocale.Remove(key);
-                    }
-                }
-            }
+            await AssetModule.UnloadAsync(id, asset);
+
+            return table;
         }
     }
 }
