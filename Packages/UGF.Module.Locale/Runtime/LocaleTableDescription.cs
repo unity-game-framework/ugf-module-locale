@@ -1,11 +1,8 @@
-﻿using System.Collections.Generic;
-using UGF.Description.Runtime;
-using UGF.EditorTools.Runtime.Ids;
+﻿using UGF.Module.Descriptions.Runtime;
 
 namespace UGF.Module.Locale.Runtime
 {
-    public class LocaleTableDescription : DescriptionBase
+    public class LocaleTableDescription<TDescription, TValue> : DescriptionTable<TDescription> where TDescription : ILocaleTableEntryDescription<TValue>
     {
-        public Dictionary<GlobalId, GlobalId> Entries { get; } = new Dictionary<GlobalId, GlobalId>();
     }
 }

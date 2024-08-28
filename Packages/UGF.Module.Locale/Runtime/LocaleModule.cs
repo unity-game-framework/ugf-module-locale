@@ -18,12 +18,14 @@ namespace UGF.Module.Locale.Runtime
         public GlobalId CurrentLocaleId { get { return HasCurrentLocale ? m_currentLocaleId : throw new ArgumentException("Value not specified."); } }
         public bool HasCurrentLocale { get { return m_currentLocaleId != GlobalId.Empty; } }
 
+        protected ILog Logger { get; }
         protected IAssetModule AssetModule { get; }
 
         private GlobalId m_currentLocaleId;
 
         public LocaleModule(LocaleModuleDescription description, IApplication application) : base(description, application)
         {
+            Logger = Log.CreateWithLabel<LocaleModule>();
             AssetModule = Application.GetModule<IAssetModule>();
         }
 
@@ -31,9 +33,14 @@ namespace UGF.Module.Locale.Runtime
         {
             base.OnInitialize();
 
-            foreach ((GlobalId key, LocaleDescription value) in Description.Locales)
+            foreach ((GlobalId id, LocaleDescription description) in Description.Locales)
             {
-                Locales.Add(key, value);
+                Locales.Add(id, description);
+            }
+
+            foreach ((GlobalId id, IDescriptionTable table) in Description.Tables)
+            {
+                Tables.Add(id, table);
             }
 
             if (Description.SelectLocaleBySystemLanguageOnInitialize
@@ -46,7 +53,7 @@ namespace UGF.Module.Locale.Runtime
                 SetCurrentLocale(Description.DefaultLocaleId);
             }
 
-            Log.Debug("Locale Module initialized", new
+            Logger.Debug("Initialized", new
             {
                 CurrentLocaleId,
                 locales = Description.Locales.Count,
@@ -58,14 +65,18 @@ namespace UGF.Module.Locale.Runtime
         {
             await base.OnInitializeAsync();
 
-            Log.Debug("Locale Module initialize async", new
+            Logger.Debug("Initialize async", new
             {
                 preloadTablesAsync = Description.PreloadTablesAsync.Count
             });
 
-            foreach (GlobalId tableId in Description.PreloadTablesAsync)
+            for (int i = 0; i < Description.PreloadTablesAsync.Count; i++)
             {
-                await LoadTableAsync(tableId);
+                GlobalId id = Description.PreloadTablesAsync[i];
+
+                IDescriptionTable table = await LoadTableAsync(id);
+
+                Tables.Add(id, table);
             }
         }
 
@@ -73,7 +84,7 @@ namespace UGF.Module.Locale.Runtime
         {
             base.OnUninitialize();
 
-            Log.Debug("Locale Module uninitialize", new
+            Logger.Debug("Uninitialize", new
             {
                 locales = Locales.Entries.Count,
                 tables = Tables.Entries.Count

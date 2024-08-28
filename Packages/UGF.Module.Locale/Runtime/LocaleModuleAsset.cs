@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UGF.Application.Runtime;
 using UGF.EditorTools.Runtime.Assets;
 using UGF.EditorTools.Runtime.Ids;
+using UGF.Module.Descriptions.Runtime;
 using UnityEngine;
 
 namespace UGF.Module.Locale.Runtime
@@ -16,7 +17,6 @@ namespace UGF.Module.Locale.Runtime
         [SerializeField] private bool m_unloadEntriesOnUninitialize = true;
         [SerializeField] private List<AssetIdReference<LocaleDescriptionAsset>> m_locales = new List<AssetIdReference<LocaleDescriptionAsset>>();
         [SerializeField] private List<AssetIdReference<LocaleTableDescriptionAsset>> m_tables = new List<AssetIdReference<LocaleTableDescriptionAsset>>();
-        [SerializeField] private List<LocaleTableDescriptionCollectionAsset> m_collections = new List<LocaleTableDescriptionCollectionAsset>();
         [AssetId(typeof(LocaleTableDescriptionAsset))]
         [SerializeField] private List<Hash128> m_preloadTablesAsync = new List<Hash128>();
 
@@ -25,13 +25,12 @@ namespace UGF.Module.Locale.Runtime
         public bool UnloadEntriesOnUninitialize { get { return m_unloadEntriesOnUninitialize; } set { m_unloadEntriesOnUninitialize = value; } }
         public List<AssetIdReference<LocaleDescriptionAsset>> Locales { get { return m_locales; } }
         public List<AssetIdReference<LocaleTableDescriptionAsset>> Tables { get { return m_tables; } }
-        public List<LocaleTableDescriptionCollectionAsset> Collections { get { return m_collections; } }
         public List<Hash128> PreloadTablesAsync { get { return m_preloadTablesAsync; } }
 
         protected override LocaleModuleDescription OnBuildDescription()
         {
             var locales = new Dictionary<GlobalId, LocaleDescription>();
-            var tables = new Dictionary<GlobalId, LocaleTableDescription>();
+            var tables = new Dictionary<GlobalId, IDescriptionTable>();
             var preloadTableAsync = new List<GlobalId>();
 
             for (int i = 0; i < m_locales.Count; i++)
@@ -48,13 +47,6 @@ namespace UGF.Module.Locale.Runtime
                 tables.Add(reference.Guid, reference.Asset.Build());
             }
 
-            for (int i = 0; i < m_collections.Count; i++)
-            {
-                LocaleTableDescriptionCollectionAsset collection = m_collections[i];
-
-                collection.GetTableDescriptions(tables);
-            }
-
             for (int i = 0; i < m_preloadTablesAsync.Count; i++)
             {
                 GlobalId id = m_preloadTablesAsync[i];
@@ -67,7 +59,6 @@ namespace UGF.Module.Locale.Runtime
             return new LocaleModuleDescription(
                 m_defaultLocale,
                 m_selectLocaleBySystemLanguageOnInitialize,
-                m_unloadEntriesOnUninitialize,
                 locales,
                 tables,
                 preloadTableAsync
