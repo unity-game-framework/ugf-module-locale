@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UGF.EditorTools.Runtime.Ids;
 using UnityEngine;
 
@@ -32,34 +31,17 @@ namespace UGF.Module.Locale.Runtime.Tests
 
         public bool TryGetValue(LocaleDescription locale, out string value)
         {
-            switch (locale.SystemLanguage)
+            if (locale == null) throw new ArgumentNullException(nameof(locale));
+
+            value = locale.SystemLanguage switch
             {
-                case SystemLanguage.Chinese:
-                {
-                    value = Chinese;
-                    return true;
-                }
-                case SystemLanguage.English:
-                {
-                    value = English;
-                    return true;
-                }
-                case SystemLanguage.French:
-                {
-                    value = French;
-                    return true;
-                }
-            }
+                SystemLanguage.Chinese => Chinese,
+                SystemLanguage.English => English,
+                SystemLanguage.French => French,
+                _ => string.Empty
+            };
 
-            value = default;
-            return false;
-        }
-
-        public void GetValues(ICollection<string> values)
-        {
-            values.Add(English);
-            values.Add(French);
-            values.Add(Chinese);
+            return !string.IsNullOrEmpty(value);
         }
     }
 
@@ -68,8 +50,11 @@ namespace UGF.Module.Locale.Runtime.Tests
     {
         [SerializeField] private Hash128 m_id;
         [SerializeField] private string m_name;
+        [TextArea(5, 5)]
         [SerializeField] private string m_english;
+        [TextArea(5, 5)]
         [SerializeField] private string m_french;
+        [TextArea(5, 5)]
         [SerializeField] private string m_chinese;
 
         public GlobalId Id { get { return m_id; } set { m_id = value; } }
